@@ -20,6 +20,41 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <LinearLayout
+        android:id="@+id/prSentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="90dp"
+        android:visibility="gone"
+        android:paddingHorizontal="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:visibility=""
+            android:text="@string/email_sent"
+            android:textColor="@color/brown"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/email_sent_copy"
+            android:textSize="18sp" />
+    </LinearLayout>>
+
+    <LinearLayout
+        android:id="@+id/prResetContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -31,14 +66,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/brown"
-            android:gravity="center"
-            android:textSize="22sp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="@string/password_reset" />
+            android:gravity="center"
+            android:text="@string/password_reset"
+            android:textColor="@color/brown"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -75,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:text="@string/reset_password" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
