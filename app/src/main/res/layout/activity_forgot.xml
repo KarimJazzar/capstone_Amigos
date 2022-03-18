@@ -6,4 +6,75 @@
     android:layout_height="match_parent"
     tools:context=".ForgotActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/back"
+        android:contentDescription="@string/back_btn"
+        android:text="@string/empty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="90dp"
+        android:paddingHorizontal="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/brown"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/password_reset" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/password_reset_copy" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inputborder"
+            android:hint="@string/email"
+            app:boxStrokeWidth="0dp"
+            android:layout_marginTop="30dp"
+            app:startIconContentDescription="@string/email"
+            app:startIconTint="@color/yellow">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/resetEmailt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:fontFamily="@font/montserrat"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnResetPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="@string/reset_password" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

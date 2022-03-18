@@ -192,8 +192,10 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/back"
+        android:contentDescription="@string/back_btn"
         android:text="@string/empty"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,13 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="password_reset">Password Reset</string>
+    <string name="password_reset_copy">We will send you and email with a link to reset your password</string>
+    <string name="email_sent">Email Sent</string>
+    <string name="email_sent_copy">Follow the instructions sent to your email. If you can\'t find the email, please check in your spam.</string>
+    <string name="reset_password">Reset Password</string>
     <string name="phone">Phone</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="back_btn">Back Button</string>
     <string name="empty"></string>
 </resources>
