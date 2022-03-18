@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText etRegEmail;
     TextInputEditText etRegPassword;
-    TextView tvLoginHere;
+    Button backBtutton;
     Button btnRegister;
 
     FirebaseAuth mAuth;
@@ -41,9 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etRegEmail = findViewById(R.id.etRegEmail);
-        etRegPassword = findViewById(R.id.etRegPass);
-        tvLoginHere = findViewById(R.id.tvLoginHere);
+        etRegEmail = findViewById(R.id.registerEmail);
+        etRegPassword = findViewById(R.id.registerPassword);
+        backBtutton = findViewById(R.id.registerBack);
         btnRegister = findViewById(R.id.btnRegister);
 
         mAuth = FirebaseAuth.getInstance();
@@ -53,8 +54,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
-        tvLoginHere.setOnClickListener(view ->{
-            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        backBtutton.setOnClickListener(view ->{
+            this.finish();
+            //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         });
     }
 

@@ -6,4 +6,10 @@
     <string name="signup">Sign Up</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="phone">Phone</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="empty"></string>
 </resources>
