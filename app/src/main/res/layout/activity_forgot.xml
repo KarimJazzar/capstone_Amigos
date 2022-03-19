@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:visibility=""
             android:text="@string/email_sent"
             android:textColor="@color/brown"
             android:textSize="22sp" />
@@ -51,7 +50,7 @@
             android:fontFamily="@font/montserrat"
             android:text="@string/email_sent_copy"
             android:textSize="18sp" />
-    </LinearLayout>>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/prResetContainer"
