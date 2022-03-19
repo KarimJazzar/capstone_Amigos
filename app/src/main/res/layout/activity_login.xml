@@ -56,7 +56,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/inputborder"
+                    android:background="@drawable/input_bottom_border"
                     app:startIconDrawable="@drawable/user"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/inputborder"
+                    android:background="@drawable/input_bottom_border"
                     app:startIconDrawable="@drawable/lock"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"

@@ -18,6 +18,13 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="back_btn">Back Button</string>
     <string name="empty"></string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="find_trip_headline">Where is your next adventure?</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="flexible_dates">Flexible Dates</string>
+    <string name="find_trip">Find a trip</string>
+    <string name="create_ride">Create ride</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="date_holder">00/00/0000</string>
+    <string name="people_number">0</string>
 </resources>
