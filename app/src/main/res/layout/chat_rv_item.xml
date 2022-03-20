@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chatUserRV"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="15dp"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="15dp">
 
     <View
         android:id="@+id/top_line"
         android:layout_width="match_parent"
-        android:background="@color/grey"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/grey" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/registerPicture"
+                android:id="@+id/chatImageRV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -50,7 +51,7 @@
             android:paddingVertical="10dp">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/chatNameRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
@@ -59,7 +60,7 @@
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/chatRoutRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
@@ -68,7 +69,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/chatMsgRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
@@ -81,7 +82,7 @@
     <View
         android:id="@+id/bottom_line"
         android:layout_width="match_parent"
-        android:background="@color/grey"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/grey" />
 
 </LinearLayout>
