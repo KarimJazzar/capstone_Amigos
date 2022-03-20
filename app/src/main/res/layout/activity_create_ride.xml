@@ -38,6 +38,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/back"
+                android:backgroundTint="@color/brown"
+                app:backgroundTint="@color/brown"
                 android:contentDescription="@string/back_btn"
                 android:text="@string/empty"
                 app:layout_constraintStart_toStartOf="parent"
