@@ -29,6 +29,7 @@
     <string name="ride_hour">00:00</string>
     <string name="profile">Profile</string>
     <string name="messages">Messages</string>
+    <string name="trip_and_ride">Trips and Rides</string>
     <string name="change_profile_img">Change profile picture</string>
     <string name="people_number">0</string>
 </resources>

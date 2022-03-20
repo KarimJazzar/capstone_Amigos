@@ -104,7 +104,7 @@ public class MessagesFragment extends Fragment {
 
         messagesAdapter.submitList(messages);
 
-        messagesRV = (RecyclerView) view.findViewById(R.id.messageRV);
+        messagesRV = (RecyclerView) view.findViewById(R.id.tripsRidesRV);
         messagesRV.setLayoutManager(new LinearLayoutManager(context));
         messagesRV.setHasFixedSize(true);
         messagesRV.setAdapter(messagesAdapter);
