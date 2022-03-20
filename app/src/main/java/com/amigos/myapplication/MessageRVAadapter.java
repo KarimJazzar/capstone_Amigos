@@ -1,7 +1,6 @@
 package com.amigos.myapplication;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +12,22 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder> {
-    public static Chat taskSelected;
+public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.ViewHolder> {
+    public static Message taskSelected;
     private OnItemClickListener listener;
 
-    public ChatRVAadapter() {
+    public MessageRVAadapter() {
         super(DIFF_CALLBACK);
     }
 
-    private static final DiffUtil.ItemCallback<Chat> DIFF_CALLBACK = new DiffUtil.ItemCallback<Chat>() {
+    private static final DiffUtil.ItemCallback<Message> DIFF_CALLBACK = new DiffUtil.ItemCallback<Message>() {
         @Override
-        public boolean areItemsTheSame(Chat oldItem, Chat newItem) {
+        public boolean areItemsTheSame(Message oldItem, Message newItem) {
             return oldItem.getId() == newItem.getId();
         }
 
         @Override
-        public boolean areContentsTheSame(Chat oldItem, Chat newItem) {
+        public boolean areContentsTheSame(Message oldItem, Message newItem) {
             return oldItem.getDriverName().equals(newItem.getDriverName());
         }
     };
@@ -42,13 +41,13 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Chat model = getTaskAt(position);
+        Message model = getTaskAt(position);
         holder.nameTV.setText(model.getDriverName());
         holder.directionTV.setText("Trip From " + model.getFrom() + " to " + model.getTo());
         holder.msgTV.setText(model.getLastMsg());
     }
 
-    public Chat getTaskAt(int position) {
+    public Message getTaskAt(int position) {
         return getItem(position);
     }
 
@@ -76,7 +75,7 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Chat model);
+        void onItemClick(Message model);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

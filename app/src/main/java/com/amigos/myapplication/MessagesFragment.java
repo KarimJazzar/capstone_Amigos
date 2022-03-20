@@ -1,12 +1,20 @@
 package com.amigos.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +22,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MessagesFragment extends Fragment {
+
+    private RecyclerView messagesRV;
+    private List<Message> messages = new ArrayList<>();
+    private MessageRVAadapter messagesAdapter = new MessageRVAadapter();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +72,42 @@ public class MessagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messages, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Context context = getActivity().getApplicationContext();
+
+        Message m1 = new Message();
+        m1.setDriverName("Jose Miolan");
+        m1.setFrom("Santo Domingo");
+        m1.setTo("Samana");
+        m1.setLastMsg("Are you ready for the trip?");
+
+        Message m2 = new Message();
+        m2.setDriverName("Alla Ponomarenko");
+        m2.setFrom("Santo Domingo");
+        m2.setTo("Santiago");
+        m2.setLastMsg("Almost there!");
+
+        Message m3 = new Message();
+        m3.setDriverName("Thom Solo");
+        m3.setFrom("La Romana");
+        m3.setTo("Punta Cana");
+        m3.setLastMsg("Hello, is possible...");
+
+        messages.add(m1);
+        messages.add(m2);
+        messages.add(m3);
+
+        messagesAdapter.submitList(messages);
+
+        messagesRV = (RecyclerView) view.findViewById(R.id.messageRV);
+        messagesRV.setLayoutManager(new LinearLayoutManager(context));
+        messagesRV.setHasFixedSize(true);
+        messagesRV.setAdapter(messagesAdapter);
+
     }
 }

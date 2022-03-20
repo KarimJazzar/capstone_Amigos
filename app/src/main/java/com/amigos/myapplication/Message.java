@@ -1,6 +1,6 @@
 package com.amigos.myapplication;
 
-public class Chat {
+public class Message {
     private int id;
     private String driverImage;
     private String driverName;
