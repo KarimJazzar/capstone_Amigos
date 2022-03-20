@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "785828651407",
+    "project_id": "capstone-amigos",
+    "storage_bucket": "capstone-amigos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785828651407:android:d69423b83e5514276fabfa",
+        "android_client_info": {
+          "package_name": "com.amigos.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785828651407-9fq047a6q7sbr72kjb63sm5n4jc2u271.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6IF7Pc-DHUrRN0RECjhDc50cPrZTjPAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785828651407-9fq047a6q7sbr72kjb63sm5n4jc2u271.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
