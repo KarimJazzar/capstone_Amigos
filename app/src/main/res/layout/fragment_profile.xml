@@ -80,28 +80,37 @@
                 android:textSize="18sp"
                 android:text="@string/change_profile_img" />
 
-            <TextView
-                android:id="@+id/textView8"
+            <EditText
+                android:id="@+id/profileFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bottom_border"
                 android:layout_marginTop="15dp"
+                android:background="@drawable/input_bottom_border"
                 android:paddingVertical="15dp"
-                android:textSize="18sp"
-                android:text="Full Name" />
-
-            <TextView
-                android:id="@+id/textView9"
+                android:text="First Name"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/profileLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bottom_border"
                 android:layout_marginTop="15dp"
+                android:background="@drawable/input_bottom_border"
                 android:paddingVertical="15dp"
-                android:textSize="18sp"
-                android:text="temp@email.com" />
+                android:text="Last Name"
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/profileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/input_bottom_border"
+                android:paddingVertical="15dp"
+                android:text="temp@email.com"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/profileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_bottom_border"
@@ -109,6 +118,12 @@
                 android:paddingVertical="15dp"
                 android:textSize="18sp"
                 android:text="000 000 0000" />
+
+            <Button
+                android:id="@+id/updateProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Profile" />
 
         </LinearLayout>
 

@@ -87,12 +87,12 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginPass"
-                        android:fontFamily="@font/montserrat"
-                        android:backgroundTint="@color/transparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/transparent"
+                        android:fontFamily="@font/montserrat"
                         android:inputType="textEmailAddress"
-                        />
+                        android:password="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
