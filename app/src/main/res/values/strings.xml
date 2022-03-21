@@ -35,6 +35,14 @@
     <string name="change_profile_img">Change profile picture</string>
     <string name="results">Results</string>
     <string name="people_number">0</string>
+    <!-- Login Strings Values -->
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">Log In</string>
+    <string name="login_forgot">Forgot my password</string>
+    <string name="login_divider">|</string>
+    <string name="login_singup">Sign Up</string>
+    <!-- Booking Strings Values -->
     <string name="booking_driver_name">Trip with Katy</string>
     <string name="booking_departure_time">Departure at 11:45 am</string>
     <string name="booking_seats">3 open seats</string>

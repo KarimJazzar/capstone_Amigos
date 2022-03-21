@@ -60,13 +60,14 @@
                     app:startIconDrawable="@drawable/user"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"
-                    app:startIconContentDescription="@string/email"
-                    android:hint="@string/email">
+                    app:startIconContentDescription="@string/login_email"
+                    android:hint="@string/login_email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginEmail"
                         android:fontFamily="@font/montserrat"
                         android:backgroundTint="@color/transparent"
+                        android:textSize="12sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
@@ -82,13 +83,14 @@
                     app:startIconDrawable="@drawable/lock"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"
-                    app:startIconContentDescription="@string/password"
-                    android:hint="@string/password">
+                    app:startIconContentDescription="@string/login_password"
+                    android:hint="@string/login_password">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginPass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="12sp"
                         android:backgroundTint="@color/transparent"
                         android:fontFamily="@font/montserrat"
                         android:inputType="textEmailAddress"
@@ -103,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/yellow"
-                    android:text="@string/login" />
+                    android:text="@string/login_button" />
 
             </LinearLayout>
 
@@ -117,21 +119,22 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvForgotPassword"
                 android:fontFamily="@font/montserrat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
-                android:text="@string/forgot"
-                android:textSize="16sp" />
+                android:text="@string/login_forgot"
+                android:textSize="12sp" />
 
             <TextView
                 android:fontFamily="@font/montserrat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
-                android:text="@string/divider"
+                android:text="@string/login_divider"
                 android:layout_marginHorizontal="5dp"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:fontFamily="@font/montserrat"
@@ -139,8 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
-                android:text="@string/signup"
-                android:textSize="16sp" />
+                android:text="@string/login_singup"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
