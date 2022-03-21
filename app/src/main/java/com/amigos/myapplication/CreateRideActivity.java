@@ -1,5 +1,7 @@
 package com.amigos.myapplication;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -7,15 +9,34 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 
-public class CreateRideActivity extends AppCompatActivity {
+public class CreateRideActivity extends AppCompatActivity  implements OnMapReadyCallback{
 
     MapView mapView;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private GoogleMap googleMap;
+    private static int AUTOCOMPLETE_REQUEST_CODE = 100;
+    private final String TAG = this.getClass().getName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +45,47 @@ public class CreateRideActivity extends AppCompatActivity {
 
         initialize();
         checkLocationPermission();
+
+        Places.initialize(getApplicationContext(), getString(R.string.google_geo_api_key));
+
+        mapView.onCreate(savedInstanceState);
+
+        mapView.onResume();
+
+        try {
+            MapsInitializer.initialize(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+
+                // For showing a move to my location button
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
+                // For zooming automatically to the location of the marker
+
+                if (mMap != null) {
+
+                    mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                        @Override
+                        public void onMyLocationChange(Location arg0) {
+                            googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Your Location"));
+                            CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(arg0.getLatitude(), arg0.getLongitude())).zoom(12).build();
+                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     private void initialize() {
@@ -72,4 +134,129 @@ public class CreateRideActivity extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                Place place = Autocomplete.getPlaceFromIntent(data);
+//                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//
+//                    return;
+//                }
+//                googleMap.setMyLocationEnabled(true);
+//                // For zooming automatically to the location of the marker
+//
+//                if (googleMap != null) {
+//                    googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+//                        @Override
+//                        public void onMyLocationChange(Location arg0) {
+//                            googleMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName()));
+//                            CameraPosition cameraPosition = new CameraPosition.Builder().target(place.getLatLng()).zoom(12).build();
+//                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//
+////                            pName = place.getName();
+////                            pAddrss = place.getAddress();
+////                            pPlaceId = place.getId();
+////                            pLat = place.getLatLng().latitude;
+////                            pLong = place.getLatLng().longitude;
+//
+//
+//                        }
+//                    });
+//                }
+//            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+//                Status status = Autocomplete.getStatusFromIntent(data);
+//            } else if (resultCode == RESULT_CANCELED) {
+//                // The user canceled the operation.
+//            }
+//            return;
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }else {
+
+            Toast.makeText(CreateRideActivity.this,"Allow Location Permission", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            mapView.onStart();
+        }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+
+    }
 }
