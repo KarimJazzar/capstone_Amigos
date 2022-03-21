@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Tripeando</string>
+    <string name="google_geo_api_key">AIzaSyCd895IrjOYGcQ7ziysAMepz2r9Hd1kwIM</string>
+
     <string name="login">Log In</string>
     <string name="forgot">Forgot my password</string>
     <string name="divider">|</string>
