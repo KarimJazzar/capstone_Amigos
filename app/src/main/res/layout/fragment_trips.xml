@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/trip_and_ride"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:textAllCaps="true"
             android:layout_marginLeft="20dp"
             android:textSize="33sp"
