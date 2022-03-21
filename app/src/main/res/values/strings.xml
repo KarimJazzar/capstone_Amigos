@@ -31,5 +31,6 @@
     <string name="messages">Messages</string>
     <string name="trip_and_ride">Trips and Rides</string>
     <string name="change_profile_img">Change profile picture</string>
+    <string name="results">Results</string>
     <string name="people_number">0</string>
 </resources>
