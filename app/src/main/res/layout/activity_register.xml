@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="text|textEmailAddress|phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,7 +151,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:password="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,7 +172,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:password="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

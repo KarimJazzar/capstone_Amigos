@@ -21,33 +21,35 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnLogOut;
     FirebaseAuth mAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //btnLogOut = findViewById(R.id.btnLogout);
+        btnLogOut = findViewById(R.id.btnLogout);
         mAuth = FirebaseAuth.getInstance();
 
-        BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
-        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
-        NavigationUI.setupWithNavController(navigation, navController);
 
-        /*
+
         btnLogOut.setOnClickListener(view ->{
             mAuth.signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         });
-        */
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser();
         if (user == null){
-            //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }else{
+            BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
+            NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
+            NavigationUI.setupWithNavController(navigation, navController);
         }
     }
 }

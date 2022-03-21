@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +71,9 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
+    Button btnLogOut;
+    FirebaseAuth mAuth;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView openCreateRide = view.findViewById(R.id.openCreateRideBtn);
@@ -81,5 +87,16 @@ public class SearchFragment extends Fragment {
         });
 
         super.onViewCreated(view, savedInstanceState);
+
+        btnLogOut = view.findViewById(R.id.btnLogout);
+        mAuth = FirebaseAuth.getInstance();
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
     }
 }

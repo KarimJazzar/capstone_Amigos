@@ -29,6 +29,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText etRegEmail;
     TextInputEditText etRegPassword;
+    TextInputEditText etRegPassword2;
+    TextInputEditText etRegFirst;
+    TextInputEditText etRegLast;
+    TextInputEditText etRegNumber;
+
+
     Button backBtutton;
     Button btnRegister;
 
@@ -44,6 +50,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         etRegEmail = findViewById(R.id.registerEmail);
         etRegPassword = findViewById(R.id.registerPassword);
+        etRegPassword2 = findViewById(R.id.registerRepeatPassword);
+        etRegFirst = findViewById(R.id.registerFirstName);
+        etRegLast = findViewById(R.id.registerLastName);
+        etRegNumber = findViewById(R.id.registerPhone);
+
         backBtutton = findViewById(R.id.registerBack);
         btnRegister = findViewById(R.id.btnRegister);
 
@@ -63,6 +74,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void createUser(){
         String email = etRegEmail.getText().toString();
         String password = etRegPassword.getText().toString();
+        String password2 = etRegPassword2.getText().toString();
+
+        String firstName = etRegFirst.getText().toString();
+        String lastName = etRegLast.getText().toString();
+        String number = etRegNumber.getText().toString();
 
         if (TextUtils.isEmpty(email)){
             etRegEmail.setError("Email cannot be empty");
@@ -70,17 +86,24 @@ public class RegisterActivity extends AppCompatActivity {
         }else if (TextUtils.isEmpty(password)){
             etRegPassword.setError("Password cannot be empty");
             etRegPassword.requestFocus();
+        }else if (!password.equals(password2)){
+            etRegPassword.setError("Passwords are not the same");
+            etRegPassword.requestFocus();
         }else{
             mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         String currentuid = task.getResult().getUser().getUid();
-                        Map<String,String> mail = new HashMap<>();
-                        mail.put("email", email);
+                        Map<String,String> details = new HashMap<>();
+                        details.put("email", email);
+                        details.put("number", number);
+                        details.put("first name", firstName);
+                        details.put("last name", lastName);
+
 
                         db.collection("User Info").document(currentuid)
-                                .set(mail)
+                                .set(details)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
