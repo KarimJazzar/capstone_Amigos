@@ -35,7 +35,7 @@ public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_rv_item, parent, false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_message_cell, parent, false);
         return new ViewHolder(item);
     }
 
