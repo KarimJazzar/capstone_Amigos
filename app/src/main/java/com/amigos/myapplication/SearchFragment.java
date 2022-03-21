@@ -71,8 +71,8 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
-    Button btnLogOut;
-    FirebaseAuth mAuth;
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -87,16 +87,5 @@ public class SearchFragment extends Fragment {
         });
 
         super.onViewCreated(view, savedInstanceState);
-
-        btnLogOut = view.findViewById(R.id.btnLogout);
-        mAuth = FirebaseAuth.getInstance();
-
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(getContext(), LoginActivity.class));
-            }
-        });
     }
 }

@@ -1,5 +1,6 @@
 package com.amigos.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -74,12 +75,13 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    FirebaseAuth mAuth;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Map<String,Object> details;
-    EditText firstName, lastName, number;
-    MaterialTextView email;
-    Button updateProf;
+    private Button btnLogOut;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Map<String,Object> details;
+    private EditText firstName, lastName, number;
+    private MaterialTextView email;
+    private Button updateProf;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String userid = user.getUid();
 
+        btnLogOut = view.findViewById(R.id.profileLogout);
         firstName = view.findViewById(R.id.profileFirstName);
         lastName = view.findViewById(R.id.profileLastName);
         email = view.findViewById(R.id.profileEmail);
@@ -133,6 +136,14 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Profile info updated.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
     }
 
     @Override
@@ -141,4 +152,5 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
+
 }

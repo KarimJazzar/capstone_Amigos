@@ -26,13 +26,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/registerBack"
+            android:id="@+id/profileLogout"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/gear"
-            android:contentDescription="@string/back_btn"
+            android:background="@drawable/logout"
+            android:contentDescription="@string/logout"
             android:text="@string/empty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
