@@ -19,6 +19,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="20dp"
             android:textSize="33sp"
+            android:textAllCaps="true"
             android:textColor="@color/brown"
             android:fontFamily="@font/montserrat_bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +64,7 @@
                 <ImageView
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:id="@+id/registerPicture"
+                    android:id="@+id/chatImageRV"
                     android:src="@drawable/picture"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true">

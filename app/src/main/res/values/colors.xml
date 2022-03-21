@@ -10,5 +10,6 @@
     <color name="white_fade">#CCFFFFFF</color>
     <color name="yellow">#D9A048</color>
     <color name="brown">#8C4608</color>
+    <color name="grey">#E4E4E4</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>
