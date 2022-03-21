@@ -60,8 +60,8 @@
                     app:startIconDrawable="@drawable/user"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"
-                    app:startIconContentDescription="@string/login_email"
-                    android:hint="@string/login_email">
+                    app:startIconContentDescription="@string/email"
+                    android:hint="@string/email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginEmail"
@@ -83,8 +83,8 @@
                     app:startIconDrawable="@drawable/lock"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"
-                    app:startIconContentDescription="@string/login_password"
-                    android:hint="@string/login_password">
+                    app:startIconContentDescription="@string/password"
+                    android:hint="@string/password">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLoginPass"
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/yellow"
-                    android:text="@string/login_button" />
+                    android:text="@string/login" />
 
             </LinearLayout>
 
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
-                android:text="@string/login_singup"
+                android:text="@string/singup"
                 android:textSize="12sp" />
 
 

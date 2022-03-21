@@ -18,7 +18,7 @@
             android:text="@string/profile"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
-            android:textSize="33sp"
+            android:textSize="22sp"
             android:textAllCaps="true"
             android:textColor="@color/brown"
             android:fontFamily="@font/montserrat_bold"
@@ -27,8 +27,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registerBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/gear"
@@ -85,10 +85,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
                 android:background="@drawable/input_bottom_border"
                 android:paddingVertical="15dp"
                 android:text="First Name"
-                android:textSize="18sp" />
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/profileLastName"
                 android:layout_width="match_parent"
@@ -96,8 +98,9 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/input_bottom_border"
                 android:paddingVertical="15dp"
+                android:paddingLeft="10dp"
                 android:text="Last Name"
-                android:textSize="18sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/profileEmail"
@@ -106,8 +109,9 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/input_bottom_border"
                 android:paddingVertical="15dp"
+                android:paddingLeft="10dp"
                 android:text="temp@email.com"
-                android:textSize="18sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/profileNumber"
@@ -115,14 +119,16 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_bottom_border"
                 android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
                 android:paddingVertical="15dp"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:text="000 000 0000" />
 
             <Button
                 android:id="@+id/updateProfile"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="Update Profile" />
 
         </LinearLayout>

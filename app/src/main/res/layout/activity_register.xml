@@ -69,6 +69,7 @@
                     android:id="@+id/registerFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
                     android:inputType="textEmailAddress" />
@@ -89,6 +90,7 @@
                     android:id="@+id/registerLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
                     android:inputType="textEmailAddress" />
@@ -109,6 +111,7 @@
                     android:id="@+id/registerEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
                     android:inputType="textEmailAddress" />
@@ -129,6 +132,7 @@
                     android:id="@+id/registerPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
                     android:inputType="text|textEmailAddress|phone" />
@@ -149,6 +153,7 @@
                     android:id="@+id/registerPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
                     android:inputType="textEmailAddress"
@@ -170,6 +175,7 @@
                     android:id="@+id/registerRepeatPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:backgroundTint="@color/transparent"
                     android:fontFamily="@font/montserrat"
                     android:inputType="textEmailAddress"
@@ -181,8 +187,9 @@
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/signup" />
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="100dp"
+                android:text="@string/singup" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/searchFragment" android:title="Trips" android:icon="@drawable/car"/>
-    <item android:id="@+id/tripsFragment" android:title="Your Trips" android:icon="@drawable/resource_case"/>
-    <item android:id="@+id/messagesFragment" android:title="Messages" android:icon="@drawable/message"/>
-    <item android:id="@+id/profileFragment" android:title="Profile" android:icon="@drawable/profile"/>
+    <item android:id="@+id/searchFragment" android:title="@string/trips" android:icon="@drawable/car"/>
+    <item android:id="@+id/tripsFragment" android:title="@string/your_trips" android:icon="@drawable/resource_case"/>
+    <item android:id="@+id/messagesFragment" android:title="@string/messages" android:icon="@drawable/message"/>
+    <item android:id="@+id/profileFragment" android:title="@string/profile" android:icon="@drawable/profile"/>
 </menu>

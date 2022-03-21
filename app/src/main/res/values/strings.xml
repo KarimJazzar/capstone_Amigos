@@ -2,46 +2,36 @@
     <string name="app_name">Tripeando</string>
     <string name="google_geo_api_key">AIzaSyCd895IrjOYGcQ7ziysAMepz2r9Hd1kwIM</string>
 
-    <string name="login">Log In</string>
-    <string name="forgot">Forgot my password</string>
-    <string name="divider">|</string>
-    <string name="signup">Sign Up</string>
-    <string name="email">E-mail</string>
-    <string name="password">Password</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="repeat_password">Repeat Password</string>
-    <string name="password_reset">Password Reset</string>
-    <string name="password_reset_copy">We will send you and email with a link to reset your password</string>
-    <string name="email_sent">Email Sent</string>
-    <string name="email_sent_copy">Follow the instructions sent to your email. If you can\'t find the email, please check in your spam.</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="phone">Phone</string>
-    <string name="profile_picture">Profile Picture</string>
-    <string name="back_btn">Back Button</string>
-    <string name="empty"></string>
-    <string name="find_trip_headline">Where is your next adventure?</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
-    <string name="flexible_dates">Flexible Dates</string>
-    <string name="find_trip">Find a trip</string>
-    <string name="create_ride">Create Ride</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="date_holder">00/00/0000</string>
-    <string name="ride_hour">00:00</string>
+    <!-- Navigation Strings Values -->
     <string name="profile">Profile</string>
     <string name="messages">Messages</string>
+    <string name="trips">Trips</string>
+    <string name="your_trips">Your Trips</string>
     <string name="trip_and_ride">Trips and Rides</string>
     <string name="change_profile_img">Change profile picture</string>
     <string name="results">Results</string>
-    <string name="people_number">0</string>
+
     <!-- Login Strings Values -->
     <string name="login_email">E-mail</string>
     <string name="login_password">Password</string>
-    <string name="login_button">Log In</string>
     <string name="login_forgot">Forgot my password</string>
     <string name="login_divider">|</string>
-    <string name="login_singup">Sign Up</string>
+
+    <!-- Search Strings Values -->
+    <string name="find_trip_headline">Where is your next adventure?</string>
+    <string name="flexible_dates">Flexible Dates</string>
+    <string name="find_trip">Find a trip</string>
+
+    <!-- Create Ride Strings Values -->
+    <string name="create_ride_hour">00:00 AM</string>
+
+    <!-- Forgot Strings Values -->
+    <string name="forgot_reset_headline">Password Reset</string>
+    <string name="forgot_reset_copy">We will send you and email with a link to reset your password</string>
+    <string name="forgot_button">Reset Password</string>
+    <string name="forgot_email_sent">Email sent</string>
+    <string name="forgot_sent_copy">Follow the instructions sent to your email. If you can\'t find the email, please check in your spam.</string>
+
     <!-- Booking Strings Values -->
     <string name="booking_driver_name">Trip with Katy</string>
     <string name="booking_departure_time">Departure at 11:45 am</string>
@@ -51,4 +41,25 @@
     <string name="booking_smoke">No smoking</string>
     <string name="booking_pets">Pet friendly</string>
     <string name="booking_button">Book Trip</string>
+
+    <!-- General Strings Values -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone">Phone</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="login">Log In</string>
+    <string name="logout">Log out</string>
+    <string name="singup">Sign Up</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="create_ride">Create Ride</string>
+    <string name="back_btn">Back Button</string>
+    <string name="people_number">0</string>
+    <string name="date_holder">00/00/0000</string>
+    <string name="time_holder">00:00 AM</string>
+    <string name="empty"></string>
+
 </resources>

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="@string/email_sent"
+            android:text="@string/forgot_email_sent"
             android:textColor="@color/brown"
             android:textSize="22sp" />
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/email_sent_copy"
+            android:text="@string/forgot_sent_copy"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:text="@string/password_reset"
+            android:text="@string/forgot_reset_headline"
             android:textColor="@color/brown"
             android:textSize="22sp" />
 
@@ -81,7 +81,7 @@
             android:layout_marginTop="25dp"
             android:textSize="18sp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/password_reset_copy" />
+            android:text="@string/forgot_reset_copy" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -98,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/transparent"
+                android:textSize="12sp"
                 android:fontFamily="@font/montserrat"
                 android:inputType="textEmailAddress" />
 
@@ -108,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="@string/reset_password" />
+            android:text="@string/forgot_button" />
 
     </LinearLayout>
 
