@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -20,6 +21,8 @@ import java.math.BigDecimal;
 public class BookingActivity extends AppCompatActivity {
 
     private Button btnBook;
+    private TextView amountTextView;
+    private double testAmount = 78.60;
     private int PAYPAL_REQ_CODE = 12;
     private static PayPalConfiguration paypalConfig = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
@@ -31,12 +34,16 @@ public class BookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking);
 
         btnBook = findViewById(R.id.btnBook);
+        amountTextView = findViewById(R.id.textView18);
 
+        testAmount = Double.parseDouble(amountTextView.getText().toString());
+
+        //Intent to start the paypal service and configure basic settings
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
         startService(intent);
 
-
+        //Onclick method to run the method
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,20 +52,21 @@ public class BookingActivity extends AppCompatActivity {
         });
     }
 
+    //Method to open the payment screen
     private void PaypalpaymentsMethod() {
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(50), "CAD"
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(testAmount), "CAD"
                 , "Test Payment", PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
 
+        //Starts next screen and receives back the result
         startActivityForResult(intent, PAYPAL_REQ_CODE);
-        //someActivityResultLauncher.launch(intent);
-
     }
 
 
+    //Method to receive the payment status from the payment screen and display the relative toast
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -68,36 +76,17 @@ public class BookingActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 Toast.makeText(this, "Payment Made Successfully!", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Payment Is Unsuccessful", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Payment Unsuccessful, \n Please Try Again", Toast.LENGTH_LONG).show();
             }
         }
 
     }
 
+    //Destroys the paypal service after finishing the task
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
         super.onDestroy();
     }
-
-
-    //Receiver for intent from next activity to get the payment status and change it in current activity
-    /*ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    int status = 1;
-                    if (status == 1){
-
-                        if (status == Activity.RESULT_OK){
-                            Toast.makeText(MainActivity.this, "Payment Made Successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MainActivity.this, "Payment Is Unsuccessful", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                }
-            });*/
 
 }

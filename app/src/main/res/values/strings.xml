@@ -38,7 +38,8 @@
     <string name="booking_driver_name">Trip with Katy</string>
     <string name="booking_departure_time">Departure at 11:45 am</string>
     <string name="booking_seats">3 open seats</string>
-    <string name="booking_price">CAD$30</string>
+    <string name="booking_currency">CAD$</string>
+    <string name="booking_price">30</string>
     <string name="booking_condition">Conditions</string>
     <string name="booking_smoke">No smoking</string>
     <string name="booking_pets">Pet friendly</string>
