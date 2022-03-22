@@ -1,6 +1,9 @@
 package com.amigos.myapplication;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +29,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +92,8 @@ public class ProfileFragment extends Fragment {
     private EditText firstName, lastName, number;
     private MaterialTextView email;
     private Button updateProf;
+    private ImageView profPic;
+    private FirebaseStorage storage;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -89,6 +101,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String userid = user.getUid();
+        storage = FirebaseStorage.getInstance();
 
         btnLogOut = view.findViewById(R.id.profileLogout);
         firstName = view.findViewById(R.id.profileFirstName);
@@ -96,6 +109,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.profileEmail);
         number = view.findViewById(R.id.profileNumber);
         updateProf = view.findViewById(R.id.updateProfile);
+        profPic = view.findViewById(R.id.profileChatImageRV);
 
         DocumentReference docRef = db.collection("User Info").document(userid);
         details = new HashMap<>();
@@ -109,6 +123,27 @@ public class ProfileFragment extends Fragment {
                     String lastN = (String) details.get("last name");
                     String mail = (String) details.get("email");
                     String numb = (String) details.get("number");
+                    String profilePicId = (String) details.get("profile picture");
+
+                    // Create a storage reference from our app
+                    StorageReference storageRef = storage.getReference();
+
+                    StorageReference pathReference = storageRef.child("images/" + profilePicId);
+                    final File localFile;
+                    try {
+                        localFile = File.createTempFile(profilePicId,"jpg");
+                        pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                profPic.setImageBitmap(bitmap);
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                     firstName.setText(firstN);
                     lastName.setText(lastN);
                     email.setText(mail);

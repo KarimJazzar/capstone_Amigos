@@ -64,7 +64,7 @@
                 <ImageView
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:id="@+id/chatImageRV"
+                    android:id="@+id/profileChatImageRV"
                     android:src="@drawable/picture"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true">

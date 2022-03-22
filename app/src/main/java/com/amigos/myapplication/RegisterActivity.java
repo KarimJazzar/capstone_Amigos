@@ -1,11 +1,15 @@
 package com.amigos.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,15 +19,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -34,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText etRegLast;
     TextInputEditText etRegNumber;
 
+    ImageView profPic;
 
     Button backBtutton;
     Button btnRegister;
@@ -43,10 +57,17 @@ public class RegisterActivity extends AppCompatActivity {
     //DatabaseReference documentReference;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    Uri imageUri;
+    StorageReference storageReference;
+    private FirebaseStorage storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         etRegEmail = findViewById(R.id.registerEmail);
         etRegPassword = findViewById(R.id.registerPassword);
@@ -57,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         backBtutton = findViewById(R.id.registerBack);
         btnRegister = findViewById(R.id.btnRegister);
+        profPic = findViewById(R.id.chatImageRV);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -69,6 +91,57 @@ public class RegisterActivity extends AppCompatActivity {
             this.finish();
             //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         });
+
+        profPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+            imageUri = data.getData();
+            profPic.setImageURI(imageUri);
+            //uploadImage();
+        }
+    }
+
+    private void uploadImage(String randomName) {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setTitle("Profile picture being uploaded");
+        pd.show();
+
+
+        StorageReference picsRef = storageReference.child("images/" + randomName);
+        picsRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                pd.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                pd.setMessage("Percentage: " + (int) progressPercent + "%");
+            }
+        });
+
     }
 
     private void createUser(){
@@ -100,6 +173,9 @@ public class RegisterActivity extends AppCompatActivity {
                         details.put("number", number);
                         details.put("first name", firstName);
                         details.put("last name", lastName);
+                        final String randomName = UUID.randomUUID().toString();
+                        details.put("profile picture", randomName);
+                        uploadImage(randomName);
 
 
                         db.collection("User Info").document(currentuid)
