@@ -113,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri = data.getData();
             profPic.setImageURI(imageUri);
-            //uploadImage();
         }
     }
 
