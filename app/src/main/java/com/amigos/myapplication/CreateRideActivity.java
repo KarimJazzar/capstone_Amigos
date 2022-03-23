@@ -25,14 +25,22 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class CreateRideActivity extends AppCompatActivity  implements OnMapReadyCallback{
 
     MapView mapView;
+    private Button createButton;
     private Button backBtutton;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleMap googleMap;
@@ -40,12 +48,19 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     private final String TAG = this.getClass().getName();
 
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ride);
 
+        createButton = findViewById(R.id.btnCreateRide);
         backBtutton = findViewById(R.id.createRideBack);
+
+        createButton.setOnClickListener(view ->{
+            
+        });
 
         backBtutton.setOnClickListener(view ->{
             this.finish();
