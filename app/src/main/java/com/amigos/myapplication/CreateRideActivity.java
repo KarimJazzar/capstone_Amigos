@@ -49,7 +49,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
 
         backBtutton.setOnClickListener(view ->{
             this.finish();
-            //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         });
 
         initialize();
