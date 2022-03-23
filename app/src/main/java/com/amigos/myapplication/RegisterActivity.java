@@ -60,11 +60,13 @@ public class RegisterActivity extends AppCompatActivity {
     Uri imageUri;
     StorageReference storageReference;
     private FirebaseStorage storage;
+    Boolean check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        check = false;
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -113,6 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri = data.getData();
             profPic.setImageURI(imageUri);
+            check = true;
         }
     }
 
@@ -161,6 +164,8 @@ public class RegisterActivity extends AppCompatActivity {
         }else if (!password.equals(password2)){
             etRegPassword.setError("Passwords are not the same");
             etRegPassword.requestFocus();
+        }else if(!check){
+            Toast.makeText(this, "Please upload a profile picture", Toast.LENGTH_SHORT).show();
         }else{
             mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
