@@ -93,25 +93,27 @@
                 android:id="@+id/tripFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_full_border"
-                android:layout_weight="1"
-                android:gravity="center"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_full_border"
+                android:gravity="center"
+                android:hint="@string/date_holder"
+                android:inputType="date"
                 android:paddingVertical="15dp"
-                android:textSize="12sp"
-                android:hint="@string/date_holder" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/tripTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_full_border"
-                android:layout_weight="1"
-                android:gravity="center"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_full_border"
+                android:gravity="center"
+                android:hint="@string/time_holder"
+                android:inputType="time"
                 android:paddingVertical="15dp"
-                android:textSize="12sp"
-                android:hint="@string/time_holder" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
