@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -32,6 +33,7 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 public class CreateRideActivity extends AppCompatActivity  implements OnMapReadyCallback{
 
     MapView mapView;
+    private Button backBtutton;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleMap googleMap;
     private static int AUTOCOMPLETE_REQUEST_CODE = 100;
@@ -42,6 +44,13 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ride);
+
+        backBtutton = findViewById(R.id.createRideBack);
+
+        backBtutton.setOnClickListener(view ->{
+            this.finish();
+            //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        });
 
         initialize();
         checkLocationPermission();
