@@ -19,7 +19,7 @@
         <entry key="app/src/main/res/layout/activity_create_ride.xml" value="0.29863013698630136" />
         <entry key="app/src/main/res/layout/activity_forgot.xml" value="0.3706893920898438" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3359765468499599" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25275816306089743" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/chat_rv_item.xml" value="0.37604166666666666" />
@@ -30,7 +30,7 @@
         <entry key="app/src/main/res/layout/fragment_trips.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/row_message_cell.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/row_result_cell.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/row_trips_rides_cell.xml" value="0.1828774062816616" />
+        <entry key="app/src/main/res/layout/row_trips_rides_cell.xml" value="0.44198232571525536" />
         <entry key="app/src/main/res/layout/trips_ride_rv_item.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.240625" />
       </map>
