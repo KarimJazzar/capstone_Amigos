@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,14 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
     Button backBtutton;
     Button btnRegister;
 
-    FirebaseAuth mAuth;
-    //FirebaseDatabase database = FirebaseDatabase.getInstance();
-    //DatabaseReference documentReference;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     Uri imageUri;
-    StorageReference storageReference;
-    private FirebaseStorage storage;
     Boolean check;
 
     @Override
@@ -61,9 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         check = false;
-
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
 
         etRegEmail = findViewById(R.id.registerEmail);
         etRegPassword = findViewById(R.id.registerPassword);
@@ -75,8 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
         backBtutton = findViewById(R.id.registerBack);
         btnRegister = findViewById(R.id.btnRegister);
         profPic = findViewById(R.id.chatImageRV);
-
-        mAuth = FirebaseAuth.getInstance();
 
         btnRegister.setOnClickListener(view ->{
             createUser();
@@ -119,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
         pd.show();
 
 
-        StorageReference picsRef = storageReference.child("images/" + randomName);
+        StorageReference picsRef = FirebaseHelper.instance.getStorageRef().child("images/" + randomName);
         picsRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -149,19 +139,19 @@ public class RegisterActivity extends AppCompatActivity {
         String lastName = etRegLast.getText().toString();
         String number = etRegNumber.getText().toString();
 
-        if (TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             etRegEmail.setError("Email cannot be empty");
             etRegEmail.requestFocus();
-        }else if (TextUtils.isEmpty(password)){
+        } else if (TextUtils.isEmpty(password)) {
             etRegPassword.setError("Password cannot be empty");
             etRegPassword.requestFocus();
-        }else if (!password.equals(password2)){
+        } else if (!password.equals(password2)) {
             etRegPassword.setError("Passwords are not the same");
             etRegPassword.requestFocus();
-        }else if(!check){
+         }else if (!check) {
             Toast.makeText(this, "Please upload a profile picture", Toast.LENGTH_SHORT).show();
         }else{
-            mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            FirebaseHelper.instance.getAuth().createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
@@ -176,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                         uploadImage(randomName);
 
 
-                        db.collection("User Info").document(currentuid)
+                        FirebaseHelper.instance.getDB().collection("User Info").document(currentuid)
                                 .set(details)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

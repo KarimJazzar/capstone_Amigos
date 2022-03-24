@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,8 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvResetPassword;
     Button btnLogin;
 
-    FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         tvRegisterHere = findViewById(R.id.tvRegisterHere);
         tvResetPassword = findViewById(R.id.tvForgotPassword);
         btnLogin = findViewById(R.id.btnLogin);
-
-        mAuth = FirebaseAuth.getInstance();
 
         btnLogin.setOnClickListener(view -> {
             loginUser();
@@ -81,11 +78,11 @@ public class LoginActivity extends AppCompatActivity {
             etLoginPassword.setError("Password cannot be empty");
             etLoginPassword.requestFocus();
         }else{
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            FirebaseHelper.instance.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        getUserData(task.getResult().getUser().getUid());
+                        FirebaseHelper.instance.getUserData(task.getResult().getUser().getUid());
 
                         Toast.makeText(LoginActivity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -96,43 +93,4 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
-
-    private void getUserData(String userid) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("User Info").document(userid);
-
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    Map<String,Object> details = document.getData();
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-
-                    UserHelper.user.setFirstName((String) details.get("first name"));
-                    UserHelper.user.setLastName((String) details.get("last name"));
-                    UserHelper.user.setEmail((String) details.get("email"));
-                    UserHelper.user.setPhoneNuber((String) details.get("number"));
-
-
-                    String profilePicId = (String) details.get("profile picture");
-                    StorageReference pathReference = storageRef.child("images/" + profilePicId);
-
-                    final File localFile;
-                    try {
-                        localFile = File.createTempFile(profilePicId,"jpg");
-                        pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                UserHelper.user.setProfilePicture(BitmapFactory.decodeFile(localFile.getAbsolutePath()));
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
 }

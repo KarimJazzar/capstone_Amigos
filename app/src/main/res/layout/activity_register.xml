@@ -35,14 +35,15 @@
                 android:innerRadius="0dp"
                 android:shape="ring"
                 android:thicknessRatio="1.9">
+
                 <ImageView
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
                     android:id="@+id/chatImageRV"
-                    android:src="@drawable/picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true">
-                </ImageView>
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/picture"></ImageView>
             </androidx.cardview.widget.CardView>
 
 

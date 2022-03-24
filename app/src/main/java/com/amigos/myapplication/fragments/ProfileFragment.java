@@ -126,6 +126,7 @@ public class ProfileFragment extends Fragment {
         email.setText(UserHelper.user.getEmail());
         number.setText(UserHelper.user.getPhoneNuber());
         profPic.setImageBitmap(UserHelper.user.getProfilePicture());
+        profPic.setImageURI(imageUri);
 
         /*
         DocumentReference docRef = db.collection("User Info").document(userid);
