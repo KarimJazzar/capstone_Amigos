@@ -59,6 +59,17 @@
     <string name="create_ride">Create Ride</string>
     <string name="back_btn">Back Button</string>
     <string name="people_number">0</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="price">Price:</string>
+    <string name="seats">Seats:</string>
+    <string name="passengers">Passengers:</string>
+    <string name="conditions">Conditions:</string>
+    <string name="no_pets">No Pets</string>
+    <string name="no_smoke">No Smoking</string>
+    <string name="no_eat">No Eating</string>
+    <string name="no_drink">No Drinking</string>
+    <string name="price_value">$0.00</string>
     <string name="date_holder">00/00/0000</string>
     <string name="time_holder">00:00 AM</string>
     <string name="empty"></string>

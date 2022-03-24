@@ -11,11 +11,18 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Geopoint;
+import com.amigos.myapplication.models.User;
+import com.amigos.myapplication.models.UserMinimun;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -29,7 +36,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CreateRideActivity extends AppCompatActivity  implements OnMapReadyCallback{
@@ -37,6 +46,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     MapView mapView;
     private Button createButton;
     private Button backBtutton;
+    private EditText inputFrom, inputTo, inputDate, inputTime, inputPrice, inputSeats;
+    private CheckBox boxPet, boxSmoke, boxDrink, boxEat;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleMap googleMap;
     private static int AUTOCOMPLETE_REQUEST_CODE = 100;
@@ -53,6 +64,18 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         createButton = findViewById(R.id.btnCreateRide);
         backBtutton = findViewById(R.id.createRideBack);
 
+        inputFrom = findViewById(R.id.createFrom);
+        inputTo = findViewById(R.id.createTo);
+        inputDate = findViewById(R.id.createDate);
+        inputTime = findViewById(R.id.createTime);
+        inputPrice = findViewById(R.id.createPrice);
+        inputSeats = findViewById(R.id.createSeats);
+
+        boxPet = findViewById(R.id.createSelectPet);
+        boxSmoke = findViewById(R.id.createSelectSmoke);
+        boxDrink = findViewById(R.id.createSelectDrink);
+        boxEat = findViewById(R.id.createSelectEat);
+
         createButton.setOnClickListener(view ->{
             Map<String,Object> details = new HashMap<>();
             details.put("from", "La Romana");
@@ -68,7 +91,39 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             details.put("price", 0.00);
             details.put("date", 0.00);
 
-            db.collection("Trips").document()
+            UserMinimun driver = new UserMinimun();
+            driver.setId(FirebaseHelper.instance.getUserId());
+            driver.setName(UserHelper.user.getFullName());
+            driver.setPhone(UserHelper.user.getPhoneNuber());
+            driver.setAvatar("");
+
+            details.put("driver", driver);
+
+            List<UserMinimun> passengers = new ArrayList<>();
+            details.put("passengers", passengers);
+
+            List<String> conditions = new ArrayList<>();
+
+            if(boxPet.isSelected()) {
+                conditions.add("No Pets");
+            }
+
+            if(boxSmoke.isSelected()) {
+                conditions.add("No Smoking");
+            }
+
+            if(boxDrink.isSelected()) {
+                conditions.add("No Drinking");
+            }
+
+            if(boxEat.isSelected()) {
+                conditions.add("No Eating");
+            }
+
+            details.put("restrictions", passengers);
+
+
+            FirebaseHelper.instance.getDB().collection("Trips").document()
                     .set(details)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

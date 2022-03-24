@@ -165,7 +165,6 @@ public class RegisterActivity extends AppCompatActivity {
                         details.put("profile picture", randomName);
                         uploadImage(randomName);
 
-
                         FirebaseHelper.instance.getDB().collection("User Info").document(currentuid)
                                 .set(details)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
