@@ -1,11 +1,13 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.models;
+
+import android.graphics.Bitmap;
 
 public class User {
     private String firstName;
     private String lastName;
     private String phoneNuber;
     private String email;
-    private String profilePicture;
+    private Bitmap profilePicture;
 
     public String getFirstName() {
         return firstName;
@@ -39,11 +41,11 @@ public class User {
         this.email = email;
     }
 
-    public String getProfilePicture() {
+    public Bitmap getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(String profilePicture) {
+    public void setProfilePicture(Bitmap profilePicture) {
         this.profilePicture = profilePicture;
     }
 }

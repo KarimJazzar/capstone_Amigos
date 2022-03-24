@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capstone_Amigos">
         <activity
-            android:name=".BookingActivity"
+            android:name=".activities.BookingActivity"
             android:exported="false" />
 
         <meta-data
@@ -22,22 +22,22 @@
             android:value="@string/google_geo_api_key" />
 
         <activity
-            android:name=".ResultActivity"
+            android:name=".activities.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateRideActivity"
+            android:name=".activities.CreateRideActivity"
             android:exported="false" />
         <activity
-            android:name=".ForgotActivity"
+            android:name=".activities.ForgotActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

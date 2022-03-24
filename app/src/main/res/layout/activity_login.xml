@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="0dp"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -60,6 +60,7 @@
                     app:startIconDrawable="@drawable/user"
                     app:startIconTint="@color/yellow"
                     app:boxStrokeWidth="0dp"
+                    app:hintTextColor="@color/black"
                     app:startIconContentDescription="@string/email"
                     android:hint="@string/email">
 
@@ -68,6 +69,7 @@
                         android:fontFamily="@font/montserrat"
                         android:backgroundTint="@color/transparent"
                         android:textSize="12sp"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"

@@ -1,4 +1,4 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.amigos.myapplication.R;
+import com.amigos.myapplication.activities.LoginActivity;
+import com.amigos.myapplication.helpers.UserHelper;
+import com.amigos.myapplication.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -118,6 +121,13 @@ public class ProfileFragment extends Fragment {
         updateProf = view.findViewById(R.id.updateProfile);
         profPic = view.findViewById(R.id.profileChatImageRV);
 
+        firstName.setText(UserHelper.user.getFirstName());
+        lastName.setText(UserHelper.user.getLastName());
+        email.setText(UserHelper.user.getEmail());
+        number.setText(UserHelper.user.getPhoneNuber());
+        profPic.setImageBitmap(UserHelper.user.getProfilePicture());
+
+        /*
         DocumentReference docRef = db.collection("User Info").document(userid);
         details = new HashMap<>();
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -159,6 +169,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+        */
 
         updateProf.setOnClickListener(new View.OnClickListener() {
             @Override

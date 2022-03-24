@@ -1,4 +1,4 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.amigos.myapplication.R;
+import com.amigos.myapplication.adapters.MessageRVAadapter;
+import com.amigos.myapplication.models.Message;
 
 import java.util.ArrayList;
 import java.util.List;

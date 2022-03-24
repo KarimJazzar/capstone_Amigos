@@ -1,4 +1,4 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amigos.myapplication.configurations.PaypalClientIDConfigClass;
+import com.amigos.myapplication.R;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;

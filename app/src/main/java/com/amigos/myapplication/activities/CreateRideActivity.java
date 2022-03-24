@@ -1,7 +1,6 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -9,14 +8,14 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Status;
+import com.amigos.myapplication.R;
+import com.amigos.myapplication.models.Geopoint;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -28,14 +27,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class CreateRideActivity extends AppCompatActivity  implements OnMapReadyCallback{
 
@@ -59,7 +54,34 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         backBtutton = findViewById(R.id.createRideBack);
 
         createButton.setOnClickListener(view ->{
-            
+            Map<String,Object> details = new HashMap<>();
+            details.put("from", "La Romana");
+            Geopoint fromGP = new Geopoint();
+            fromGP.setCoordinates(1.0,1.30);
+            //Map<String,String> fromGP = new HashMap<>();
+            details.put("from point", fromGP);
+            details.put("to", "Santo Domingo");
+            Geopoint toGP = new Geopoint();
+            toGP.setCoordinates(0.0,0.4);
+            details.put("to point", toGP);
+            details.put("seats", 4);
+            details.put("price", 0.00);
+            details.put("date", 0.00);
+
+            db.collection("Trips").document()
+                    .set(details)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //Log.w(TAG, "Error writing document", e);
+                        }
+                    });
         });
 
         backBtutton.setOnClickListener(view ->{

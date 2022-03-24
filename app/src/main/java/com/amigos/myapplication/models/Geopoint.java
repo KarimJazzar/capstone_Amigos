@@ -1,4 +1,4 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.models;
 
 public class Geopoint {
     private double latitude;

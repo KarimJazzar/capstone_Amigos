@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.amigos.myapplication.SearchFragment"
+        android:name="com.amigos.myapplication.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/tripsFragment"
-        android:name="com.amigos.myapplication.TripsFragment"
+        android:name="com.amigos.myapplication.fragments.TripsFragment"
         android:label="fragment_trips"
         tools:layout="@layout/fragment_trips" />
     <fragment
         android:id="@+id/messagesFragment"
-        android:name="com.amigos.myapplication.MessagesFragment"
+        android:name="com.amigos.myapplication.fragments.MessagesFragment"
         android:label="fragment_messages"
         tools:layout="@layout/fragment_messages" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.amigos.myapplication.ProfileFragment"
+        android:name="com.amigos.myapplication.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

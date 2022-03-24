@@ -1,9 +1,11 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.amigos.myapplication.R;
 
 public class ForgotActivity extends AppCompatActivity {
 

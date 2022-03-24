@@ -1,4 +1,4 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.configurations;
 
 public class PaypalClientIDConfigClass {
     //PayPal Sandbox ClientID

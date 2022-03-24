@@ -5,7 +5,7 @@
     android:id="@+id/tripsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TripsFragment">
+    tools:context=".fragments.TripsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

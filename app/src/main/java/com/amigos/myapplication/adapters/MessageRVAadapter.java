@@ -1,4 +1,4 @@
-package com.amigos.myapplication;
+package com.amigos.myapplication.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.amigos.myapplication.models.Message;
+import com.amigos.myapplication.R;
 
 public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.ViewHolder> {
     public static Message taskSelected;
