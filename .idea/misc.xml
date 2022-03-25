@@ -18,7 +18,7 @@
         <entry key="app/src/main/res/drawable/user.xml" value="0.2845" />
         <entry key="app/src/main/res/font/montserrat.xml" value="0.3828125" />
         <entry key="app/src/main/res/layout/activity_booking.xml" value="0.30290456692619283" />
-        <entry key="app/src/main/res/layout/activity_create_ride.xml" value="0.35435523464255136" />
+        <entry key="app/src/main/res/layout/activity_create_ride.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_forgot.xml" value="0.3706893920898438" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3901587033220072" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25275816306089743" />

@@ -84,30 +84,51 @@
                     android:paddingHorizontal="50dp"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/createFrom"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_bottom_border"
-                        android:hint="@string/from"
-                        android:paddingVertical="15dp"
-                        android:paddingLeft="10dp"
-                        android:singleLine="true"
-                        android:textColorHint="@color/grey"
-                        android:textSize="12sp" />
+                        app:startIconTint="@color/yellow"
+                        app:boxStrokeWidth="0dp"
+                        app:hintTextColor="@color/black"
+                        app:startIconContentDescription="@string/from"
+                        android:hint="@string/from">
 
-                    <EditText
-                        android:id="@+id/createTo"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createFrom"
+                            android:fontFamily="@font/montserrat"
+                            android:backgroundTint="@color/transparent"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/input_bottom_border"
-                        android:hint="@string/to"
-                        android:paddingVertical="15dp"
-                        android:paddingLeft="10dp"
-                        android:singleLine="true"
-                        android:textColorHint="@color/grey"
-                        android:textSize="12sp" />
+                        app:startIconTint="@color/yellow"
+                        app:boxStrokeWidth="0dp"
+                        android:layout_marginTop="5dp"
+                        app:hintTextColor="@color/black"
+                        app:startIconContentDescription="@string/to"
+                        android:hint="@string/to">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createTo"
+                            android:fontFamily="@font/montserrat"
+                            android:backgroundTint="@color/transparent"
+                            android:textSize="12sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -139,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/createDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -147,7 +168,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/input_full_border"
                             android:gravity="center"
-                            android:hint="@string/date_holder"
+                            android:text="@string/date_holder"
                             android:inputType="date"
                             android:paddingVertical="15dp"
                             android:textColorHint="@color/grey"

@@ -12,12 +12,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Geopoint;
@@ -46,7 +49,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     MapView mapView;
     private Button createButton;
     private Button backBtutton;
-    private EditText inputFrom, inputTo, inputDate, inputTime, inputPrice, inputSeats;
+    private TextView inputDate;
+    private EditText inputFrom, inputTo, inputTime, inputPrice, inputSeats;
     private CheckBox boxPet, boxSmoke, boxDrink, boxEat;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleMap googleMap;
@@ -75,6 +79,13 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         boxSmoke = findViewById(R.id.createSelectSmoke);
         boxDrink = findViewById(R.id.createSelectDrink);
         boxEat = findViewById(R.id.createSelectEat);
+
+        inputDate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                DateHelper.selectDate(inputDate,CreateRideActivity.this);
+            }
+        });
 
         createButton.setOnClickListener(view ->{
             Map<String,Object> details = new HashMap<>();
