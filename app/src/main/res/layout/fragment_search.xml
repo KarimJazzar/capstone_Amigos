@@ -54,7 +54,6 @@
             app:layout_constraintTop_toBottomOf="@+id/searchHead">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -63,35 +62,57 @@
                 android:textColor="@color/brown"
                 android:textSize="22sp" />
 
-            <EditText
-                android:id="@+id/searchFrom"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_bottom_border"
-                android:hint="@string/from"
-                android:paddingVertical="15dp"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:textColorHint="@color/grey"
-                android:textSize="12sp" />
+                app:startIconTint="@color/yellow"
+                app:boxStrokeWidth="0dp"
+                app:hintTextColor="@color/black"
+                app:startIconContentDescription="@string/from"
+                android:hint="@string/from">
 
-            <EditText
-                android:id="@+id/searchTo"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchFrom"
+                    android:fontFamily="@font/montserrat"
+                    android:backgroundTint="@color/transparent"
+                    android:textSize="12sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/input_bottom_border"
-                android:hint="@string/to"
-                android:paddingVertical="15dp"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                android:textColorHint="@color/grey"
-                android:textSize="12sp" />
+                app:startIconTint="@color/yellow"
+                app:boxStrokeWidth="0dp"
+                app:hintTextColor="@color/black"
+                app:startIconContentDescription="@string/to"
+                android:hint="@string/to">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchTo"
+                    android:fontFamily="@font/montserrat"
+                    android:backgroundTint="@color/transparent"
+                    android:textSize="12sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -100,7 +121,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -109,10 +130,10 @@
                         android:textColor="@color/brown" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="0.55"
+                        android:layout_weight="1"
                         android:fontFamily="@font/montserrat_bold"
                         android:text="@string/passengers"
                         android:textColor="@color/brown" />
@@ -125,18 +146,18 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/searchDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/input_full_border"
                     android:gravity="center"
                     android:hint="@string/date_holder"
-                    android:inputType="numberDecimal"
+                    android:inputType="date"
                     android:paddingVertical="15dp"
-                    android:textColorHint="@color/grey"
+                    android:textColor="@color/black"
                     android:textSize="12sp" />
 
                 <LinearLayout
@@ -155,29 +176,32 @@
                         android:layout_weight="0.2"
                         android:src="@drawable/less" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="10dp"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/input_full_border"
-                        android:hint="@string/people_number"
-                        android:textColorHint="@color/grey"
-                        app:boxStrokeWidth="0dp"
-                        android:layout_weight="1"
-                        app:startIconContentDescription="@string/people_number"
-                        app:startIconDrawable="@drawable/user"
-                        app:startIconTint="@color/yellow">
+                        android:paddingVertical="15dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="5"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/searchPassengers"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/transparent"
-                            android:fontFamily="@font/montserrat"
-                            android:inputType="textEmailAddress" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/user"
+                            android:scaleType="fitCenter" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/grey"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/people_number"/>
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/searchMoreBtn"

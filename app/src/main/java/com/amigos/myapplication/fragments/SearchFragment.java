@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.CreateRideActivity;
+import com.amigos.myapplication.helpers.DateHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,11 +73,17 @@ public class SearchFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView openCreateRide = view.findViewById(R.id.openCreateRideBtn);
+        TextView dateTV = view.findViewById(R.id.searchDate);
+
+        dateTV.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                DateHelper.selectDate(dateTV,getContext());
+            }
+        });
 
         openCreateRide.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
