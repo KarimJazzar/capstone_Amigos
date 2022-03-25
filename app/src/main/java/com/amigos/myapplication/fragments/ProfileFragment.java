@@ -47,6 +47,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import im.crisp.client.ChatActivity;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileFragment#newInstance} factory method to
@@ -100,7 +102,7 @@ public class ProfileFragment extends Fragment {
     private Map<String,Object> details;
     private EditText firstName, lastName, number;
     private MaterialTextView email;
-    private Button updateProf;
+    private Button updateProf, btmHelp;
     private ImageView profPic;
     private FirebaseStorage storage;
     private StorageReference storageRef;
@@ -120,6 +122,7 @@ public class ProfileFragment extends Fragment {
         number = view.findViewById(R.id.profileNumber);
         updateProf = view.findViewById(R.id.updateProfile);
         profPic = view.findViewById(R.id.profileChatImageRV);
+        btmHelp = view.findViewById(R.id.btnHelp);
 
         firstName.setText(UserHelper.user.getFirstName());
         lastName.setText(UserHelper.user.getLastName());
@@ -212,6 +215,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectImage();
+            }
+        });
+
+        btmHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent to open the customer service chat activity
+                Intent crispIntent = new Intent(getView().getContext(), ChatActivity.class);
+                startActivity(crispIntent);
             }
         });
     }
