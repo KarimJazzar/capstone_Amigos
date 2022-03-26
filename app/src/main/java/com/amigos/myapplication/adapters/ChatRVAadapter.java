@@ -12,26 +12,28 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Message;
 import com.amigos.myapplication.R;
 
-public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.ViewHolder> {
-    public static Message taskSelected;
+public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder> {
+    public static Chat chatSelected;
     private OnItemClickListener listener;
 
-    public MessageRVAadapter() {
+    public ChatRVAadapter() {
         super(DIFF_CALLBACK);
     }
 
-    private static final DiffUtil.ItemCallback<Message> DIFF_CALLBACK = new DiffUtil.ItemCallback<Message>() {
+    private static final DiffUtil.ItemCallback<Chat> DIFF_CALLBACK = new DiffUtil.ItemCallback<Chat>() {
         @Override
-        public boolean areItemsTheSame(Message oldItem, Message newItem) {
-            return oldItem.getId() == newItem.getId();
+        public boolean areItemsTheSame(Chat oldItem, Chat newItem) {
+            return oldItem.getDriver() == newItem.getDriver();
         }
 
         @Override
-        public boolean areContentsTheSame(Message oldItem, Message newItem) {
-            return oldItem.getDriverName().equals(newItem.getDriverName());
+        public boolean areContentsTheSame(Chat oldItem, Chat newItem) {
+            return oldItem.getDriver().equals(newItem.getDriver());
         }
     };
 
@@ -44,13 +46,18 @@ public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Message model = getTaskAt(position);
-        holder.nameTV.setText(model.getDriverName());
-        holder.directionTV.setText("Trip From " + model.getFrom() + " to " + model.getTo());
-        holder.msgTV.setText(model.getLastMsg());
+        Chat model = getTaskAt(position);
+
+        if(FirebaseHelper.instance.getUserId().equals(model.getUsers().get(0))) {
+            holder.nameTV.setText(model.getPassenger());
+        } else {
+            holder.nameTV.setText(model.getDriver());
+        }
+        //holder.directionTV.setText("Trip From " + model.getFrom() + " to " + model.getTo());
+        //holder.msgTV.setText(model.getLastMsg());
     }
 
-    public Message getTaskAt(int position) {
+    public Chat getTaskAt(int position) {
         return getItem(position);
     }
 
@@ -78,7 +85,7 @@ public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.Vi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Message model);
+        void onItemClick(Chat model);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
