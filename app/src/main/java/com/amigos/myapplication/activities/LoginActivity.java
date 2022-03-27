@@ -65,6 +65,11 @@ public class LoginActivity extends AppCompatActivity {
         tvResetPassword.setOnClickListener(view ->{
             startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
         });
+
+        if (!FirebaseHelper.instance.isUserAuth()){
+            FirebaseHelper.instance.getUserDataFromAuth();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
     private void loginUser(){

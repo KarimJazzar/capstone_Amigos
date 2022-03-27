@@ -16,10 +16,10 @@
         android:label="fragment_trips"
         tools:layout="@layout/fragment_trips" />
     <fragment
-        android:id="@+id/messagesFragment"
-        android:name="com.amigos.myapplication.fragments.MessagesFragment"
+        android:id="@+id/chatsFragment"
+        android:name="com.amigos.myapplication.fragments.ChatFragment"
         android:label="fragment_messages"
-        tools:layout="@layout/fragment_messages" />
+        tools:layout="@layout/fragment_chats" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.amigos.myapplication.fragments.ProfileFragment"

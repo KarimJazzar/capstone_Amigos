@@ -1,6 +1,7 @@
 package com.amigos.myapplication.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,45 +13,59 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amigos.myapplication.models.Message;
+import com.amigos.myapplication.activities.MessagesActivity;
+import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.R;
 
-public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.ViewHolder> {
-    public static Message taskSelected;
+public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder> {
+    public static Chat chatSelected;
     private OnItemClickListener listener;
 
-    public MessageRVAadapter() {
+    public ChatRVAadapter() {
         super(DIFF_CALLBACK);
     }
 
-    private static final DiffUtil.ItemCallback<Message> DIFF_CALLBACK = new DiffUtil.ItemCallback<Message>() {
+    private static final DiffUtil.ItemCallback<Chat> DIFF_CALLBACK = new DiffUtil.ItemCallback<Chat>() {
         @Override
-        public boolean areItemsTheSame(Message oldItem, Message newItem) {
-            return oldItem.getId() == newItem.getId();
+        public boolean areItemsTheSame(Chat oldItem, Chat newItem) {
+            return oldItem.getDriver() == newItem.getDriver();
         }
 
         @Override
-        public boolean areContentsTheSame(Message oldItem, Message newItem) {
-            return oldItem.getDriverName().equals(newItem.getDriverName());
+        public boolean areContentsTheSame(Chat oldItem, Chat newItem) {
+            return oldItem.getDriver().equals(newItem.getDriver());
         }
     };
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_message_cell, parent, false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat_cell, parent, false);
         return new ViewHolder(item);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Message model = getTaskAt(position);
-        holder.nameTV.setText(model.getDriverName());
-        holder.directionTV.setText("Trip From " + model.getFrom() + " to " + model.getTo());
-        holder.msgTV.setText(model.getLastMsg());
+        Chat model = getChatAt(position);
+        String direction = "Trip from " + model.getFrom() + " to " + model.getTo();
+        String msg = "" + model.getMessages().getText();
+        msg = msg.equals("null") ? "" : msg;
+
+        if(FirebaseHelper.instance.getUserId().equals(model.getUsers().get(0))) {
+            holder.nameTV.setText(model.getPassenger());
+        } else {
+            holder.nameTV.setText(model.getDriver());
+        }
+
+        holder.directionTV.setText(direction);
+        holder.msgTV.setText(msg);
+
+        //holder.directionTV.setText("Trip From " + model.getFrom() + " to " + model.getTo());
+        //holder.msgTV.setText(model.getLastMsg());
     }
 
-    public Message getTaskAt(int position) {
+    public Chat getChatAt(int position) {
         return getItem(position);
     }
 
@@ -72,13 +87,16 @@ public class MessageRVAadapter extends ListAdapter<Message, MessageRVAadapter.Vi
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     Context context = v.getContext();
+                    Intent intent = new Intent(context, MessagesActivity.class);
+                    intent.putExtra("msg_id",getChatAt(position).getMsgID());
+                    context.startActivity(intent);
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Message model);
+        void onItemClick(Chat model);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

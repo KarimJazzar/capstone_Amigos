@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capstone_Amigos">
         <activity
+            android:name=".activities.MessagesActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.BookingActivity"
             android:exported="false" />
 
@@ -31,13 +34,13 @@
             android:name=".activities.ForgotActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,58 +1,42 @@
 package com.amigos.myapplication.models;
 
+import java.util.Date;
+
 public class Message {
-    private int id;
-    private String driverImage;
-    private String driverName;
-    private String from;
-    private String to;
-    private String lastMsg;
+    private Date date;
+    private String text;
+    private String sender;
+    private boolean readed;
 
-    public int getId() {
-        return id;
+    public Date getDate() {
+        return date;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getDriverImage() {
-        return driverImage;
+    public String getText() {
+        return text;
     }
 
-    public void setDriverImage(String driverImage) {
-        this.driverImage = driverImage;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getDriverName() {
-        return driverName;
+    public String getSender() {
+        return sender;
     }
 
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getFrom() {
-        return from;
+    public boolean isReaded() {
+        return readed;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getLastMsg() {
-        return lastMsg;
-    }
-
-    public void setLastMsg(String lastMsg) {
-        this.lastMsg = lastMsg;
+    public void setReaded(boolean readed) {
+        this.readed = readed;
     }
 }

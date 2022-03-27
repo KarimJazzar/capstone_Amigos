@@ -30,13 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (FirebaseHelper.instance.isUserAuth()){
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }else{
-            FirebaseHelper.instance.getUserDataFromAuth();
-            BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
-            NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
-            NavigationUI.setupWithNavController(navigation, navController);
-        }
+        BottomNavigationView navigation = findViewById(R.id.bottomNavigationView);
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
+        NavigationUI.setupWithNavController(navigation, navController);
     }
 }
