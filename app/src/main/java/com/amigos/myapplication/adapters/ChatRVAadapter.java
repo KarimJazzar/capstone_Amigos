@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Chat;
-import com.amigos.myapplication.models.Message;
 import com.amigos.myapplication.R;
 
 public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder> {
@@ -40,19 +39,26 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_message_cell, parent, false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat_cell, parent, false);
         return new ViewHolder(item);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Chat model = getTaskAt(position);
+        String direction = "Trip from " + model.getFrom() + " to " + model.getTo();
+        String msg = "" + model.getMessages().getText();
+        msg = msg.equals("null") ? "" : msg;
 
         if(FirebaseHelper.instance.getUserId().equals(model.getUsers().get(0))) {
             holder.nameTV.setText(model.getPassenger());
         } else {
             holder.nameTV.setText(model.getDriver());
         }
+
+        holder.directionTV.setText(direction);
+        holder.msgTV.setText(msg);
+
         //holder.directionTV.setText("Trip From " + model.getFrom() + " to " + model.getTo());
         //holder.msgTV.setText(model.getLastMsg());
     }

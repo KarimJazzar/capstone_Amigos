@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Alex P."
+                android:singleLine="true"
                 android:textColor="@color/brown"
                 android:textSize="17sp" />
 
@@ -64,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="Trip from Santo Domingo to Santiago"
+                android:singleLine="true"
                 android:textColor="@color/brown"
                 android:textSize="12sp" />
 
@@ -73,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/grey"
+                android:singleLine="true"
                 android:text="Meet you at the park!..."
                 android:textSize="12sp" />
         </LinearLayout>

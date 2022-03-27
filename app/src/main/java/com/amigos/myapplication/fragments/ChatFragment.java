@@ -20,6 +20,8 @@ import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Message;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,6 +29,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -111,6 +114,38 @@ public class ChatFragment extends Fragment {
 
         String id = FirebaseHelper.instance.getUserId();
 
+        // ==========================
+        // CREATE CHAT CODE
+        // ==========================
+        /*
+        Chat chat1 = new Chat();
+        Message msg1 = new Message();
+        List<String> users1 = new ArrayList<>();
+        users1.add("PLrwcmRbx9YuvpPfNq4EHoIMaOD2");
+        users1.add("91JMvuKeCwZJIdT0kgIMlhfQeyY2");
+        chat1.setDriver("Daniel Miolan");
+        chat1.setPassenger("Simran Singh");
+        chat1.setFrom("Santo Domingo");
+        chat1.setTo("La Romana");
+        chat1.setUsers(users1);
+        chat1.setMessages(msg1);
+
+        FirebaseHelper.instance.getDB().collection("Chat").document()
+        .set(chat1)
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //Log.d(TAG, "DocumentSnapshot successfully written!");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Log.w(TAG, "Error writing document", e);
+            }
+        });
+        */
+
         CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Chat");
         Query yourChat =  chatRef.whereArrayContains("users", id);
 
@@ -125,15 +160,35 @@ public class ChatFragment extends Fragment {
 
                 chatList = chats;
                 messagesAdapter.submitList(chatList);
+            }
+        });
 
-                Log.e("CHECK", " " + chats.get(0).getDriver());
-                Log.e("CHECK", " " + chats.get(0).getPassenger());
-                Log.e("CHECK", " " + chats.get(0).getMessages().get(0));
+        yourChat.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e("ERROR","Listen failed: " + error);
+                    return;
+                }
+
+                chatList.clear();
+
+                for(QueryDocumentSnapshot val : value) {
+                    if (value != null && val.exists()) {
+                        Log.e("ERROR","Current data: " + val.toObject(Chat.class));
+                        chatList.add(val.toObject(Chat.class));
+                    } else {
+                        System.out.print("Current data: null");
+                    }
+                }
+
+                messagesAdapter.notifyDataSetChanged();
             }
         });
 
         //yourChat.get()
 
+        /*
         Message msg = new Message();
         Date date = new Date();
         msg.setDate(date);
@@ -145,11 +200,35 @@ public class ChatFragment extends Fragment {
 
         Map<String,Object> details = new HashMap<>();
         details.put("", msg);
+        */
 
         //FirebaseHelper.instance.getDB().collection("Messages").document("1").set(details);
         //FirebaseHelper.instance.getDB().collection("Messages").document("1").update("messages", FieldValue.arrayUnion(msg));
 
-        DocumentReference docRef = FirebaseHelper.instance.getDB().collection("Messages").document("1");
+        /*
+        Query queryRef = FirebaseHelper.instance.getDB().collection("Chat").whereArrayContains("users", id);
+
+        queryRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    System.err.println("Listen failed: " + error);
+                    return;
+                }
+
+                for(QueryDocumentSnapshot val : value) {
+                    if (value != null && val.exists()) {
+                        System.out.println("Current data: " + val.getData());
+                    } else {
+                        System.out.print("Current data: null");
+                    }
+                }
+            }
+        });
+        */
+
+        //DocumentReference docRef = FirebaseHelper.instance.getDB().collection("Messages").document("1");
+        /*
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -165,6 +244,7 @@ public class ChatFragment extends Fragment {
                 }
             }
         });
+        */
 
         //Task<QuerySnapshot> docRef = FirebaseHelper.instance.getDB().collectionGroup("Chat").whereEqualTo("driver.id", id).get();
         //Log.e("CHECK", "" + docRef.toString());

@@ -4,9 +4,11 @@ import java.util.List;
 
 public class Chat {
     private String driver;
+    private String from;
+    private String to;
     private String passenger;
     private List<String> users;
-    private List<Message> messages;
+    private Message messages;
 
     public String getDriver() {
         return driver;
@@ -14,6 +16,22 @@ public class Chat {
 
     public void setDriver(String driver) {
         this.driver = driver;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
     }
 
     public String getPassenger() {
@@ -32,11 +50,11 @@ public class Chat {
         this.users = users;
     }
 
-    public List<Message> getMessages() {
+    public Message getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
+    public void setMessages(Message messages) {
         this.messages = messages;
     }
 }

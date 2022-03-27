@@ -133,7 +133,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
 
             details.put("restrictions", passengers);
 
-
             FirebaseHelper.instance.getDB().collection("Trips").document()
                     .set(details)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {

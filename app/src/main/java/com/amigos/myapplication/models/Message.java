@@ -6,6 +6,7 @@ public class Message {
     private Date date;
     private String text;
     private String sender;
+    private boolean readed;
 
     public Date getDate() {
         return date;
@@ -29,5 +30,13 @@ public class Message {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public boolean isReaded() {
+        return readed;
+    }
+
+    public void setReaded(boolean readed) {
+        this.readed = readed;
     }
 }
