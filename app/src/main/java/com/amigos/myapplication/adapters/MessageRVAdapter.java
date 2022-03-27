@@ -19,8 +19,8 @@ import java.util.List;
 
 public class MessageRVAdapter extends RecyclerView.Adapter {
 
-    List<Message> msgList;
-    String senderID = FirebaseHelper.instance.getUserId();
+    private List<Message> msgList;
+    private String senderID = FirebaseHelper.instance.getUserId();
 
     public MessageRVAdapter (List<Message> messages) {
         msgList = messages;
@@ -42,11 +42,11 @@ public class MessageRVAdapter extends RecyclerView.Adapter {
 
         if(viewType == 0) {
             view = layoutInflater.inflate(R.layout.row_message_cell_v2, parent,false);
-            return new ViewHolderOne(view);
+            return new ViewHolderTwo(view);
         }
 
         view = layoutInflater.inflate(R.layout.row_message_cell_v1, parent, false);
-        return new ViewHolderTwo(view);
+        return new ViewHolderOne(view);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MessageRVAdapter extends RecyclerView.Adapter {
 
         public ViewHolderOne(@NonNull View itemView) {
             super(itemView);
-            msgTV = itemView.findViewById(R.id.messageText);
+            msgTV = itemView.findViewById(R.id.messageText1);
         }
     }
 
@@ -81,7 +81,7 @@ public class MessageRVAdapter extends RecyclerView.Adapter {
 
         public ViewHolderTwo(@NonNull View itemView) {
             super(itemView);
-            msgTV = itemView.findViewById(R.id.messageText);
+            msgTV = itemView.findViewById(R.id.messageText2);
         }
     }
 }

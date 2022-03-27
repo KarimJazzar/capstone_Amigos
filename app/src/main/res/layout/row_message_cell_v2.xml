@@ -16,7 +16,7 @@
         android:elevation="15dp">
 
         <TextView
-            android:id="@+id/messageText"
+            android:id="@+id/messageText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="5dp"

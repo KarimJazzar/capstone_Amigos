@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capstone_Amigos">
         <activity
-            android:name=".MessagesActivity"
+            android:name=".activities.MessagesActivity"
             android:exported="false" />
         <activity
             android:name=".activities.BookingActivity"

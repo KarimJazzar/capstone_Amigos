@@ -1,6 +1,7 @@
 package com.amigos.myapplication.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amigos.myapplication.activities.MessagesActivity;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.R;
@@ -45,7 +47,7 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Chat model = getTaskAt(position);
+        Chat model = getChatAt(position);
         String direction = "Trip from " + model.getFrom() + " to " + model.getTo();
         String msg = "" + model.getMessages().getText();
         msg = msg.equals("null") ? "" : msg;
@@ -63,7 +65,7 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
         //holder.msgTV.setText(model.getLastMsg());
     }
 
-    public Chat getTaskAt(int position) {
+    public Chat getChatAt(int position) {
         return getItem(position);
     }
 
@@ -85,6 +87,9 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     Context context = v.getContext();
+                    Intent intent = new Intent(context, MessagesActivity.class);
+                    intent.putExtra("msg_id",getChatAt(position).getMsgID());
+                    context.startActivity(intent);
                 }
             });
         }

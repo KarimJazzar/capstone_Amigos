@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,9 @@ import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.ChatRVAadapter;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Chat;
-import com.amigos.myapplication.models.Message;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -33,10 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +39,7 @@ public class ChatFragment extends Fragment {
 
     private RecyclerView chatRV;
     private List<Chat> chatList = new ArrayList<>();
-    private ChatRVAadapter messagesAdapter = new ChatRVAadapter();
+    private ChatRVAadapter chatsAdapter = new ChatRVAadapter();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -110,7 +102,7 @@ public class ChatFragment extends Fragment {
         chatRV = (RecyclerView) view.findViewById(R.id.tripsRidesRV);
         chatRV.setLayoutManager(new LinearLayoutManager(context));
         chatRV.setHasFixedSize(true);
-        chatRV.setAdapter(messagesAdapter);
+        chatRV.setAdapter(chatsAdapter);
 
         String id = FirebaseHelper.instance.getUserId();
 
@@ -155,11 +147,10 @@ public class ChatFragment extends Fragment {
                 QuerySnapshot documents = task.getResult();
                 for(DocumentSnapshot document : documents) {
                     chats.add(document.toObject(Chat.class));
-                    Log.e("CHECK", " " + document.toString());
                 }
 
                 chatList = chats;
-                messagesAdapter.submitList(chatList);
+                chatsAdapter.submitList(chatList);
             }
         });
 
@@ -167,7 +158,6 @@ public class ChatFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    Log.e("ERROR","Listen failed: " + error);
                     return;
                 }
 
@@ -175,14 +165,13 @@ public class ChatFragment extends Fragment {
 
                 for(QueryDocumentSnapshot val : value) {
                     if (value != null && val.exists()) {
-                        Log.e("ERROR","Current data: " + val.toObject(Chat.class));
                         chatList.add(val.toObject(Chat.class));
                     } else {
                         System.out.print("Current data: null");
                     }
                 }
 
-                messagesAdapter.notifyDataSetChanged();
+                chatsAdapter.notifyDataSetChanged();
             }
         });
 

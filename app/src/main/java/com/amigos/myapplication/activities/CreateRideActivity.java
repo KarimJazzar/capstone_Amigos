@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,7 +24,6 @@ import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Geopoint;
 import com.amigos.myapplication.models.User;
-import com.amigos.myapplication.models.UserMinimun;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -102,15 +100,15 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             details.put("price", 0.00);
             details.put("date", 0.00);
 
-            UserMinimun driver = new UserMinimun();
-            driver.setId(FirebaseHelper.instance.getUserId());
-            driver.setName(UserHelper.user.getFullName());
-            driver.setPhone(UserHelper.user.getPhoneNuber());
-            driver.setAvatar("");
+            User driver = new User();
+            driver.setEmail("");
+            driver.setFirstName(UserHelper.user.getFullName());
+            driver.setLastName(UserHelper.user.getPhoneNuber());
+            driver.setPhoneNuber("");
 
             details.put("driver", driver);
 
-            List<UserMinimun> passengers = new ArrayList<>();
+            List<User> passengers = new ArrayList<>();
             details.put("passengers", passengers);
 
             List<String> conditions = new ArrayList<>();
