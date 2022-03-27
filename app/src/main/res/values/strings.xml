@@ -51,6 +51,8 @@
     <string name="email">E-mail</string>
     <string name="password">Password</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
     <string name="login">Log In</string>
     <string name="logout">Log out</string>
     <string name="singup">Sign Up</string>
