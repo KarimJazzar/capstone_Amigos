@@ -183,10 +183,12 @@
                             android:scaleType="fitCenter" />
 
                         <TextView
+                            android:id="@+id/txtSeats"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textColor="@color/grey"
                             android:layout_weight="1"
+                            android:textSize="16dp"
                             android:gravity="center"
                             android:text="@string/people_number"/>
                     </LinearLayout>

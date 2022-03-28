@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amigos.myapplication.R;
@@ -58,6 +59,9 @@ public class SearchFragment extends Fragment {
     private Double fLat,fLong;
     private Double tLat,tLong;
 
+    ImageView searchLessBtn,searchMoreBtn;
+    TextView txtSeats;
+
     private String fName,fAddress,fPlaceID,fDate;
     private String tName,tAddress,tPlaceID,tDate;
 
@@ -84,6 +88,9 @@ public class SearchFragment extends Fragment {
 
         fromTrip = view.findViewById(R.id.searchFrom);
         toTrip = view.findViewById(R.id.searchTo);
+        searchLessBtn = view.findViewById(R.id.searchLessBtn);
+        searchMoreBtn = view.findViewById(R.id.searchMoreBtn);
+        txtSeats = view.findViewById(R.id.txtSeats);
         if (!Places.isInitialized()) {
             Places.initialize(getContext(), getString(R.string.google_geo_api_key));
         }
@@ -133,6 +140,30 @@ public class SearchFragment extends Fragment {
         adapter1 = new AutoCompleteAdapter(getContext(), placesClient);
         toTrip.setAdapter(adapter1);
 
+
+        searchLessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!txtSeats.getText().toString().equals("")){
+                    if(!txtSeats.getText().toString().equals("0")) {
+                        txtSeats.setText(String.valueOf(Integer.parseInt(txtSeats.getText().toString()) - 1));
+                    }
+                }
+            }
+        });
+
+        searchMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(txtSeats.getText().toString()=="") {
+
+                    txtSeats.setText(""+1);
+                }else {
+                    txtSeats.setText(String.valueOf(Integer.parseInt(txtSeats.getText().toString())+1));
+
+                }
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
     }
 
