@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.adapters.AutoCompleteAdapter;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -61,6 +63,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     private static int AUTOCOMPLETE_REQUEST_CODE = 100;
     private final String TAG = this.getClass().getName();
 
+    PlacesClient placesClient;
+    AutoCompleteAdapter adapter,adapter1;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
