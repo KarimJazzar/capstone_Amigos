@@ -120,7 +120,13 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             }
         });
 
+        inputTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateTimeHelper.selectTime(inputTime,CreateRideActivity.this);
 
+            }
+        });
 
         createButton.setOnClickListener(view ->{
             Map<String,Object> details = new HashMap<>();
