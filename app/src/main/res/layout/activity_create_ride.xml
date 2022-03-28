@@ -236,31 +236,23 @@
                                 android:layout_weight="0.2"
                                 android:src="@drawable/less" />
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginHorizontal="10dp"
-                                android:background="@drawable/input_full_border"
-                                android:hint="@string/people_number"
-                                android:textColorHint="@color/grey"
-                                app:boxStrokeWidth="0dp"
-                                android:layout_weight="1"
-                                app:startIconContentDescription="@string/people_number"
-                                app:startIconDrawable="@drawable/car_seat"
-                                app:startIconTint="@color/yellow">
 
-                                <com.google.android.material.textfield.TextInputEditText
+
+                                <TextView
                                     android:id="@+id/createSeats"
                                     android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:backgroundTint="@color/transparent"
+                                    android:layout_weight="1"
+                                    android:drawableLeft="@drawable/car_seat"
+
+                                    android:layout_height="48dp"
+                                    android:background="@drawable/input_full_border"
                                     android:fontFamily="@font/montserrat"
                                     android:focusable="false"
+                                    android:gravity="center"
+                                    android:hint="0"
                                     android:textSize="16sp"
-                                    android:inputType="textEmailAddress" />
+                                    android:paddingLeft="15dp" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageView
                                 android:id="@+id/tripMoreSeat"

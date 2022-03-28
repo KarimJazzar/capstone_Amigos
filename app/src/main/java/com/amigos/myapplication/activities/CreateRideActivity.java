@@ -74,7 +74,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     private Button backBtutton;
     private ImageView tripLessSeat,tripMoreSeat;
     private EditText   inputPrice ;
-    private TextInputEditText inputSeats;
+    private TextView inputSeats;
     private AutoCompleteTextView inputFrom,inputTo;
     private TextView inputDate,inputTime;
 
@@ -246,6 +246,29 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         adapter1 = new AutoCompleteAdapter(this, placesClient);
         inputTo.setAdapter(adapter1);
 
+        tripLessSeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(!inputSeats.getText().toString().equals("")){
+                    if(!inputSeats.getText().toString().equals("0")) {
+                        inputSeats.setText(String.valueOf(Integer.parseInt(inputSeats.getText().toString()) - 1));
+                    }
+                }
+            }
+        });
+        tripMoreSeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(inputSeats.getText().toString()=="") {
+
+                    inputSeats.setText(""+1);
+                }else {
+                    inputSeats.setText(String.valueOf(Integer.parseInt(inputSeats.getText().toString())+1));
+
+                }
+            }
+        });
 
     }
 
@@ -475,6 +498,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         inputTime = findViewById(R.id.createTime);
         inputPrice = findViewById(R.id.createPrice);
         inputSeats = findViewById(R.id.createSeats);
+        tripLessSeat = findViewById(R.id.tripLessSeat);
+        tripMoreSeat = findViewById(R.id.tripMoreSeat);
 
         boxPet = findViewById(R.id.createSelectPet);
         boxSmoke = findViewById(R.id.createSelectSmoke);
