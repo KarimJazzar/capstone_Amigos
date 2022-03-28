@@ -84,51 +84,35 @@
                     android:paddingHorizontal="50dp"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/createFrom"
+                        android:hint="From"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="16sp"
                         android:background="@drawable/input_bottom_border"
-                        app:startIconTint="@color/yellow"
-                        app:boxStrokeWidth="0dp"
-                        app:hintTextColor="@color/black"
-                        app:startIconContentDescription="@string/from"
-                        android:hint="@string/from">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/createFrom"
-                            android:fontFamily="@font/montserrat"
-                            android:backgroundTint="@color/transparent"
-                            android:textSize="12sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.google.android.material.textfield.TextInputLayout
+                        android:padding="8dp"
+                        android:maxLines="1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"/>
+
+
+
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/createTo"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="16sp"
+                        android:hint="To"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/input_bottom_border"
-                        app:startIconTint="@color/yellow"
-                        app:boxStrokeWidth="0dp"
-                        android:layout_marginTop="5dp"
-                        app:hintTextColor="@color/black"
-                        app:startIconContentDescription="@string/to"
-                        android:hint="@string/to">
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/createTo"
-                            android:fontFamily="@font/montserrat"
-                            android:backgroundTint="@color/transparent"
-                            android:textSize="12sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -172,9 +156,10 @@
                             android:inputType="date"
                             android:paddingVertical="15dp"
                             android:textColorHint="@color/grey"
-                            android:textSize="12sp" />
+                            android:textSize="16sp"
+                            />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/createTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -186,7 +171,8 @@
                             android:inputType="time"
                             android:paddingVertical="15dp"
                             android:textColorHint="@color/grey"
-                            android:textSize="12sp" />
+                            android:textSize="16sp"
+                            />
 
                     </LinearLayout>
 
@@ -232,7 +218,8 @@
                             android:inputType="numberDecimal"
                             android:paddingVertical="15dp"
                             android:textColorHint="@color/grey"
-                            android:textSize="12sp" />
+                            android:textSize="16sp"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -240,6 +227,8 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"
+                            android:="@drawable/input_full_border"
+
                             android:orientation="horizontal">
 
                             <ImageView
@@ -250,29 +239,21 @@
                                 android:layout_weight="0.2"
                                 android:src="@drawable/less" />
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="wrap_content"
+
+
+                            <EditText
+                                android:id="@+id/createSeats"
+                                android:layout_width="78dp"
+                                android:hint="0"
+                                android:gravity="center"
+
                                 android:layout_height="48dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginHorizontal="10dp"
-                                android:background="@drawable/input_full_border"
-                                android:hint="@string/people_number"
-                                android:textColorHint="@color/grey"
-                                app:boxStrokeWidth="0dp"
-                                android:layout_weight="1"
-                                app:startIconContentDescription="@string/people_number"
-                                app:startIconDrawable="@drawable/car_seat"
-                                app:startIconTint="@color/yellow">
+                                android:fontFamily="@font/montserrat"
+                                android:background="@drawable/input_bottom_border"
+                                android:textSize="16sp"
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/createSeats"
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                    android:backgroundTint="@color/transparent"
-                                    android:fontFamily="@font/montserrat"
-                                    android:inputType="textEmailAddress" />
+                                android:inputType="number" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageView
                                 android:id="@+id/tripMoreSeat"
@@ -310,6 +291,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textSize="16sp"
+
                                 android:textColor="@color/grey"
                                 android:fontFamily="@font/montserrat"
                                 android:text="@string/no_pets" />
@@ -319,6 +302,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textSize="16sp"
+
                                 android:textColor="@color/grey"
                                 android:fontFamily="@font/montserrat"
                                 android:text="@string/no_smoke" />
@@ -328,6 +313,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textSize="16sp"
+
                                 android:textColor="@color/grey"
                                 android:fontFamily="@font/montserrat"
                                 android:text="@string/no_drink" />
@@ -337,6 +324,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textSize="16sp"
+
                                 android:textColor="@color/grey"
                                 android:fontFamily="@font/montserrat"
                                 android:text="@string/no_eat" />

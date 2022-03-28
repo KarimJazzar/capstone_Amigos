@@ -6,15 +6,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +50,11 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     MapView mapView;
     private Button createButton;
     private Button backBtutton;
-    private TextView inputDate;
-    private EditText inputFrom, inputTo, inputTime, inputPrice, inputSeats;
+    private ImageView tripLessSeat,tripMoreSeat;
+    private EditText   inputPrice, inputSeats;
+    private AutoCompleteTextView inputFrom,inputTo;
+    private TextView inputDate,inputTime;
+
     private CheckBox boxPet, boxSmoke, boxDrink, boxEat;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleMap googleMap;
@@ -167,6 +173,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         }
 
         mapView.getMapAsync(new OnMapReadyCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
