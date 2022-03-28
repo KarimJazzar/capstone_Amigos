@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.MessageRVAdapter;
@@ -35,7 +36,8 @@ public class MessagesActivity extends AppCompatActivity {
     private List<Message> messages = new ArrayList<>();
     private RecyclerView messagesRV;
     private EditText msgTV;
-    private Button sendBtn;
+    private Button sendBtn, backBtutton;
+    private TextView receiverName;
     private Message msg = new Message();
     private List<Message> msgList = new ArrayList<>();
     private String msgDocumentID;
@@ -57,12 +59,18 @@ public class MessagesActivity extends AppCompatActivity {
 
         msgTV = findViewById(R.id.messageText);
         sendBtn = findViewById(R.id.messageSendBtn);
+        backBtutton = findViewById(R.id.messageBack);
+        receiverName = findViewById(R.id.messageSenderName);
 
+
+        backBtutton.setOnClickListener(view ->{
+            this.finish();
+        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             msgDocumentID = extras.getString("msg_id");
-            Log.e("CHECK", " " +  msgDocumentID);
+            receiverName.setText(extras.getString("msg_name"));
         }
 
         sendBtn.setOnClickListener(new View.OnClickListener() {

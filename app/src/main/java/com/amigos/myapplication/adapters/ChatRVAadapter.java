@@ -88,7 +88,14 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
                     int position = getAdapterPosition();
                     Context context = v.getContext();
                     Intent intent = new Intent(context, MessagesActivity.class);
-                    intent.putExtra("msg_id",getChatAt(position).getMsgID());
+                    intent.putExtra("msg_id", getChatAt(position).getMsgID());
+
+                    if(FirebaseHelper.instance.getUserId().equals(getChatAt(position).getUsers().get(0))) {
+                        intent.putExtra("msg_name", getChatAt(position).getPassenger());
+                    } else {
+                        intent.putExtra("msg_name", getChatAt(position).getDriver());
+                    }
+
                     context.startActivity(intent);
                 }
             });
