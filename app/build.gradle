@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'androidx.navigation:navigation-runtime:2.3.5'
     implementation 'com.google.firebase:firebase-storage:20.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.paypal.sdk:paypal-android-sdk:2.15.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
