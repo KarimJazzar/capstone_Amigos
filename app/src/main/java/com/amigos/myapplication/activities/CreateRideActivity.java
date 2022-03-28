@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.AutoCompleteAdapter;
-import com.amigos.myapplication.helpers.DateHelper;
+import com.amigos.myapplication.helpers.DateTimeHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Geopoint;
@@ -36,6 +36,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
@@ -66,6 +67,14 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     PlacesClient placesClient;
     AutoCompleteAdapter adapter,adapter1;
 
+    private String fName,fAddress,fPlaceID,fDate;
+    private String tName,tAddress,tPlaceID,tDate;
+    private Double fLat,fLong;
+    private Double tLat,tLong;
+    protected LatLng start=null;
+    protected LatLng end=null;
+    private List<Polyline> polylines=null;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -73,27 +82,24 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ride);
 
-        createButton = findViewById(R.id.btnCreateRide);
-        backBtutton = findViewById(R.id.createRideBack);
 
-        inputFrom = findViewById(R.id.createFrom);
-        inputTo = findViewById(R.id.createTo);
-        inputDate = findViewById(R.id.createDate);
-        inputTime = findViewById(R.id.createTime);
-        inputPrice = findViewById(R.id.createPrice);
-        inputSeats = findViewById(R.id.createSeats);
+        initialize(); // initializing all views
 
-        boxPet = findViewById(R.id.createSelectPet);
-        boxSmoke = findViewById(R.id.createSelectSmoke);
-        boxDrink = findViewById(R.id.createSelectDrink);
-        boxEat = findViewById(R.id.createSelectEat);
+        checkLocationPermission();
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), getString(R.string.google_geo_api_key));
+        }
+        placesClient = Places.createClient(this);
+
+
 
         inputDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                DateHelper.selectDate(inputDate,CreateRideActivity.this);
+                DateTimeHelper.selectDate(inputDate,CreateRideActivity.this);
             }
         });
+
 
         createButton.setOnClickListener(view ->{
             Map<String,Object> details = new HashMap<>();
@@ -161,7 +167,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             this.finish();
         });
 
-        initialize();
         checkLocationPermission();
 
         Places.initialize(getApplicationContext(), getString(R.string.google_geo_api_key));
@@ -210,7 +215,20 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     private void initialize() {
 
         mapView = findViewById(R.id.mapView);
+        createButton = findViewById(R.id.btnCreateRide);
+        backBtutton = findViewById(R.id.createRideBack);
 
+        inputFrom = findViewById(R.id.createFrom);
+        inputTo = findViewById(R.id.createTo);
+        inputDate = findViewById(R.id.createDate);
+        inputTime = findViewById(R.id.createTime);
+        inputPrice = findViewById(R.id.createPrice);
+        inputSeats = findViewById(R.id.createSeats);
+
+        boxPet = findViewById(R.id.createSelectPet);
+        boxSmoke = findViewById(R.id.createSelectSmoke);
+        boxDrink = findViewById(R.id.createSelectDrink);
+        boxEat = findViewById(R.id.createSelectEat);
 
     }
 

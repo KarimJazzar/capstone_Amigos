@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.CreateRideActivity;
 import com.amigos.myapplication.activities.ResultActivity;
-import com.amigos.myapplication.helpers.DateHelper;
+import com.amigos.myapplication.helpers.DateTimeHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +89,7 @@ public class SearchFragment extends Fragment {
         dateTV.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                DateHelper.selectDate(dateTV,getContext());
+                DateTimeHelper.selectDate(dateTV,getContext());
             }
         });
 
