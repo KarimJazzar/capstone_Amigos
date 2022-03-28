@@ -18,7 +18,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingHorizontal="50dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -62,50 +62,37 @@
                 android:textColor="@color/brown"
                 android:textSize="22sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_bottom_border"
-                app:startIconTint="@color/yellow"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="@color/black"
-                app:startIconContentDescription="@string/from"
-                android:hint="@string/from">
 
-                <com.google.android.material.textfield.TextInputEditText
+
+                <AutoCompleteTextView
                     android:id="@+id/searchFrom"
+                    android:hint="From"
+                    android:paddingLeft="10dp"
                     android:fontFamily="@font/montserrat"
-                    android:backgroundTint="@color/transparent"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:background="@drawable/input_bottom_border"
+
+                    android:layout_height="70dp"
                     />
 
-            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_bottom_border"
-                app:startIconTint="@color/yellow"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="@color/black"
-                app:startIconContentDescription="@string/to"
-                android:hint="@string/to">
 
-                <com.google.android.material.textfield.TextInputEditText
+
+                <AutoCompleteTextView
                     android:id="@+id/searchTo"
                     android:fontFamily="@font/montserrat"
-                    android:backgroundTint="@color/transparent"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
+                    android:paddingLeft="10dp"
+
+                    android:hint="To"
+
+                    android:background="@drawable/input_bottom_border"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:layout_height="70dp"
                     />
 
-            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
@@ -173,6 +160,7 @@
                         android:background="@color/transparent"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="0.2"
                         android:src="@drawable/less" />
 
@@ -188,8 +176,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/user"
                             android:scaleType="fitCenter" />
@@ -209,6 +197,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="0.2"
+                        android:layout_marginLeft="5dp"
+
                         android:src="@drawable/more" />
 
                 </LinearLayout>

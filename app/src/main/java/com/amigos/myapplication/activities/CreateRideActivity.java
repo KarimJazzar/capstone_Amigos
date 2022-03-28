@@ -142,10 +142,13 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 Geopoint toGP = new Geopoint();
                 toGP.setCoordinates(tLat, tLong);
                 details.put("to point", toGP);
-            }else if(!inputSeats.getText().toString().equals("")&&!inputSeats.getText().toString().equals("0")) {
+            }else if(!inputSeats.getText().toString().isEmpty()) {
                 details.put("seats", inputSeats.getText().toString());
+                Log.e(TAG,"inside.");
+
 
             }else if(!inputPrice.getText().toString().equals("")&&!inputPrice.getText().toString().equals("0")) {
+
                 details.put("price", inputPrice.getText().toString());
 
                 details.put("date", inputDate.getText().toString());
@@ -709,9 +712,9 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     //Routing call back functions.
     @Override
     public void onRoutingFailure(RouteException e) {
-        View parentLayout = findViewById(android.R.id.content);
-        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
-        snackbar.show();
+//        View parentLayout = findViewById(android.R.id.content);
+//        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
+//        snackbar.show();
     }
 
     @Override
