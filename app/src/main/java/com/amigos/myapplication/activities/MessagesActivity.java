@@ -94,6 +94,7 @@ public class MessagesActivity extends AppCompatActivity {
                 FirebaseHelper.instance.getDB().collection("Messages").document(msgDocumentID).update("messages", FieldValue.arrayUnion(msg));
 
                 msgTV.setText("");
+                messagesRV.smoothScrollToPosition(msgList.size() - 1);
             }
         });
 
@@ -137,6 +138,6 @@ public class MessagesActivity extends AppCompatActivity {
         }
 
         messagesAdapter.notifyDataSetChanged();
-        messagesRV.smoothScrollToPosition(msgList.size() - 1);
+        messagesRV.smoothScrollToPosition(0);
     }
 }
