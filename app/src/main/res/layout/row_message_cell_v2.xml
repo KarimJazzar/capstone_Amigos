@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="@color/light_yellow"
-        android:elevation="15dp">
+        android:elevation="0dp"
+        app:cardBackgroundColor="@color/light_yellow">
 
         <TextView
             android:id="@+id/messageText2"
@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:paddingVertical="5dp"
             android:paddingHorizontal="10dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/brown"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/black"
             android:text="@string/messages" />
 
     </androidx.cardview.widget.CardView>
