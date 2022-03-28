@@ -130,64 +130,85 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
 
         createButton.setOnClickListener(view ->{
             Map<String,Object> details = new HashMap<>();
-            details.put("from", "La Romana");
-            Geopoint fromGP = new Geopoint();
-            fromGP.setCoordinates(1.0,1.30);
-            //Map<String,String> fromGP = new HashMap<>();
-            details.put("from point", fromGP);
-            details.put("to", "Santo Domingo");
-            Geopoint toGP = new Geopoint();
-            toGP.setCoordinates(0.0,0.4);
-            details.put("to point", toGP);
-            details.put("seats", 4);
-            details.put("price", 0.00);
-            details.put("date", 0.00);
+            if(fName!=null){
+                details.put("from", fName);
+                Geopoint fromGP = new Geopoint();
+                fromGP.setCoordinates(fLat,fLong);
+                details.put("from point", fromGP);
 
-            User driver = new User();
-            driver.setEmail("");
-            driver.setFirstName(UserHelper.user.getFullName());
-            driver.setLastName(UserHelper.user.getPhoneNuber());
-            driver.setPhoneNuber("");
+            }else if(tName!=null) {
+                //Map<String,String> fromGP = new HashMap<>();
+                details.put("to", tName);
+                Geopoint toGP = new Geopoint();
+                toGP.setCoordinates(tLat, tLong);
+                details.put("to point", toGP);
+            }else if(!inputSeats.getText().toString().equals("")&&!inputSeats.getText().toString().equals("0")) {
+                details.put("seats", inputSeats.getText().toString());
 
-            details.put("driver", driver);
+            }else if(!inputPrice.getText().toString().equals("")&&!inputPrice.getText().toString().equals("0")) {
+                details.put("price", inputPrice.getText().toString());
 
-            List<User> passengers = new ArrayList<>();
-            details.put("passengers", passengers);
+                details.put("date", inputDate.getText().toString());
 
-            List<String> conditions = new ArrayList<>();
+                User driver = new User();
+                driver.setEmail("");
+                driver.setFirstName(UserHelper.user.getFullName());
+                driver.setLastName(UserHelper.user.getPhoneNuber());
+                driver.setPhoneNuber("");
 
-            if(boxPet.isSelected()) {
-                conditions.add("No Pets");
+                details.put("driver", driver);
+
+                List<User> passengers = new ArrayList<>();
+                details.put("passengers", passengers);
+
+                List<String> conditions = new ArrayList<>();
+
+                if(boxPet.isSelected()) {
+                    conditions.add("No Pets");
+                }
+
+                if(boxSmoke.isSelected()) {
+                    conditions.add("No Smoking");
+                }
+
+                if(boxDrink.isSelected()) {
+                    conditions.add("No Drinking");
+                }
+
+                if(boxEat.isSelected()) {
+                    conditions.add("No Eating");
+                }
+
+                details.put("restrictions", passengers);
+
+                FirebaseHelper.instance.getDB().collection("Trips").document()
+                        .set(details)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                //Log.d(TAG, "DocumentSnapshot successfully written!");
+                                View parentLayout = findViewById(android.R.id.content);
+                                Snackbar snackbar= Snackbar.make(parentLayout,"Ride Created", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                View parentLayout = findViewById(android.R.id.content);
+                                Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+                        });
+            }else {
+
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snackbar= Snackbar.make(parentLayout, "Add all details", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
             }
 
-            if(boxSmoke.isSelected()) {
-                conditions.add("No Smoking");
-            }
 
-            if(boxDrink.isSelected()) {
-                conditions.add("No Drinking");
-            }
-
-            if(boxEat.isSelected()) {
-                conditions.add("No Eating");
-            }
-
-            details.put("restrictions", passengers);
-
-            FirebaseHelper.instance.getDB().collection("Trips").document()
-                    .set(details)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            //Log.d(TAG, "DocumentSnapshot successfully written!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //Log.w(TAG, "Error writing document", e);
-                        }
-                    });
         });
 
         backBtutton.setOnClickListener(view ->{
@@ -242,9 +263,22 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         adapter = new AutoCompleteAdapter(this, placesClient);
         inputFrom.setAdapter(adapter);
 
-        inputTo.setOnItemClickListener(autocompleteClickListenerTo);
-        adapter1 = new AutoCompleteAdapter(this, placesClient);
-        inputTo.setAdapter(adapter1);
+        inputTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!inputFrom.getText().toString().isEmpty()) {
+                    inputTo.setOnItemClickListener(autocompleteClickListenerTo);
+                    adapter1 = new AutoCompleteAdapter(CreateRideActivity.this, placesClient);
+                    inputTo.setAdapter(adapter1);
+                } else {
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snackbar= Snackbar.make(parentLayout, "Add Start Point", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
+        });
+
+
 
         tripLessSeat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -466,7 +500,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
 
     {
 
-        Log.e(TAG,"start "+ Start+ "end "+ End);
         if(Start==null || End==null) {
             Toast.makeText(CreateRideActivity.this,"Unable to get location", Toast.LENGTH_LONG).show();
         }
@@ -692,9 +725,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     //If Route finding success..
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-
-        Log.e(TAG,"route succes");
-
 
 
         if(polylines!=null) {
