@@ -10,10 +10,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.CreateRideActivity;
+import com.amigos.myapplication.activities.ResultActivity;
 import com.amigos.myapplication.helpers.DateHelper;
 
 /**
@@ -77,6 +80,11 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView openCreateRide = view.findViewById(R.id.openCreateRideBtn);
         TextView dateTV = view.findViewById(R.id.searchDate);
+        Button findTrip = view.findViewById(R.id.btnFind);
+
+        EditText fromTrip = view.findViewById(R.id.searchFrom);
+        EditText toTrip = view.findViewById(R.id.searchTo);
+
 
         dateTV.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
@@ -93,6 +101,20 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        findTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String from = fromTrip.getText().toString();
+                String to = toTrip.getText().toString();
+                String inputDate = dateTV.getText().toString();
+                Intent intent = new Intent(getActivity(), ResultActivity.class);
+                intent.putExtra("from", from);
+                intent.putExtra("to", to);
+                intent.putExtra("date", inputDate);
+                startActivity(intent);
+
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
     }
 }

@@ -3,13 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_booking.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_find_trips.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_result.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_trip_find.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_trips.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/content_find_trips.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/fragment_chats.xml" value="0.1408514492753623" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/fragment_search.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Simranjit Singh/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_booking.xml" value="0.17074275362318841" />
-        <entry key="..\:/Users/Simranjit Singh/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_login.xml" value="0.17074275362318841" />
-        <entry key="..\:/Users/Simranjit Singh/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/activity_register.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/fragment_trips.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/row_message_cell_v1.xml" value="0.1408514492753623" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/row_result_cell.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Karim/AndroidStudioProjects/capstone_Amigos/app/src/main/res/layout/row_trips_rides_cell.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/card_ripple.xml" value="0.3185" />
         <entry key="app/src/main/res/drawable/color_logo.xml" value="0.2465" />
         <entry key="app/src/main/res/drawable/input_full_border.xml" value="0.232" />
@@ -24,7 +33,6 @@
         <entry key="app/src/main/res/layout/activity_forgot.xml" value="0.3706893920898438" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25275816306089743" />
-        <entry key="app/src/main/res/layout/activity_messages.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/chat_rv_item.xml" value="0.37604166666666666" />
@@ -34,8 +42,6 @@
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.2970027247956403" />
         <entry key="app/src/main/res/layout/fragment_trips.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/row_message_cell.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/row_message_cell_v1.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/row_message_cell_v2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/row_result_cell.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/row_trips_rides_cell.xml" value="0.44198232571525536" />
         <entry key="app/src/main/res/layout/trips_ride_rv_item.xml" value="0.37604166666666666" />
