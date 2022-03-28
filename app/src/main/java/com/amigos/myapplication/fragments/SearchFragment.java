@@ -116,20 +116,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        findTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String from = fromTrip.getText().toString();
-                String to = toTrip.getText().toString();
-                String inputDate = dateTV.getText().toString();
-                Intent intent = new Intent(getActivity(), ResultActivity.class);
-                intent.putExtra("from", from);
-                intent.putExtra("to", to);
-                intent.putExtra("date", inputDate);
-                startActivity(intent);
 
-            }
-        });
 
         fromTrip.setOnItemClickListener(autocompleteClickListener);
         adapter = new AutoCompleteAdapter(getContext(), placesClient);
@@ -164,6 +151,22 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+
+        findTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String from = fName;
+                String to = tName;
+                String inputDate = dateTV.getText().toString();
+                Intent intent = new Intent(getActivity(), ResultActivity.class);
+                intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
+                intent.putExtra("toLatLong", new LatLng(tLat,tLong));
+                intent.putExtra("date", inputDate);
+                startActivity(intent);
+
+            }
+        });
+
         super.onViewCreated(view, savedInstanceState);
     }
 
