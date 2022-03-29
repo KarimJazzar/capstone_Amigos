@@ -58,5 +58,9 @@ public class TripRideDetailActivity extends AppCompatActivity {
             conditionRV.setHasFixedSize(true);
             conditionRV.setAdapter(conditionAdapter);
         }
+
+        backBtn.setOnClickListener(view ->{
+            this.finish();
+        });
     }
 }
