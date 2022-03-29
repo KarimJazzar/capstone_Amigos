@@ -10,6 +10,7 @@
         android:id="@+id/mapView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/yellow"
         app:layout_constraintHeight_percent="0.45"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
