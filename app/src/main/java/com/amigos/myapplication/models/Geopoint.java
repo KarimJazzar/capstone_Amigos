@@ -19,8 +19,4 @@ public class Geopoint {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
-    public void setCoordinates(double lat, double lng) {
-        this.longitude = lng;
-    }
 }

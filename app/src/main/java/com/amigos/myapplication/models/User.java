@@ -9,8 +9,6 @@ public class User {
     private String email;
     private String profilePicture;
 
-    public String getFullName() { return firstName + " " + lastName; }
-
     public String getFirstName() {
         return firstName;
     }

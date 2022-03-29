@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.AutoCompleteAdapter;
+import com.amigos.myapplication.helpers.AlertDialogHelper;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.DateTimeHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
@@ -80,7 +83,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     private EditText inputPrice ;
     private TextView inputSeats, inputDate, inputTime;
     private AutoCompleteTextView inputFrom,inputTo;
-
     private CheckBox boxPet, boxSmoke, boxDrink, boxEat;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleMap googleMap;
@@ -135,22 +137,26 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             Trip trip = new Trip();
 
             if(fName == null || fName.equals("")){
+                AlertDialogHelper.show(CreateRideActivity.this, "Invalid From", "Plase select a valid direction.");
                 return;
             } else {
                 trip.setFrom(fName);
 
                 Geopoint fromGP = new Geopoint();
-                fromGP.setCoordinates(fLat,fLong);
+                fromGP.setLatitude(fLat);
+                fromGP.setLongitude(fLong);
                 trip.setFromPoints(fromGP);
             }
 
             if(tName == null || tName.equals("")) {
+                AlertDialogHelper.show(CreateRideActivity.this, "Invalid To", "Plase select a valid direction.");
                 return;
             } else {
                 trip.setTo(tName);
 
                 Geopoint toGP = new Geopoint();
-                toGP.setCoordinates(tLat,tLong);
+                toGP.setLatitude(tLat);
+                toGP.setLongitude(tLong);
                 trip.setToPoints(toGP);
             }
 
@@ -159,12 +165,14 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 double price = Double.parseDouble(inputPrice.getText().toString());
 
                 if (seats == 0) {
+                    AlertDialogHelper.show(CreateRideActivity.this, "Invalid Seat", "Please insert a valid amount.");
                     return;
                 } else {
                     trip.setSeats(seats);
                 }
 
                 if (price == 0) {
+                    AlertDialogHelper.show(CreateRideActivity.this, "Invalid Price", "Please insert a valid amount.");
                     return;
                 } else {
                     trip.setPrice(price);
@@ -179,21 +187,25 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             User driver = UserHelper.user;
             trip.setDriver(driver);
 
+            List<String> users = new ArrayList<>();
+            users.add(FirebaseHelper.instance.getUserId());
+            trip.setUsers(users);
+
             List<String> conditions = new ArrayList<>();
 
-            if(boxPet.isSelected()) {
+            if(boxPet.isChecked()) {
                 conditions.add("No Pets");
             }
 
-            if(boxSmoke.isSelected()) {
+            if(boxSmoke.isChecked()) {
                 conditions.add("No Smoking");
             }
 
-            if(boxDrink.isSelected()) {
+            if(boxDrink.isChecked()) {
                 conditions.add("No Drinking");
             }
 
-            if(boxEat.isSelected()) {
+            if(boxEat.isChecked()) {
                 conditions.add("No Eating");
             }
 
@@ -211,13 +223,20 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 e.printStackTrace();
             }
 
-            Log.e("ERROR", "" + trip);
-
             FirebaseHelper.instance.getDB().collection("Trips").document().set(trip)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     //Log.d(TAG, "DocumentSnapshot successfully written!");
+                    inputFrom.setText("");
+                    inputTo.setText("");
+                    inputSeats.setText("0");
+                    inputPrice.setText("$0.00");
+                    boxPet.setSelected(false);
+                    boxSmoke.setSelected(false);
+                    boxDrink.setSelected(false);
+                    boxEat.setSelected(false);
+
                     View parentLayout = findViewById(android.R.id.content);
                     Snackbar snackbar= Snackbar.make(parentLayout,"Ride Created", Snackbar.LENGTH_LONG);
                     snackbar.show();
@@ -300,8 +319,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             }
         });
 
-
-
         tripLessSeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -317,15 +334,14 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             @Override
             public void onClick(View view) {
                 if(inputSeats.getText().toString()=="") {
-
                     inputSeats.setText(""+1);
                 }else {
-                    inputSeats.setText(String.valueOf(Integer.parseInt(inputSeats.getText().toString())+1));
-
+                    if(!inputSeats.getText().toString().equals("8")) {
+                        inputSeats.setText(String.valueOf(Integer.parseInt(inputSeats.getText().toString())+1));
+                    }
                 }
             }
         });
-
     }
 
     private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
@@ -342,13 +358,11 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
 //                To specify which data types to return, pass an array of Place.Fields in your FetchPlaceRequest
 //                Use only those fields which are required.
 
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS
-                        , Place.Field.LAT_LNG);
+                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
                 FetchPlaceRequest request = null;
                 if (placeID != null) {
-                    request = FetchPlaceRequest.builder(placeID, placeFields)
-                            .build();
+                    request = FetchPlaceRequest.builder(placeID, placeFields).build();
                 }
 
                 if (request != null) {
@@ -359,6 +373,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                             Log.e(TAG,"from click");
 
                             inputTo.requestFocus();
+                            //InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
                             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -386,30 +402,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                                         fLat = task.getPlace().getLatLng().latitude;
                                         fLong = task.getPlace().getLatLng().longitude;
                                         inputFrom.setText(fName);
-
-//                                        }
-
-//                                        if(toClick){
-//
-//                                            googleMap.addMarker(new MarkerOptions().position(task.getPlace().getLatLng()).title(task.getPlace().getName()));
-//                                            CameraPosition cameraPosition1 = new CameraPosition.Builder().target(task.getPlace().getLatLng()).zoom(12).build();
-//                                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition1));
-//
-//
-//                                            tName = task.getPlace().getName();
-//                                            tAddress = task.getPlace().getAddress();
-//                                            tPlaceID = task.getPlace().getId();
-//                                            tLat = task.getPlace().getLatLng().latitude;
-//                                            tLong = task.getPlace().getLatLng().longitude;
-//                                            inputTo.setText(tName);
-//
-//                                            start=new LatLng(fLat,fLong);
-//                                            end=new LatLng(tLat,tLong);
-//
-//                                            Findroutes(start,end);
-//                                            toClick=false;
-//                                        }
-
 
                                     }
                                 });
@@ -489,13 +481,10 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                                         tLong = task.getPlace().getLatLng().longitude;
                                         inputTo.setText(tName);
 
-                                        start=new LatLng(fLat,fLong);
-                                        end=new LatLng(tLat,tLong);
+                                        start = new LatLng(fLat,fLong);
+                                        end = new LatLng(tLat,tLong);
 
                                         Findroutes(start,end);
-//
-
-////
                                     }
                                 });
                             }
@@ -600,46 +589,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             return true;
         }
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-//            if (resultCode == RESULT_OK) {
-//                Place place = Autocomplete.getPlaceFromIntent(data);
-//                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//
-//                    return;
-//                }
-//                googleMap.setMyLocationEnabled(true);
-//                // For zooming automatically to the location of the marker
-//
-//                if (googleMap != null) {
-//                    googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-//                        @Override
-//                        public void onMyLocationChange(Location arg0) {
-//                            googleMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName()));
-//                            CameraPosition cameraPosition = new CameraPosition.Builder().target(place.getLatLng()).zoom(12).build();
-//                            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-////                            pName = place.getName();
-////                            pAddrss = place.getAddress();
-////                            pPlaceId = place.getId();
-////                            pLat = place.getLatLng().latitude;
-////                            pLong = place.getLatLng().longitude;
-//
-//
-//                        }
-//                    });
-//                }
-//            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-//                Status status = Autocomplete.getStatusFromIntent(data);
-//            } else if (resultCode == RESULT_CANCELED) {
-//                // The user canceled the operation.
-//            }
-//            return;
-//        }
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 
     @Override
     protected void onStart() {
@@ -771,14 +720,10 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 int k=polyline.getPoints().size();
                 polylineEndLatLng=polyline.getPoints().get(k-1);
                 polylines.add(polyline);
-
-
-
             }
             else {
 
             }
-
         }
 
         //Add Marker on route starting position
