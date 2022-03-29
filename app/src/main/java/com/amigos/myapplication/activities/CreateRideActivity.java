@@ -134,7 +134,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         createButton.setOnClickListener(view ->{
             Trip trip = new Trip();
 
-            if(fName.equals("")){
+            if(fName == null || fName.equals("")){
                 return;
             } else {
                 trip.setFrom(fName);
@@ -144,7 +144,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 trip.setFromPoints(fromGP);
             }
 
-            if(tName.equals("")) {
+            if(tName == null || tName.equals("")) {
                 return;
             } else {
                 trip.setTo(tName);
@@ -719,9 +719,9 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     //Routing call back functions.
     @Override
     public void onRoutingFailure(RouteException e) {
-        View parentLayout = findViewById(android.R.id.content);
-        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
-        snackbar.show();
+//        View parentLayout = findViewById(android.R.id.content);
+//        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
+//        snackbar.show();
     }
 
     @Override
