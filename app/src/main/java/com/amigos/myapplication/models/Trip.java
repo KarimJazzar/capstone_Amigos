@@ -1,9 +1,12 @@
 package com.amigos.myapplication.models;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Trip {
+public class Trip implements Serializable {
     private String from;
     private Geopoint fromPoints;
     private String to;

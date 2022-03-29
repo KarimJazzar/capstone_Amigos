@@ -47,7 +47,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_result_cell,parent,false);
             return new MyViewHolder(itemView);
-
     }
 
     @SuppressLint("SetTextI18n")

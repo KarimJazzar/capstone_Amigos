@@ -75,6 +75,10 @@
     <string name="date_holder">00/00/0000</string>
     <string name="time_holder">00:00 AM</string>
     <string name="name">Name</string>
+    <string name="driver_detail">Driver Detail:</string>
+    <string name="trip_details">Trip Details:</string>
+    <string name="trip_passengers">Passengers:</string>
+    <string name="delete">Delete</string>
     <string name="empty"></string>
     <string name="title_activity_find_trips">FindTrips</string>
     <!-- Strings used for fragments for navigation -->

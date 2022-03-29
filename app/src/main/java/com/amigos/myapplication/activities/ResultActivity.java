@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.amigos.myapplication.R;
@@ -79,7 +80,8 @@ public class ResultActivity extends AppCompatActivity {
                         Timestamp timestamp = document.getTimestamp("date");
                         LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
-                        System.out.println(dateTimeFormatter.format(ldt));
+                        Log.e("ERROR", dateTimeFormatter.format(ldt));
+
                         if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
                             //tripsList.add(new Trip(fromTrip,toTrip,map.get("name")));
                             tripAdapter.notifyDataSetChanged();
