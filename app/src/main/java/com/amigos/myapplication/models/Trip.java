@@ -16,6 +16,9 @@ public class Trip {
     private User driver;
     private List<User> passengers;
     private List<String> users;
+    private String fromGeohash;
+    private String toGeohash;
+
 
     public String getFrom() {
         return from;
@@ -111,5 +114,21 @@ public class Trip {
 
     public void setUsers(List<String> users) {
         this.users = users;
+    }
+
+    public String getFromGeohash() {
+        return fromGeohash;
+    }
+
+    public void setFromGeohash(String fromGeohash) {
+        this.fromGeohash = fromGeohash;
+    }
+
+    public String getToGeohash() {
+        return toGeohash;
+    }
+
+    public void setToGeohash(String toGeohash) {
+        this.toGeohash = toGeohash;
     }
 }
