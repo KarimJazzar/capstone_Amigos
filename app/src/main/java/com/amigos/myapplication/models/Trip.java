@@ -1,15 +1,20 @@
 package com.amigos.myapplication.models;
 
+import java.util.Date;
+import java.util.List;
+
 public class Trip {
     private String from;
+    private Geopoint fromPoints;
     private String to;
-    private String driver;
-
-    public Trip(String from, String to, String driver) {
-        this.from = from;
-        this.to = to;
-        this.driver = driver;
-    }
+    private Geopoint toPoints;
+    private Integer seats;
+    private Date date;
+    private Double price;
+    private List<String> conditions;
+    private User driver;
+    private List<User> passengers;
+    private List<String> users;
 
     public String getFrom() {
         return from;
@@ -17,6 +22,14 @@ public class Trip {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public Geopoint getFromPoints() {
+        return fromPoints;
+    }
+
+    public void setFromPoints(Geopoint fromPoints) {
+        this.fromPoints = fromPoints;
     }
 
     public String getTo() {
@@ -27,11 +40,67 @@ public class Trip {
         this.to = to;
     }
 
-    public String getDriver() {
+    public Geopoint getToPoints() {
+        return toPoints;
+    }
+
+    public void setToPoints(Geopoint toPoints) {
+        this.toPoints = toPoints;
+    }
+
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public List<String> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<String> conditions) {
+        this.conditions = conditions;
+    }
+
+    public User getDriver() {
         return driver;
     }
 
-    public void setDriver(String driver) {
+    public void setDriver(User driver) {
         this.driver = driver;
+    }
+
+    public List<User> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<User> passengers) {
+        this.passengers = passengers;
+    }
+
+    public List<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<String> users) {
+        this.users = users;
     }
 }

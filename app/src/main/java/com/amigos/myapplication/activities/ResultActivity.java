@@ -59,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
                         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
                         System.out.println(dateTimeFormatter.format(ldt));
                         if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
-                            tripsList.add(new Trip(fromTrip,toTrip,map.get("name")));
+                            //tripsList.add(new Trip(fromTrip,toTrip,map.get("name")));
                             tripAdapter.notifyDataSetChanged();
                         }
                     }

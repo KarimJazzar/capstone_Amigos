@@ -47,7 +47,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.driver.setText(data.get(position).getDriver());
+        //holder.driver.setText(data.get(position).getDriver());
         holder.from.setText(String.valueOf(data.get(position).getFrom()));
         holder.to.setText(String.valueOf(data.get(position).getTo()));
     }

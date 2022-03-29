@@ -25,10 +25,12 @@ import android.widget.Toast;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.AutoCompleteAdapter;
+import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.DateTimeHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Geopoint;
+import com.amigos.myapplication.models.Trip;
 import com.amigos.myapplication.models.User;
 import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
@@ -63,6 +65,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,86 +132,92 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         });
 
         createButton.setOnClickListener(view ->{
-            Map<String,Object> details = new HashMap<>();
-            if(fName!=null){
-                details.put("from", fName);
+            Trip trip = new Trip();
+
+            if(fName.equals("")){
+                return;
+            } else {
+                trip.setFrom(fName);
+
                 Geopoint fromGP = new Geopoint();
                 fromGP.setCoordinates(fLat,fLong);
-                details.put("from point", fromGP);
-
-            }else if(tName!=null) {
-                //Map<String,String> fromGP = new HashMap<>();
-                details.put("to", tName);
-                Geopoint toGP = new Geopoint();
-                toGP.setCoordinates(tLat, tLong);
-                details.put("to point", toGP);
-            }else if(!inputSeats.getText().toString().equals("")&&!inputSeats.getText().toString().equals("0")) {
-                details.put("seats", inputSeats.getText().toString());
-
-            }else if(!inputPrice.getText().toString().equals("")&&!inputPrice.getText().toString().equals("0")) {
-                details.put("price", inputPrice.getText().toString());
-
-                details.put("date", inputDate.getText().toString());
-
-                User driver = new User();
-                driver.setEmail("");
-                driver.setFirstName(UserHelper.user.getFullName());
-                driver.setLastName(UserHelper.user.getPhoneNuber());
-                driver.setPhoneNuber("");
-
-                details.put("driver", driver);
-
-                List<User> passengers = new ArrayList<>();
-                details.put("passengers", passengers);
-
-                List<String> conditions = new ArrayList<>();
-
-                if(boxPet.isSelected()) {
-                    conditions.add("No Pets");
-                }
-
-                if(boxSmoke.isSelected()) {
-                    conditions.add("No Smoking");
-                }
-
-                if(boxDrink.isSelected()) {
-                    conditions.add("No Drinking");
-                }
-
-                if(boxEat.isSelected()) {
-                    conditions.add("No Eating");
-                }
-
-                details.put("restrictions", passengers);
-
-                FirebaseHelper.instance.getDB().collection("Trips").document()
-                        .set(details)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                //Log.d(TAG, "DocumentSnapshot successfully written!");
-                                View parentLayout = findViewById(android.R.id.content);
-                                Snackbar snackbar= Snackbar.make(parentLayout,"Ride Created", Snackbar.LENGTH_LONG);
-                                snackbar.show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                View parentLayout = findViewById(android.R.id.content);
-                                Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
-                                snackbar.show();
-                            }
-                        });
-            }else {
-
-                    View parentLayout = findViewById(android.R.id.content);
-                    Snackbar snackbar= Snackbar.make(parentLayout, "Add all details", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-
+                trip.setFromPoints(fromGP);
             }
 
+            if(tName.equals("")) {
+                return;
+            } else {
+                trip.setTo(tName);
 
+                Geopoint toGP = new Geopoint();
+                toGP.setCoordinates(tLat,tLong);
+                trip.setFromPoints(toGP);
+            }
+
+            try {
+                int seats = Integer.parseInt(inputSeats.getText().toString());
+                double price = Double.parseDouble(inputPrice.getText().toString());
+
+                if (seats == 0) {
+                    return;
+                } else {
+                    trip.setSeats(seats);
+                }
+
+                if (price == 0) {
+                    return;
+                } else {
+                    trip.setPrice(price);
+                }
+            } catch (NumberFormatException error) {
+                return;
+            }
+
+            List<User> passengers = new ArrayList<>();
+            trip.setPassengers(passengers);
+
+            User driver = UserHelper.user;
+            trip.setDriver(driver);
+
+            List<String> conditions = new ArrayList<>();
+
+            if(boxPet.isSelected()) {
+                conditions.add("No Pets");
+            }
+
+            if(boxSmoke.isSelected()) {
+                conditions.add("No Smoking");
+            }
+
+            if(boxDrink.isSelected()) {
+                conditions.add("No Drinking");
+            }
+
+            if(boxEat.isSelected()) {
+                conditions.add("No Eating");
+            }
+
+            trip.setConditions(conditions);
+
+            FirebaseHelper.instance.getDB().collection("Trips").document()
+            .set(trip)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    //Log.d(TAG, "DocumentSnapshot successfully written!");
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snackbar= Snackbar.make(parentLayout,"Ride Created", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            });
         });
 
         backBtutton.setOnClickListener(view ->{
@@ -539,6 +548,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
         boxDrink = findViewById(R.id.createSelectDrink);
         boxEat = findViewById(R.id.createSelectEat);
 
+        inputDate.setText(DateHelper.getCurrentDateAsString());
     }
 
     public boolean checkLocationPermission() {
