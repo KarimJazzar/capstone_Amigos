@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/driverName"
+                android:id="@+id/tripRideType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/brown"
@@ -35,7 +35,7 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/tripFrom"
+                android:id="@+id/tripRideDestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -43,7 +43,7 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/tripTo"
+                android:id="@+id/tripRideDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -51,7 +51,7 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/tripRideMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"

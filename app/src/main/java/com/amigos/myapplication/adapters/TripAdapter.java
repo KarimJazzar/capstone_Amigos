@@ -30,9 +30,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
 
         public MyViewHolder(@NonNull View view) {
             super(view);
-            driver =view.findViewById(R.id.driverName);
-            from =view.findViewById(R.id.tripFrom);
-            to = view.findViewById(R.id.tripTo);
+            //driver =view.findViewById(R.id.driverName);
+            //from =view.findViewById(R.id.tripFrom);
+            //to = view.findViewById(R.id.tripTo);
         }
     }
 

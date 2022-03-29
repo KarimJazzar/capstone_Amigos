@@ -231,11 +231,11 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                     inputFrom.setText("");
                     inputTo.setText("");
                     inputSeats.setText("0");
-                    inputPrice.setText("$0.00");
-                    boxPet.setSelected(false);
-                    boxSmoke.setSelected(false);
-                    boxDrink.setSelected(false);
-                    boxEat.setSelected(false);
+                    inputPrice.setText("");
+                    boxPet.setChecked(false);
+                    boxSmoke.setChecked(false);
+                    boxDrink.setChecked(false);
+                    boxEat.setChecked(false);
 
                     View parentLayout = findViewById(android.R.id.content);
                     Snackbar snackbar= Snackbar.make(parentLayout,"Ride Created", Snackbar.LENGTH_LONG);

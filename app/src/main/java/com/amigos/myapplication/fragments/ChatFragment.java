@@ -88,8 +88,6 @@ public class ChatFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
 
-    private List<Chat> chats = new ArrayList<>();
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -144,12 +142,13 @@ public class ChatFragment extends Fragment {
         yourChat.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                chatList.clear();
+
                 QuerySnapshot documents = task.getResult();
                 for(DocumentSnapshot document : documents) {
-                    chats.add(document.toObject(Chat.class));
+                    chatList.add(document.toObject(Chat.class));
                 }
 
-                chatList = chats;
                 chatsAdapter.submitList(chatList);
             }
         });

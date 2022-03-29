@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.TripAdapter;
+import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Trip;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
@@ -43,7 +44,6 @@ public class ResultActivity extends AppCompatActivity {
     RecyclerView trips;
     ArrayList<Trip> tripsList;
     TripAdapter tripAdapter;
-    FirebaseFirestore db;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -61,33 +61,6 @@ public class ResultActivity extends AppCompatActivity {
         trips = findViewById(R.id.tripsResult);
         tripsList = new ArrayList<>();
 
-
-        db = FirebaseFirestore.getInstance();
-
-//        double fromLat = fromT.latitude;
-//        double fromLng = fromT.longitude;
-//        String fromHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(fromLat, fromLng));
-//        double toLat = toT.latitude;
-//        double toLng = toT.longitude;
-//        String toHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(toLat, toLng));
-//        Map<String, Object> updates = new HashMap<>();
-//        updates.put("from geohash", fromHash);
-//        updates.put("from lat", fromLat);
-//        updates.put("from lng", fromLng);
-//        updates.put("to geohash", toHash);
-//        updates.put("to lat", toLat);
-//        updates.put("to lng", toLng);
-//        DocumentReference londonRef = db.collection("Trips").document("Zhzl5AVrJI2zn8NeQGHd");
-//        londonRef.update(updates)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // ...
-//                    }
-//                });
-
-
-
         final GeoLocation centerFrom = new GeoLocation(fromT.latitude, fromT.longitude);
         final GeoLocation centerTo = new GeoLocation(toT.latitude, toT.longitude);
         //List<DocumentSnapshot> docsFrom = getRadiusTrips(centerFrom,"from geohash", "from lat", "from lng");
@@ -96,7 +69,7 @@ public class ResultActivity extends AppCompatActivity {
         getRadiusTrips(centerFrom,"from geohash", "from lat", "from lng", inputDate);
 
 
-        db.collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        FirebaseHelper.instance.getDB().collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -132,7 +105,7 @@ public class ResultActivity extends AppCompatActivity {
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
         for (GeoQueryBounds b : bounds) {
-            Query q = db.collection("Trips")
+            Query q = FirebaseHelper.instance.getDB().collection("Trips")
                     .orderBy(whereGeo)
                     .startAt(b.startHash)
                     .endAt(b.endHash);
@@ -164,8 +137,13 @@ public class ResultActivity extends AppCompatActivity {
                             LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
                             System.out.println(dateTimeFormatter.format(ldt));
+
                             if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
-                                tripsList.add(new Trip(fromS,toS,map.get("driver")));
+                                Trip tempTrip = new Trip();
+                                tempTrip.setFrom(fromS);
+                                tempTrip.setTo(toS);
+                                //tempTrip.getDriver(map.get("driver"))
+                                tripsList.add(tempTrip);
                                 tripAdapter.notifyDataSetChanged();
                             }
                         }
