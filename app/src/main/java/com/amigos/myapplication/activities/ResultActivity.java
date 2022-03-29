@@ -143,7 +143,9 @@ public class ResultActivity extends AppCompatActivity {
 
                             if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
                                 Trip trip = matchingDocs.get(i).toObject(Trip.class);
-                                tripsList.add(trip);
+                                if(!tripsList.contains(trip)){
+                                    tripsList.add(trip);
+                                }
                                 tripAdapter.notifyDataSetChanged();
                             }
                         }
