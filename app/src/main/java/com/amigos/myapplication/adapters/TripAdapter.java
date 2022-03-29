@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Trip;
 
 import org.w3c.dom.Text;
@@ -31,6 +34,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
         private TextView date;
         private TextView price;
         private TextView seats;
+        private ImageView profPic;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
@@ -38,6 +42,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
             date = view.findViewById(R.id.chatMsgRV);
             price = view.findViewById(R.id.chatNameRV2);
             seats = view.findViewById(R.id.chatMsgRV2);
+            profPic = view.findViewById(R.id.chatImageRV);
         }
     }
 
@@ -56,6 +61,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
         holder.date.setText(data.get(position).getDate().toString());
         holder.price.setText("$" + data.get(position).getPrice().toString());
         holder.seats.setText(String.valueOf(data.get(position).getSeats()) + " seats");
+        FirebaseHelper.instance.setProfileImage(data.get(position).getDriver().getProfilePicture(), holder.profPic);
     }
 
 
