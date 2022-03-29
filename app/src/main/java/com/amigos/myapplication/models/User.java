@@ -7,7 +7,7 @@ public class User {
     private String lastName;
     private String phoneNuber;
     private String email;
-    private Bitmap profilePicture;
+    private String profilePicture;
 
     public String getFullName() { return firstName + " " + lastName; }
 
@@ -43,11 +43,11 @@ public class User {
         this.email = email;
     }
 
-    public Bitmap getProfilePicture() {
+    public String getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(Bitmap profilePicture) {
+    public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
 }

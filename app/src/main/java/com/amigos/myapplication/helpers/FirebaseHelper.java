@@ -1,9 +1,14 @@
 package com.amigos.myapplication.helpers;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.amigos.myapplication.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -54,6 +59,23 @@ public class FirebaseHelper {
         getUserData(user.getUid());
     }
 
+    public void setProfileImage(String profilePicId, ImageView profileIV) {
+        StorageReference pathReference = storageReference.child("images/" + profilePicId);
+
+        final File localFile;
+        try {
+            localFile = File.createTempFile(profilePicId,"jpg");
+            pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    profileIV.setImageBitmap(BitmapFactory.decodeFile(localFile.getAbsolutePath()));
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void getUserData(String userid) {
         DocumentReference docRef = db.collection("User Info").document(userid);
 
@@ -63,14 +85,15 @@ public class FirebaseHelper {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Map<String,Object> details = document.getData();
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
                     UserHelper.user.setFirstName((String) details.get("first name"));
                     UserHelper.user.setLastName((String) details.get("last name"));
                     UserHelper.user.setEmail((String) details.get("email"));
                     UserHelper.user.setPhoneNuber((String) details.get("number"));
+                    UserHelper.user.setProfilePicture((String) details.get("profile picture"));
+                    Log.e("ERROR", "" + details.get("profile picture"));
 
-
+                    /*
                     String profilePicId = (String) details.get("profile picture");
                     StorageReference pathReference = storageRef.child("images/" + profilePicId);
 
@@ -86,6 +109,7 @@ public class FirebaseHelper {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    */
                 }
             }
         });

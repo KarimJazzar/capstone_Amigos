@@ -63,6 +63,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -76,10 +77,9 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     private Button createButton;
     private Button backBtutton;
     private ImageView tripLessSeat,tripMoreSeat;
-    private EditText   inputPrice ;
-    private TextView inputSeats;
+    private EditText inputPrice ;
+    private TextView inputSeats, inputDate, inputTime;
     private AutoCompleteTextView inputFrom,inputTo;
-    private TextView inputDate,inputTime;
 
     private CheckBox boxPet, boxSmoke, boxDrink, boxEat;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -151,7 +151,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
 
                 Geopoint toGP = new Geopoint();
                 toGP.setCoordinates(tLat,tLong);
-                trip.setFromPoints(toGP);
+                trip.setToPoints(toGP);
             }
 
             try {
@@ -197,10 +197,23 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 conditions.add("No Eating");
             }
 
+            if(conditions.size() <= 0) {
+                conditions.add("No restrictions.");
+            }
+
             trip.setConditions(conditions);
 
-            FirebaseHelper.instance.getDB().collection("Trips").document()
-            .set(trip)
+            trip.setTime(inputTime.getText().toString());
+
+            try {
+                trip.setDate(DateHelper.stringToDate(inputDate.getText().toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Log.e("ERROR", "" + trip);
+
+            FirebaseHelper.instance.getDB().collection("Trips").document().set(trip)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -505,9 +518,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
     };
 
     // function to find Routes.
-    public void Findroutes(LatLng Start, LatLng End)
-
-    {
+    public void Findroutes(LatLng Start, LatLng End) {
 
         if(Start==null || End==null) {
             Toast.makeText(CreateRideActivity.this,"Unable to get location", Toast.LENGTH_LONG).show();

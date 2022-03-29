@@ -3,8 +3,6 @@ package com.amigos.myapplication.fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,27 +20,20 @@ import android.widget.Toast;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.LoginActivity;
+import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
-import com.amigos.myapplication.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -128,7 +119,8 @@ public class ProfileFragment extends Fragment {
         lastName.setText(UserHelper.user.getLastName());
         email.setText(UserHelper.user.getEmail());
         number.setText(UserHelper.user.getPhoneNuber());
-        profPic.setImageBitmap(UserHelper.user.getProfilePicture());
+        FirebaseHelper.instance.setProfileImage(UserHelper.user.getProfilePicture(), profPic);
+        //profPic.setImageBitmap(UserHelper.user.getProfilePicture());
         profPic.setImageURI(imageUri);
 
         /*

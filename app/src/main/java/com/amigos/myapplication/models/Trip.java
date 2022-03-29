@@ -10,6 +10,7 @@ public class Trip {
     private Geopoint toPoints;
     private Integer seats;
     private Date date;
+    private String time;
     private Double price;
     private List<String> conditions;
     private User driver;
@@ -62,6 +63,14 @@ public class Trip {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public Double getPrice() {

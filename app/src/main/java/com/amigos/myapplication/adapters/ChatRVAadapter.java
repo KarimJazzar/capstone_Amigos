@@ -54,8 +54,10 @@ public class ChatRVAadapter extends ListAdapter<Chat, ChatRVAadapter.ViewHolder>
 
         if(FirebaseHelper.instance.getUserId().equals(model.getUsers().get(0))) {
             holder.nameTV.setText(model.getPassenger());
+            FirebaseHelper.instance.setProfileImage(model.getPassengerAvatar(), holder.imageV);
         } else {
             holder.nameTV.setText(model.getDriver());
+            FirebaseHelper.instance.setProfileImage(model.getDriverAvatar(), holder.imageV);
         }
 
         holder.directionTV.setText(direction);
