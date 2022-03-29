@@ -131,10 +131,9 @@ public class ResultActivity extends AppCompatActivity {
                             }
                         }
                         // load docs
+                        tripsList.clear();
                         for (int i = 0; i < matchingDocs.size(); i++) {
-                            String fromS = (String) matchingDocs.get(i).get("from");
-                            String toS = (String) matchingDocs.get(i).get("to");
-                            matchingDocs.get(i).get("name");
+                            System.out.println(matchingDocs.size() + " hello!!!");
 
                             Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
                             LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
@@ -146,6 +145,7 @@ public class ResultActivity extends AppCompatActivity {
                                 if(!tripsList.contains(trip)){
                                     tripsList.add(trip);
                                 }
+
                                 tripAdapter.notifyDataSetChanged();
                             }
                         }
