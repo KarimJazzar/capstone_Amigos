@@ -1,6 +1,8 @@
 package com.amigos.myapplication.models;
 
-public class Geopoint {
+import java.io.Serializable;
+
+public class Geopoint implements Serializable {
     private double latitude;
     private double longitude;
 

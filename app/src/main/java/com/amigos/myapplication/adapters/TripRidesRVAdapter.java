@@ -15,10 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.MessagesActivity;
+import com.amigos.myapplication.activities.TripRideDetailActivity;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Trip;
+
+import java.io.Serializable;
 
 public class TripRidesRVAdapter extends ListAdapter<Trip, TripRidesRVAdapter.ViewHolder> {
     private TripRidesRVAdapter.OnItemClickListener listener;
@@ -83,25 +86,17 @@ public class TripRidesRVAdapter extends ListAdapter<Trip, TripRidesRVAdapter.Vie
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     Context context = v.getContext();
-                    /*
-                    Intent intent = new Intent(context, MessagesActivity.class);
-                    intent.putExtra("msg_id", getChatAt(position).getMsgID());
-
-                    if (FirebaseHelper.instance.getUserId().equals(getChatAt(position).getUsers().get(0))) {
-                        intent.putExtra("msg_name", getChatAt(position).getPassenger());
-                    } else {
-                        intent.putExtra("msg_name", getChatAt(position).getDriver());
-                    }
-
+                    Intent intent = new Intent(context, TripRideDetailActivity.class);
+                    intent.putExtra("header", typeTV.getText().toString());
+                    intent.putExtra("trip_obj", getTripAt(position));
                     context.startActivity(intent);
-                    */
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Chat model);
+        void onItemClick(Trip model);
     }
 
     public void setOnItemClickListener(TripRidesRVAdapter.OnItemClickListener listener) {

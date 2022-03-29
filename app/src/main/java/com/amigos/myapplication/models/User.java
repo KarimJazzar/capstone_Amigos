@@ -2,7 +2,9 @@ package com.amigos.myapplication.models;
 
 import android.graphics.Bitmap;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String phoneNuber;

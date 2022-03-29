@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Capstone_Amigos">
         <activity
-            android:name=".TripRideDetailActivity"
+            android:name=".activities.TripRideDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MessagesActivity"
