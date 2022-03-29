@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.amigos.myapplication.R;
@@ -45,6 +47,7 @@ public class ResultActivity extends AppCompatActivity {
     RecyclerView trips;
     ArrayList<Trip> tripsList;
     TripAdapter tripAdapter;
+    Button resultBack;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -58,6 +61,12 @@ public class ResultActivity extends AppCompatActivity {
         LatLng fromT = intent.getParcelableExtra("fromLatLong");
         LatLng toT = intent.getParcelableExtra("toLatLong");
 
+
+        resultBack = findViewById(R.id.resultBack);
+
+        resultBack.setOnClickListener(view ->{
+            this.finish();
+        });
 
         trips = findViewById(R.id.tripsResult);
         tripsList = new ArrayList<>();
