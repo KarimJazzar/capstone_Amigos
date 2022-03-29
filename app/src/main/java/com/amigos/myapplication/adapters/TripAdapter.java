@@ -2,6 +2,7 @@ package com.amigos.myapplication.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.activities.BookingActivity;
+import com.amigos.myapplication.activities.MessagesActivity;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
+import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Trip;
 
 import org.w3c.dom.Text;
@@ -22,8 +26,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> {
-    private ArrayList<Trip> data=new ArrayList<>();
-
+    private ArrayList<Trip> data = new ArrayList<>();
+    private TripAdapter.OnItemClickListener listener;
     public TripAdapter(ArrayList<Trip>data)
     {
         this.data=data;
@@ -43,9 +47,19 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
             price = view.findViewById(R.id.chatNameRV2);
             seats = view.findViewById(R.id.chatMsgRV2);
             profPic = view.findViewById(R.id.chatImageRV);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, BookingActivity.class);
+                    intent.putExtra("trip_obj", data.get(position));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
-
 
     @NonNull
     @Override
@@ -64,11 +78,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
         FirebaseHelper.instance.setProfileImage(data.get(position).getDriver().getProfilePicture(), holder.profPic);
     }
 
-
-
     @Override
     public int getItemCount() {
         return data.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Chat model);
+    }
+
+    public void setOnItemClickListener(TripAdapter.OnItemClickListener listener) {
+        this.listener = listener;
+    }
 }
+
