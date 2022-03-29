@@ -67,7 +67,7 @@ public class ResultActivity extends AppCompatActivity {
         //List<DocumentSnapshot> docsFrom = getRadiusTrips(centerFrom,"from geohash", "from lat", "from lng");
         //List<DocumentSnapshot> docsTo = getRadiusTrips(centerTo,"to geohash", "to lat", "to lng");
 
-        getRadiusTrips(centerFrom,"from geohash", "from lat", "from lng", inputDate);
+        getRadiusTrips(centerFrom,"fromGeohash",inputDate);
 
 
         FirebaseHelper.instance.getDB().collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -102,7 +102,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void getRadiusTrips(GeoLocation center, String whereGeo, String whereLat, String whereLng, String inputDate){
+    private void getRadiusTrips(GeoLocation center, String whereGeo, String inputDate){
         final double radiusInM = 50 * 1000;
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
@@ -111,7 +111,6 @@ public class ResultActivity extends AppCompatActivity {
                     .orderBy(whereGeo)
                     .startAt(b.startHash)
                     .endAt(b.endHash);
-
             tasks.add(q.get());
         }
         List<DocumentSnapshot> matchingDocs = new ArrayList<>();
@@ -120,8 +119,11 @@ public class ResultActivity extends AppCompatActivity {
                     for (Task<QuerySnapshot> task : tasks) {
                         QuerySnapshot snap = task.getResult();
                         for (DocumentSnapshot doc : snap.getDocuments()) {
-                            double lat = doc.getDouble(whereLat);
-                            double lng = doc.getDouble(whereLng);
+                            Map<String, Double> map = new HashMap<>();
+                            map = (Map<String, Double>) doc.get("fromPoints");
+                            double lat = map.get("latitude");
+                            double lng = map.get("longitude");
+                            System.out.println(lat + " hello " + lng);
                             GeoLocation docLocation = new GeoLocation(lat, lng);
                             double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
                             if (distanceInM <= radiusInM) {
@@ -130,22 +132,18 @@ public class ResultActivity extends AppCompatActivity {
                         }
                         // load docs
                         for (int i = 0; i < matchingDocs.size(); i++) {
-                            System.out.println(matchingDocs.get(i).get("to"));
                             String fromS = (String) matchingDocs.get(i).get("from");
                             String toS = (String) matchingDocs.get(i).get("to");
                             matchingDocs.get(i).get("name");
-                            HashMap<String, String> map = (HashMap<String, String>) matchingDocs.get(i).get("driver");
+
                             Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
                             LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
                             System.out.println(dateTimeFormatter.format(ldt));
 
                             if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
-                                Trip tempTrip = new Trip();
-                                tempTrip.setFrom(fromS);
-                                tempTrip.setTo(toS);
-                                //tempTrip.getDriver(map.get("driver"))
-                                tripsList.add(tempTrip);
+                                Trip trip = matchingDocs.get(i).toObject(Trip.class);
+                                tripsList.add(trip);
                                 tripAdapter.notifyDataSetChanged();
                             }
                         }

@@ -40,6 +40,8 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
@@ -146,6 +148,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 fromGP.setLatitude(fLat);
                 fromGP.setLongitude(fLong);
                 trip.setFromPoints(fromGP);
+                String fromHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(fLat, fLong));
+                trip.setFromGeohash(fromHash);
             }
 
             if(tName == null || tName.equals("")) {
@@ -158,6 +162,8 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 toGP.setLatitude(tLat);
                 toGP.setLongitude(tLong);
                 trip.setToPoints(toGP);
+                String toHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(tLat, tLong));
+                trip.setToGeohash(toHash);
             }
 
             try {

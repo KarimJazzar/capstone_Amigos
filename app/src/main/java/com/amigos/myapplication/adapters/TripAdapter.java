@@ -1,5 +1,6 @@
 package com.amigos.myapplication.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.models.Trip;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> {
@@ -24,15 +27,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView driver;
-        private TextView from;
-        private TextView to;
+        private TextView driverName;
+        private TextView date;
+        private TextView price;
+        private TextView seats;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
-            //driver =view.findViewById(R.id.driverName);
-            //from =view.findViewById(R.id.tripFrom);
-            //to = view.findViewById(R.id.tripTo);
+            driverName = view.findViewById(R.id.chatNameRV);
+            date = view.findViewById(R.id.chatMsgRV);
+            price = view.findViewById(R.id.chatNameRV2);
+            seats = view.findViewById(R.id.chatMsgRV2);
         }
     }
 
@@ -40,15 +45,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_trips_rides_cell,parent,false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_result_cell,parent,false);
             return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        //holder.driver.setText(data.get(position).getDriver());
-        holder.from.setText(String.valueOf(data.get(position).getFrom()));
-        holder.to.setText(String.valueOf(data.get(position).getTo()));
+        holder.driverName.setText(data.get(position).getDriver().getFirstName() + " " + data.get(position).getDriver().getLastName());
+        holder.date.setText(data.get(position).getDate().toString());
+        holder.price.setText("$" + data.get(position).getPrice().toString());
+        holder.seats.setText(String.valueOf(data.get(position).getSeats()) + " seats");
     }
 
 
