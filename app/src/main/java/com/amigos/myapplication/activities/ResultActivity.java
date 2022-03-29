@@ -70,26 +70,26 @@ public class ResultActivity extends AppCompatActivity {
         getRadiusTrips(centerFrom,"fromGeohash",inputDate);
 
 
-        FirebaseHelper.instance.getDB().collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        HashMap<String, String> map = (HashMap<String, String>) document.getData().get("driver");
-                        Timestamp timestamp = document.getTimestamp("date");
-                        LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
-                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
-                        Log.e("ERROR", dateTimeFormatter.format(ldt));
-
-                        if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
-                            //tripsList.add(new Trip(fromTrip,toTrip,map.get("name")));
-                            tripAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-        });
+//        FirebaseHelper.instance.getDB().collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @RequiresApi(api = Build.VERSION_CODES.O)
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful()){
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        HashMap<String, String> map = (HashMap<String, String>) document.getData().get("driver");
+//                        Timestamp timestamp = document.getTimestamp("date");
+//                        LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
+//                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
+//                        Log.e("ERROR", dateTimeFormatter.format(ldt));
+//
+//                        if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
+//                            //tripsList.add(new Trip(fromTrip,toTrip,map.get("name")));
+//                            tripAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                }
+//            }
+//        });
         setAdapter();
     }
 
