@@ -74,7 +74,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
         holder.driverName.setText(data.get(position).getDriver().getFirstName() + " " + data.get(position).getDriver().getLastName());
         holder.date.setText(data.get(position).getDate().toString());
         holder.price.setText("$" + data.get(position).getPrice().toString());
-        holder.seats.setText(String.valueOf(data.get(position).getSeats()) + " seats");
+        holder.seats.setText(String.valueOf(data.get(position).getSeats()) + " seats available");
         FirebaseHelper.instance.setProfileImage(data.get(position).getDriver().getProfilePicture(), holder.profPic);
     }
 

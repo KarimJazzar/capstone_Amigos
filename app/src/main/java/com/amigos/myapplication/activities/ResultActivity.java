@@ -88,8 +88,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         Intent intent = getIntent();
-        String fromTrip = intent.getStringExtra("from");
-        String toTrip = intent.getStringExtra("to");
+        String seats = intent.getStringExtra("seats");
         String inputDate = intent.getStringExtra("date");
          fromT = intent.getParcelableExtra("fromLatLong");
          toT = intent.getParcelableExtra("toLatLong");
@@ -112,7 +111,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         //List<DocumentSnapshot> docsFrom = getRadiusTrips(centerFrom,"from geohash", "from lat", "from lng");
         //List<DocumentSnapshot> docsTo = getRadiusTrips(centerTo,"to geohash", "to lat", "to lng");
 
-        getRadiusTrips(centerFrom,"fromGeohash",inputDate);
+        getRadiusTrips(centerFrom,"fromGeohash",inputDate, seats);
 
 
 //        FirebaseHelper.instance.getDB().collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -251,7 +250,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void getRadiusTrips(GeoLocation center, String whereGeo, String inputDate){
+    private void getRadiusTrips(GeoLocation center, String whereGeo, String inputDate, String seats){
         final double radiusInM = 50 * 1000;
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
@@ -282,16 +281,13 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                         // load docs
                         tripsList.clear();
                         for (int i = 0; i < matchingDocs.size(); i++) {
-                            System.out.println(matchingDocs.size() + " hello!!!");
-
                             Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
                             LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
                             System.out.println(dateTimeFormatter.format(ldt));
-
                             if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
                                 Trip trip = matchingDocs.get(i).toObject(Trip.class);
-                                if(!tripsList.contains(trip)){
+                                if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
                                     tripsList.add(trip);
                                 }
 
