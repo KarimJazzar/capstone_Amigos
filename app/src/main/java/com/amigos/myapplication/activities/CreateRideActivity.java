@@ -262,7 +262,6 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             this.finish();
         });
 
-        checkLocationPermission();
 
         Places.initialize(getApplicationContext(), getString(R.string.google_geo_api_key));
 
