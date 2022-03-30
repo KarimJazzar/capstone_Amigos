@@ -162,6 +162,7 @@ public class SearchFragment extends Fragment {
                 intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
                 intent.putExtra("toLatLong", new LatLng(tLat,tLong));
                 intent.putExtra("date", inputDate);
+                intent.putExtra("seats", txtSeats.getText().toString());
                 startActivity(intent);
 
             }
