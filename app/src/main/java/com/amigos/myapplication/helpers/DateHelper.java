@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DateHelper {
-
     public static String getCurrentDateAsString() {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd - MMM - yyyy", Locale.getDefault());

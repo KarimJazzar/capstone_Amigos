@@ -80,8 +80,7 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
@@ -92,6 +91,8 @@ public class SearchFragment extends Fragment {
         TextView openCreateRide = view.findViewById(R.id.openCreateRideBtn);
         TextView dateTV = view.findViewById(R.id.searchDate);
         Button findTrip = view.findViewById(R.id.btnFind);
+
+        dateTV.setText(DateHelper.getCurrentDateAsString());
 
         fromTrip = view.findViewById(R.id.searchFrom);
         toTrip = view.findViewById(R.id.searchTo);
@@ -150,11 +151,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(txtSeats.getText().toString()=="") {
-
                     txtSeats.setText(""+1);
                 }else {
-                    txtSeats.setText(String.valueOf(Integer.parseInt(txtSeats.getText().toString())+1));
-
+                    if(!txtSeats.getText().toString().equals("8")) {
+                        txtSeats.setText(String.valueOf(Integer.parseInt(txtSeats.getText().toString())+1));
+                    }
                 }
             }
         });
