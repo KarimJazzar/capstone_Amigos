@@ -3,6 +3,8 @@ package com.amigos.myapplication.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.BookingActivity;
 import com.amigos.myapplication.activities.MessagesActivity;
+import com.amigos.myapplication.activities.ResultActivity;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Chat;
@@ -23,6 +26,7 @@ import com.amigos.myapplication.models.Trip;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> {
@@ -54,6 +58,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
                     int position = getAdapterPosition();
                     Context context = v.getContext();
                     Intent intent = new Intent(context, BookingActivity.class);
+                    intent.putExtra("trip_id", ResultActivity.tripIDs.get(position));
                     intent.putExtra("trip_obj", data.get(position));
                     context.startActivity(intent);
                 }

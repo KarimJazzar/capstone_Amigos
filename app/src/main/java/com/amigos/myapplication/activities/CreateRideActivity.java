@@ -33,6 +33,7 @@ import com.amigos.myapplication.helpers.DateTimeHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Geopoint;
+import com.amigos.myapplication.models.Passenger;
 import com.amigos.myapplication.models.Trip;
 import com.amigos.myapplication.models.User;
 import com.directions.route.AbstractRouting;
@@ -187,7 +188,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 return;
             }
 
-            List<User> passengers = new ArrayList<>();
+            List<Passenger> passengers = new ArrayList<>();
             trip.setPassengers(passengers);
 
             User driver = UserHelper.user;

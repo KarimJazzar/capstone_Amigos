@@ -19,9 +19,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
@@ -44,22 +42,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-//import com.google.type.LatLng;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDateTime;
@@ -73,14 +65,15 @@ import java.util.Map;
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
 
     private GoogleMap googleMap;
-
-    MapView resultMV;
-    RecyclerView trips;
-    ArrayList<Trip> tripsList;
-    TripAdapter tripAdapter;
-    Button resultBack;
-    LatLng fromT,toT;
-    private List<Polyline> polylines=null;
+    private MapView resultMV;
+    private RecyclerView trips;
+    private ArrayList<Trip> tripsList;
+    private TripAdapter tripAdapter;
+    private Button resultBack;
+    private LatLng fromT,toT;
+    private List<Polyline> polylines = null;
+    public static Integer passengerNumber;
+    public static List<String> tripIDs = new ArrayList<>();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -90,8 +83,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         Intent intent = getIntent();
         String seats = intent.getStringExtra("seats");
         String inputDate = intent.getStringExtra("date");
-         fromT = intent.getParcelableExtra("fromLatLong");
-         toT = intent.getParcelableExtra("toLatLong");
+        fromT = intent.getParcelableExtra("fromLatLong");
+        toT = intent.getParcelableExtra("toLatLong");
+
+        passengerNumber = Integer.parseInt(seats);
 
         trips = findViewById(R.id.tripsResult);
 
@@ -113,27 +108,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
         getRadiusTrips(centerFrom,"fromGeohash",inputDate, seats);
 
-
-//        FirebaseHelper.instance.getDB().collection("Trips").whereEqualTo("from",fromTrip).whereEqualTo("to",toTrip).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @RequiresApi(api = Build.VERSION_CODES.O)
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if(task.isSuccessful()){
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        HashMap<String, String> map = (HashMap<String, String>) document.getData().get("driver");
-//                        Timestamp timestamp = document.getTimestamp("date");
-//                        LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
-//                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
-//                        Log.e("ERROR", dateTimeFormatter.format(ldt));
-//
-//                        if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
-//                            //tripsList.add(new Trip(fromTrip,toTrip,map.get("name")));
-//                            tripAdapter.notifyDataSetChanged();
-//                        }
-//                    }
-//                }
-//            }
-//        });
         setAdapter();
 
         resultMV.onCreate(savedInstanceState);
@@ -271,16 +245,20 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                     }
                 }
 
+
                 // load docs
                 tripsList.clear();
+                tripIDs.clear();
                 for (int i = 0; i < matchingDocs.size(); i++) {
                     Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
                     LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
                     System.out.println(dateTimeFormatter.format(ldt));
+
                     if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
                         Trip trip = matchingDocs.get(i).toObject(Trip.class);
                         if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
+                            tripIDs.add(matchingDocs.get(i).getId());
                             tripsList.add(trip);
                         }
 
@@ -288,6 +266,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                     }
                 }
 
+                Log.e("ERROR", tripIDs.toString());
             }
         });
     }

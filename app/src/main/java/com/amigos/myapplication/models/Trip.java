@@ -17,7 +17,7 @@ public class Trip implements Serializable {
     private Double price;
     private List<String> conditions;
     private User driver;
-    private List<User> passengers;
+    private List<Passenger> passengers;
     private List<String> users;
     private String fromGeohash;
     private String toGeohash;
@@ -103,11 +103,11 @@ public class Trip implements Serializable {
         this.driver = driver;
     }
 
-    public List<User> getPassengers() {
+    public List<Passenger> getPassengers() {
         return passengers;
     }
 
-    public void setPassengers(List<User> passengers) {
+    public void setPassengers(List<Passenger> passengers) {
         this.passengers = passengers;
     }
 
