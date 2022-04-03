@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.ConditionRVAdapter;
+import com.amigos.myapplication.adapters.PassengerRVAdapter;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Trip;
@@ -19,6 +20,7 @@ public class TripRideDetailActivity extends AppCompatActivity {
 
     private RecyclerView conditionRV, passengerRV;
     private ConditionRVAdapter conditionAdapter  = new ConditionRVAdapter();
+    private PassengerRVAdapter passengerRVAdapter = new PassengerRVAdapter();
     private TextView titleTV, driveTV, dateTV, timeTV, seatsTV, priceTV;
     private Button deleteBtn, backBtn;
     private ImageView avatar;
@@ -57,6 +59,12 @@ public class TripRideDetailActivity extends AppCompatActivity {
             conditionRV.setLayoutManager(new LinearLayoutManager(TripRideDetailActivity.this));
             conditionRV.setHasFixedSize(true);
             conditionRV.setAdapter(conditionAdapter);
+
+            passengerRVAdapter.submitList(trip.getPassengers());
+            passengerRV.setLayoutManager(new LinearLayoutManager(TripRideDetailActivity.this));
+            passengerRV.setHasFixedSize(true);
+            passengerRV.setAdapter(passengerRVAdapter);
+
         }
 
         backBtn.setOnClickListener(view ->{

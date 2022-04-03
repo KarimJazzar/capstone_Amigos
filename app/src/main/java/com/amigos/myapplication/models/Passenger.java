@@ -1,9 +1,20 @@
 package com.amigos.myapplication.models;
 
-public class Passenger {
+import java.io.Serializable;
+
+public class Passenger implements Serializable {
+    private String userId;
     private String name;
     private String profilePic;
     private Integer seats;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

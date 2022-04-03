@@ -159,6 +159,7 @@ public class BookingActivity extends AppCompatActivity {
 
             if(resultCode == Activity.RESULT_OK){
                 Passenger passenger = new Passenger();
+                passenger.setUserId(FirebaseHelper.instance.getUserId());
                 passenger.setName(UserHelper.getUserFullname());
                 passenger.setSeats(ResultActivity.passengerNumber);
                 passenger.setProfilePic(UserHelper.user.getProfilePicture());

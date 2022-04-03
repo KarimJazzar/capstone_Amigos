@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,8 @@ public class TripsFragment extends Fragment {
         CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Trips");
         Query yourChat =  chatRef.whereArrayContains("users", id);
 
+        Log.e("ERROR", "" + FirebaseHelper.instance.getUserId());
+
         yourChat.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -95,6 +98,7 @@ public class TripsFragment extends Fragment {
                 QuerySnapshot documents = task.getResult();
                 for(DocumentSnapshot document : documents) {
                     tripList.add(document.toObject(Trip.class));
+                    Log.e("ERROR", "" + tripList);
                 }
 
                 tripAdapter.submitList(tripList);
