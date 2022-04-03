@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,7 +47,7 @@ import java.util.UUID;
 public class BookingActivity extends AppCompatActivity {
     private String tripId;
     private Button btnBook, bookingBack;
-    private TextView nameTV, timeTV, seatTV, priceTV;
+    private TextView nameTV, timeTV, seatTV, priceTV, thanksTV;
     private ImageView bookingImage;
     private List<TextView> conditionTV = new ArrayList<>();
     private double totalPrice = 00.00;
@@ -66,6 +67,7 @@ public class BookingActivity extends AppCompatActivity {
         timeTV = findViewById(R.id.bookingTime);
         seatTV = findViewById(R.id.bookingSeats);
         priceTV = findViewById(R.id.bookingPrice);
+        thanksTV = findViewById(R.id.bookingThanks);
         bookingImage = findViewById(R.id.bookingImage);
 
         conditionTV.add(findViewById(R.id.bookingCondition1));
@@ -79,6 +81,7 @@ public class BookingActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             tripId = extras.getString("trip_id");
+            trip = (Trip) extras.getSerializable("trip_obj");
 
             DocumentReference tripRef = FirebaseHelper.instance.getDB().collection("Trips").document(tripId);
 
@@ -92,7 +95,17 @@ public class BookingActivity extends AppCompatActivity {
                 }
             });
 
-            trip = (Trip) extras.getSerializable("trip_obj");
+            if (trip.getUsers().get(0).equals(FirebaseHelper.instance.getUserId())) {
+                btnBook.setVisibility(View.GONE);
+            } else {
+                for(Passenger p: trip.getPassengers()) {
+                    if(p.getUserID().equals(FirebaseHelper.instance.getUserId())) {
+                        btnBook.setVisibility(View.GONE);
+                        thanksTV.setText("Already Booked");
+                        thanksTV.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
 
             updateView();
         }
@@ -159,7 +172,7 @@ public class BookingActivity extends AppCompatActivity {
 
             if(resultCode == Activity.RESULT_OK){
                 Passenger passenger = new Passenger();
-                passenger.setUserId(FirebaseHelper.instance.getUserId());
+                passenger.setUserID(FirebaseHelper.instance.getUserId());
                 passenger.setName(UserHelper.getUserFullname());
                 passenger.setSeats(ResultActivity.passengerNumber);
                 passenger.setProfilePic(UserHelper.user.getProfilePicture());
@@ -224,6 +237,9 @@ public class BookingActivity extends AppCompatActivity {
                         //Log.w(TAG, "Error writing document", e);
                     }
                 });
+
+                btnBook.setVisibility(View.GONE);
+                thanksTV.setVisibility(View.VISIBLE);
 
                 Toast.makeText(this, "Payment Made Successfully!", Toast.LENGTH_LONG).show();
             } else {

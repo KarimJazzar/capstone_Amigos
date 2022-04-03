@@ -82,6 +82,7 @@
     <string name="trip_details">Trip Details:</string>
     <string name="trip_passengers">Passengers:</string>
     <string name="delete">Delete</string>
+    <string name="booking_thanks">Thank you for booking!</string>
     <string name="empty"></string>
     <string name="title_activity_find_trips">FindTrips</string>
     <!-- Strings used for fragments for navigation -->

@@ -3,17 +3,17 @@ package com.amigos.myapplication.models;
 import java.io.Serializable;
 
 public class Passenger implements Serializable {
-    private String userId;
+    private String userID;
     private String name;
     private String profilePic;
     private Integer seats;
 
-    public String getUserId() {
-        return userId;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getName() {

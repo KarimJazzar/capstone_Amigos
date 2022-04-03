@@ -178,6 +178,18 @@
                     android:textSize="17dp" />
             </LinearLayout>
 
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/bookingThanks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/booking_thanks"
+                android:textSize="17dp" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnBook"
                 android:layout_width="wrap_content"

@@ -29,12 +29,12 @@ public class PassengerRVAdapter extends ListAdapter<Passenger, PassengerRVAdapte
     private static final DiffUtil.ItemCallback<Passenger> DIFF_CALLBACK = new DiffUtil.ItemCallback<Passenger>() {
         @Override
         public boolean areItemsTheSame(Passenger oldItem, Passenger newItem) {
-            return oldItem.getUserId().equals(newItem.getUserId());
+            return oldItem.getUserID().equals(newItem.getUserID());
         }
 
         @Override
         public boolean areContentsTheSame(Passenger oldItem, Passenger newItem) {
-            return oldItem.getUserId().equals(newItem.getUserId());
+            return oldItem.getUserID().equals(newItem.getUserID());
         }
     };
 
