@@ -27,7 +27,13 @@ import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.CreateRideActivity;
 import com.amigos.myapplication.activities.ResultActivity;
 import com.amigos.myapplication.adapters.AutoCompleteAdapter;
+import com.amigos.myapplication.helpers.AlertDialogHelper;
+import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.DateTimeHelper;
+import com.amigos.myapplication.models.Geopoint;
+import com.amigos.myapplication.models.Trip;
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -44,6 +50,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -155,12 +162,40 @@ public class SearchFragment extends Fragment {
         findTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                if(fName == null || fName.equals("")){
+                    AlertDialogHelper.show(getContext(), "Invalid From", "Plase select a valid direction.");
+                    return;
+                }
+
+                if(tName == null || tName.equals("")) {
+                    AlertDialogHelper.show(getContext(), "Invalid To", "Plase select a valid direction.");
+                    return;
+                }
+
+                if(txtSeats.getText().equal("0")) {
+                    AlertDialogHelper.show(getContext(), "Invalid Seat", "Invalid number of passengers.");
+                    return;
+                }
+                */
+
+                Trip tempTrip = new Trip();
+                tempTrip.setFrom(fName);
+                tempTrip.setTo(tName);
+                try {
+                    tempTrip.setDate(DateHelper.stringToDate(dateTV.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 String from = fName;
                 String to = tName;
                 String inputDate = dateTV.getText().toString();
                 Intent intent = new Intent(getActivity(), ResultActivity.class);
-                intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
-                intent.putExtra("toLatLong", new LatLng(tLat,tLong));
+                //intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
+                intent.putExtra("fromLatLong", new LatLng(18.5263886,-69.8157937));
+                //intent.putExtra("toLatLong", new LatLng(tLat,tLong));
+                intent.putExtra("toLatLong", new LatLng(18.484553,-69.9143632));
                 intent.putExtra("date", inputDate);
                 intent.putExtra("seats", txtSeats.getText().toString());
                 startActivity(intent);

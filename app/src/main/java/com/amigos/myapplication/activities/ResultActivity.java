@@ -213,11 +213,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         } else {
             return true;
         }
-
-
-
-
-
     }
 
     public void Findroutes(LatLng Start, LatLng End) {
@@ -225,10 +220,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         if(Start==null || End==null) {
             Toast.makeText(ResultActivity.this,"Unable to get location", Toast.LENGTH_LONG).show();
         }
-        else
-        {
-
-
+        else {
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
                     .withListener(this)
@@ -261,51 +253,49 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                     .endAt(b.endHash);
             tasks.add(q.get());
         }
+
         List<DocumentSnapshot> matchingDocs = new ArrayList<>();
-        Tasks.whenAllComplete(tasks)
-                .addOnCompleteListener(t -> {
-                    for (Task<QuerySnapshot> task : tasks) {
-                        QuerySnapshot snap = task.getResult();
-                        for (DocumentSnapshot doc : snap.getDocuments()) {
-                            Map<String, Double> map = new HashMap<>();
-                            map = (Map<String, Double>) doc.get("fromPoints");
-                            double lat = map.get("latitude");
-                            double lng = map.get("longitude");
-                            System.out.println(lat + " hello " + lng);
-                            GeoLocation docLocation = new GeoLocation(lat, lng);
-                            double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
-                            if (distanceInM <= radiusInM) {
-                                matchingDocs.add(doc);
-                            }
-                        }
-                        // load docs
-                        tripsList.clear();
-                        for (int i = 0; i < matchingDocs.size(); i++) {
-                            Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
-                            LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
-                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
-                            System.out.println(dateTimeFormatter.format(ldt));
-                            if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
-                                Trip trip = matchingDocs.get(i).toObject(Trip.class);
-                                if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
-                                    tripsList.add(trip);
-                                }
+        Tasks.whenAllComplete(tasks).addOnCompleteListener(t -> {
+            for (Task<QuerySnapshot> task : tasks) {
+                QuerySnapshot snap = task.getResult();
+                for (DocumentSnapshot doc : snap.getDocuments()) {
+                    Map<String, Double> map = new HashMap<>();
+                    map = (Map<String, Double>) doc.get("fromPoints");
+                    double lat = map.get("latitude");
+                    double lng = map.get("longitude");
 
-                                tripAdapter.notifyDataSetChanged();
-                            }
-                        }
-
+                    GeoLocation docLocation = new GeoLocation(lat, lng);
+                    double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
+                    if (distanceInM <= radiusInM) {
+                        matchingDocs.add(doc);
                     }
-                });
+                }
+
+                // load docs
+                tripsList.clear();
+                for (int i = 0; i < matchingDocs.size(); i++) {
+                    Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
+                    LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
+                    System.out.println(dateTimeFormatter.format(ldt));
+                    if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
+                        Trip trip = matchingDocs.get(i).toObject(Trip.class);
+                        if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
+                            tripsList.add(trip);
+                        }
+
+                        tripAdapter.notifyDataSetChanged();
+                    }
+                }
+
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
         }else {
 
@@ -316,10 +306,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
         }
     }
@@ -327,10 +314,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onPause() {
         super.onPause();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
         }
     }
@@ -338,10 +322,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onStop() {
         super.onStop();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
         }
     }
@@ -349,10 +330,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
         }
     }
@@ -361,21 +339,16 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
-        }    }
+        }
+    }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             resultMV.onStart();
         }
     }
@@ -402,10 +375,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
 
-
         if(polylines!=null) {
             polylines.clear();
         }
+
         PolylineOptions polyOptions = new PolylineOptions();
         LatLng polylineStartLatLng=null;
         LatLng polylineEndLatLng=null;
@@ -414,9 +387,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         polylines = new ArrayList<>();
         //add route(s) to the map using polyline
         for (int i = 0; i <route.size(); i++) {
-
-            if(i==shortestRouteIndex)
-            {
+            if(i==shortestRouteIndex) {
                 polyOptions.color(getResources().getColor(R.color.brown));
                 polyOptions.width(12);
                 polyOptions.addAll(route.get(shortestRouteIndex).getPoints());
@@ -452,7 +423,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         googleMap.animateCamera(cu);
 
     }
-
 
     @Override
     public void onRoutingCancelled() {

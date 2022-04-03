@@ -1,5 +1,6 @@
 package com.amigos.myapplication.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +16,14 @@ import android.widget.Toast;
 import com.amigos.myapplication.configurations.PaypalClientIDConfigClass;
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.helpers.UserHelper;
+import com.amigos.myapplication.models.Chat;
+import com.amigos.myapplication.models.Message;
 import com.amigos.myapplication.models.Trip;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -23,7 +31,10 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class BookingActivity extends AppCompatActivity {
 
@@ -31,7 +42,7 @@ public class BookingActivity extends AppCompatActivity {
     private TextView nameTV, timeTV, seatTV, priceTV;
     private ImageView bookingImage;
     private List<TextView> conditionTV = new ArrayList<>();
-    private double testAmount = 78.60;
+    private double testAmount = 00.00;
     private int PAYPAL_REQ_CODE = 12;
     private Trip trip;
     private static PayPalConfiguration paypalConfig = new PayPalConfiguration()
@@ -66,6 +77,8 @@ public class BookingActivity extends AppCompatActivity {
             seatTV.setText(trip.getSeats() + " open seats");
             priceTV.setText("" + trip.getPrice());
 
+            testAmount = trip.getPrice();
+
             FirebaseHelper.instance.setProfileImage(trip.getDriver().getProfilePicture(), bookingImage);
 
             int i = 0;
@@ -95,8 +108,7 @@ public class BookingActivity extends AppCompatActivity {
 
     //Method to open the payment screen
     private void PaypalpaymentsMethod() {
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(testAmount), "CAD"
-                , "Test Payment", PayPalPayment.PAYMENT_INTENT_SALE);
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(testAmount), "CAD", "Test Payment", PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, paypalConfig);
@@ -115,6 +127,60 @@ public class BookingActivity extends AppCompatActivity {
         if (requestCode == PAYPAL_REQ_CODE){
 
             if(resultCode == Activity.RESULT_OK){
+                Chat chat = new Chat();
+                List<String> users = new ArrayList<>();
+                final String randomName = UUID.randomUUID().toString();
+
+                users.add(trip.getUsers().get(0));
+                users.add(FirebaseHelper.instance.getUserId());
+                chat.setUsers(users);
+
+                chat.setDriver(trip.getDriver().getFirstName() + " " + trip.getDriver().getLastName());
+                chat.setDriverAvatar(trip.getDriver().getProfilePicture());
+                chat.setPassenger(UserHelper.getUserFullname());
+                chat.setPassengerAvatar(UserHelper.user.getProfilePicture());
+                chat.setFrom(trip.getFrom());
+                chat.setTo(trip.getTo());
+                chat.setMsgID(randomName);
+
+                Message msg = new Message();
+                chat.setMessages(msg);
+
+                FirebaseHelper.instance.getDB().collection("Chat").document(randomName)
+                .set(chat)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
+                List<Message> messages = new ArrayList<>();
+                Map<String,Object> msgMap = new HashMap<>();
+                msgMap.put("messages", messages);
+
+                FirebaseHelper.instance.getDB().collection("Messages").document(randomName)
+                .set(msgMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
                 Toast.makeText(this, "Payment Made Successfully!", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Payment Unsuccessful, \n Please Try Again", Toast.LENGTH_LONG).show();
