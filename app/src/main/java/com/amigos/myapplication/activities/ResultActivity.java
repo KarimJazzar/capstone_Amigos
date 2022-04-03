@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ResultActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
 
@@ -217,6 +218,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void getRadiusTrips(GeoLocation center, String whereGeo, String inputDate, String seats){
+        String zero = "0";
+
         final double radiusInM = 50 * 1000;
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
@@ -253,9 +256,21 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                     Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
                     LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
-                    System.out.println(dateTimeFormatter.format(ldt));
+                    //System.out.println(dateTimeFormatter.format(ldt));
+                    //System.out.println(matchingDocs.get(i).toString() + " dio");
 
-                    if(inputDate.equalsIgnoreCase(dateTimeFormatter.format(ldt))){
+                    StringBuilder stringBuilder = new StringBuilder(inputDate);
+                    if(inputDate.substring(1,2).equalsIgnoreCase(" ")){
+                        stringBuilder.insert(0,"0");
+                    }
+
+                    StringBuilder stringBuilder1 = new StringBuilder(dateTimeFormatter.format(ldt));
+
+                    System.out.println(stringBuilder + " jojo "+ stringBuilder1);
+
+
+                    if(stringBuilder.toString().equalsIgnoreCase(stringBuilder1.toString())){
+                        System.out.println("jotarou");
                         Trip trip = matchingDocs.get(i).toObject(Trip.class);
                         if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
                             tripIDs.add(matchingDocs.get(i).getId());
