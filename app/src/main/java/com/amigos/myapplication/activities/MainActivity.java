@@ -29,12 +29,10 @@ public class MainActivity extends AppCompatActivity {
         //Initializing Crisp Chat Box
         Crisp.configure(getApplicationContext(), "566b6f31-c4f5-4b3d-a7c8-61e2c4776f97");
 
-
         //Google App Rating Dialog Box
-
         AppRate.with(this)
                 .setInstallDays(0) // default 10, 0 means install day.
-                .setLaunchTimes(5) // default 10
+                .setLaunchTimes(10) // default 10
                 .setRemindInterval(2) // default 1
                 .setShowLaterButton(true) // default true
                 .setDebug(false) // default false
