@@ -83,6 +83,9 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     public static Integer passengerNumber;
     public static List<String> tripIDs = new ArrayList<>();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    private ArrayList<Trip> tempList;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         });
 
         tripsList = new ArrayList<>();
+        tempList = new ArrayList<>();
 
         final GeoLocation centerFrom = new GeoLocation(fromT.latitude, fromT.longitude);
         final GeoLocation centerTo = new GeoLocation(toT.latitude, toT.longitude);
@@ -120,6 +124,10 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 getRadiusTrips(centerFrom,"fromGeohash",inputDate, seats);
+                if(!tripsList.isEmpty()){
+                    System.out.println("hello world " + tripsList);
+                }
+
             }
         });
 
@@ -303,7 +311,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                         tripAdapter.notifyDataSetChanged();
                     }
                 }
-
                 Log.e("ERROR", tripIDs.toString());
             }
         });

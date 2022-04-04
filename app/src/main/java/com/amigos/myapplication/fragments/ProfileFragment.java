@@ -105,6 +105,7 @@ public class ProfileFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String userid = user.getUid();
         storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
 
         btnLogOut = view.findViewById(R.id.profileLogout);
         firstName = view.findViewById(R.id.profileFirstName);
@@ -171,7 +172,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Map<String, Object> data1 = new HashMap<>();
-                CollectionReference cities = db.collection("User Info");
+                CollectionReference userInfo = db.collection("User Info");
                 String firstN = firstName.getText().toString();
                 String lastN = lastName.getText().toString();
                 String numb = number.getText().toString();
@@ -181,16 +182,20 @@ public class ProfileFragment extends Fragment {
                 data1.put("last name", lastN);
                 data1.put("number", numb);
                 data1.put("email", mail);
-                String profilePicId = (String) details.get("profile picture");
-                StorageReference pathReference = storageRef.child("images/" + profilePicId);
-                pathReference.delete();
-                final String randomName = UUID.randomUUID().toString();
-                data1.put("profile picture", randomName);
-                uploadImage(randomName);
+                //String profilePicId = (String) details.get("profile picture");
+                String profilePicId = UserHelper.user.getProfilePicture();
 
+                if(imageUri != null){
+                    StorageReference pathReference = storageRef.child("images/" + profilePicId);
+                    pathReference.delete();
+                    final String randomName = UUID.randomUUID().toString();
+                    data1.put("profile picture", randomName);
+                    uploadImage(randomName);
+                }else{
+                    data1.put("profile picture", profilePicId);
+                }
 
-
-                cities.document(userid).set(data1);
+                userInfo.document(userid).set(data1);
                 Toast.makeText(getContext(), "Profile info updated.", Toast.LENGTH_SHORT).show();
             }
         });
