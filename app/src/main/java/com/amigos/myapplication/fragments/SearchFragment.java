@@ -164,7 +164,6 @@ public class SearchFragment extends Fragment {
         findTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
                 if(fName == null || fName.equals("")){
                     AlertDialogHelper.show(getContext(), "Invalid From", "Plase select a valid direction.");
                     return;
@@ -179,7 +178,6 @@ public class SearchFragment extends Fragment {
                     AlertDialogHelper.show(getContext(), "Invalid Seat", "Invalid number of passengers.");
                     return;
                 }
-                */
 
                 Trip tempTrip = new Trip();
                 tempTrip.setFrom(fName);
