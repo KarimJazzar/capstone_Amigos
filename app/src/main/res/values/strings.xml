@@ -83,6 +83,9 @@
     <string name="trip_passengers">Passengers:</string>
     <string name="delete">Delete</string>
     <string name="booking_thanks">Thank you for booking!</string>
+    <string name="no_chat">No chats available.</string>
+    <string name="no_trip">No trips or rides found.</string>
+    <string name="no_result">Sorry, no trips found.</string>
     <string name="empty"></string>
     <string name="title_activity_find_trips">FindTrips</string>
     <!-- Strings used for fragments for navigation -->

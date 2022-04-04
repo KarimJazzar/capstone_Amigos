@@ -26,11 +26,26 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tripsRidesRV"
+            android:id="@+id/chatsRV"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/noTrip"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:paddingHorizontal="25dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/grey"
+            android:textSize="20dp"
+            android:text="@string/no_trip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />

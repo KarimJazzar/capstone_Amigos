@@ -20,7 +20,9 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amigos.myapplication.R;
@@ -72,6 +74,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap googleMap;
     private MapView resultMV;
     private RecyclerView trips;
+    private TextView noResultTV;
     private ArrayList<Trip> tripsList;
     private TripAdapter tripAdapter;
     private Button resultBack;
@@ -97,6 +100,8 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
         resultMV = findViewById(R.id.resultMV);
         checkLocationPermission();
+
+        noResultTV = findViewById(R.id.noResult);
 
         resultBack = findViewById(R.id.resultBack);
 
@@ -231,6 +236,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         final double radiusInM = 50 * 1000;
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+
         for (GeoQueryBounds b : bounds) {
             Query q = FirebaseHelper.instance.getDB().collection("Trips")
                     .orderBy(whereGeo)
@@ -241,6 +247,13 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
         List<DocumentSnapshot> matchingDocs = new ArrayList<>();
         Tasks.whenAllComplete(tasks).addOnCompleteListener(t -> {
+            if(tasks.isEmpty()) {
+                noResultTV.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            noResultTV.setVisibility(View.GONE);
+
             for (Task<QuerySnapshot> task : tasks) {
                 QuerySnapshot snap = task.getResult();
                 for (DocumentSnapshot doc : snap.getDocuments()) {
@@ -279,6 +292,12 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                         if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
                             tripIDs.add(matchingDocs.get(i).getId());
                             tripsList.add(trip);
+                        }
+
+                        if(tripsList.size() <= 0) {
+                            noResultTV.setVisibility(View.VISIBLE);
+                        } else {
+                            noResultTV.setVisibility(View.GONE);
                         }
 
                         tripAdapter.notifyDataSetChanged();

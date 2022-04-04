@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.adapters.ChatRVAadapter;
@@ -38,6 +40,7 @@ import java.util.List;
 public class ChatFragment extends Fragment {
 
     private RecyclerView chatRV;
+    private TextView noChatTV;
     private List<Chat> chatList = new ArrayList<>();
     private ChatRVAadapter chatsAdapter = new ChatRVAadapter();
 
@@ -94,10 +97,12 @@ public class ChatFragment extends Fragment {
 
         Context context = getActivity().getApplicationContext();
 
+        noChatTV = view.findViewById(R.id.chatNo);
+
         //messages.add(m1);
         //messagesAdapter.submitList(messages);
 
-        chatRV = (RecyclerView) view.findViewById(R.id.tripsRidesRV);
+        chatRV = (RecyclerView) view.findViewById(R.id.chatsRV);
         chatRV.setLayoutManager(new LinearLayoutManager(context));
         chatRV.setHasFixedSize(true);
         chatRV.setAdapter(chatsAdapter);
@@ -112,9 +117,15 @@ public class ChatFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 chatList.clear();
 
-                QuerySnapshot documents = task.getResult();
-                for(DocumentSnapshot document : documents) {
-                    chatList.add(document.toObject(Chat.class));
+                if(task.getResult().isEmpty()) {
+                    noChatTV.setVisibility(View.VISIBLE);
+                } else {
+                    noChatTV.setVisibility(View.GONE);
+
+                    QuerySnapshot documents = task.getResult();
+                    for(DocumentSnapshot document : documents) {
+                        chatList.add(document.toObject(Chat.class));
+                    }
                 }
 
                 chatsAdapter.submitList(chatList);
@@ -124,17 +135,19 @@ public class ChatFragment extends Fragment {
         yourChat.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    return;
-                }
-
                 chatList.clear();
 
-                for(QueryDocumentSnapshot val : value) {
-                    if (value != null && val.exists()) {
-                        chatList.add(val.toObject(Chat.class));
-                    } else {
-                        System.out.print("Current data: null");
+                if(value.getDocuments().isEmpty()) {
+                    noChatTV.setVisibility(View.VISIBLE);
+                } else {
+                    noChatTV.setVisibility(View.GONE);
+
+                    for(QueryDocumentSnapshot val : value) {
+                        if (value != null && val.exists()) {
+                            chatList.add(val.toObject(Chat.class));
+                        } else {
+                            System.out.print("Current data: null");
+                        }
                     }
                 }
 

@@ -13,12 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amigos.myapplication.R;
-import com.amigos.myapplication.adapters.ChatRVAadapter;
 import com.amigos.myapplication.adapters.TripRidesRVAdapter;
 import com.amigos.myapplication.helpers.FirebaseHelper;
-import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Trip;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +43,7 @@ public class TripsFragment extends Fragment {
     private List<Trip> tripList = new ArrayList<>();
     private TripRidesRVAdapter tripAdapter = new TripRidesRVAdapter();
     public static List<String> tripsIDs = new ArrayList<>();
+    private TextView noTripTV;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -81,7 +81,9 @@ public class TripsFragment extends Fragment {
 
         Context context = getActivity().getApplicationContext();
 
-        tripsRV = (RecyclerView) view.findViewById(R.id.tripsRidesRV);
+        noTripTV = view.findViewById(R.id.noTrip);
+
+        tripsRV = (RecyclerView) view.findViewById(R.id.chatsRV);
         tripsRV.setLayoutManager(new LinearLayoutManager(context));
         tripsRV.setHasFixedSize(true);
         tripsRV.setAdapter(tripAdapter);
@@ -99,10 +101,16 @@ public class TripsFragment extends Fragment {
                 tripList.clear();
                 tripsIDs.clear();
 
-                QuerySnapshot documents = task.getResult();
-                for(DocumentSnapshot document : documents) {
-                    tripsIDs.add(document.getId());
-                    tripList.add(document.toObject(Trip.class));
+                if(task.getResult().isEmpty()) {
+                    noTripTV.setVisibility(View.VISIBLE);
+                } else {
+                    noTripTV.setVisibility(View.GONE);
+
+                    QuerySnapshot documents = task.getResult();
+                    for(DocumentSnapshot document : documents) {
+                        tripsIDs.add(document.getId());
+                        tripList.add(document.toObject(Trip.class));
+                    }
                 }
 
                 tripAdapter.submitList(tripList);
@@ -119,12 +127,18 @@ public class TripsFragment extends Fragment {
                 tripList.clear();
                 tripsIDs.clear();
 
-                for(QueryDocumentSnapshot val : value) {
-                    if (value != null && val.exists()) {
-                        tripsIDs.add(val.getId());
-                        tripList.add(val.toObject(Trip.class));
-                    } else {
-                        System.out.print("Current data: null");
+                if(value.getDocuments().isEmpty()) {
+                    noTripTV.setVisibility(View.VISIBLE);
+                } else {
+                    noTripTV.setVisibility(View.GONE);
+
+                    for(QueryDocumentSnapshot val : value) {
+                        if (value != null && val.exists()) {
+                            tripsIDs.add(val.getId());
+                            tripList.add(val.toObject(Trip.class));
+                        } else {
+                            System.out.print("Current data: null");
+                        }
                     }
                 }
 
