@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvRegisterHere;
     TextView tvResetPassword;
     Button btnLogin;
+    public static boolean canLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,10 @@ public class LoginActivity extends AppCompatActivity {
             etLoginPassword.setError("Password cannot be empty");
             etLoginPassword.requestFocus();
         }else{
+            if(!canLogin) return;
+
+            canLogin = false;
+
             FirebaseHelper.instance.getAuth().signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -92,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }else{
+                        canLogin = true;
                         Toast.makeText(LoginActivity.this, "Log in Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }

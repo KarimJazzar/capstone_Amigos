@@ -124,50 +124,6 @@ public class ProfileFragment extends Fragment {
         //profPic.setImageBitmap(UserHelper.user.getProfilePicture());
         profPic.setImageURI(imageUri);
 
-        /*
-        DocumentReference docRef = db.collection("User Info").document(userid);
-        details = new HashMap<>();
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    details = document.getData();
-                    String firstN = (String) details.get("first name");
-                    String lastN = (String) details.get("last name");
-                    String mail = (String) details.get("email");
-                    String numb = (String) details.get("number");
-                    String profilePicId = (String) details.get("profile picture");
-
-                    // Create a storage reference from our app
-                    storageRef = storage.getReference();
-
-                    StorageReference pathReference = storageRef.child("images/" + profilePicId);
-                    final File localFile;
-                    try {
-                        localFile = File.createTempFile(profilePicId,"jpg");
-                        pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                profPic.setImageBitmap(bitmap);
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-
-                    firstName.setText(firstN);
-                    lastName.setText(lastN);
-                    email.setText(mail);
-                    number.setText(numb);
-                }
-            }
-        });
-        */
-
         updateProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +160,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
+                LoginActivity.canLogin = true;
+                //startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
 
