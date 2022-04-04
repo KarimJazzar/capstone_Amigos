@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.CreateRideActivity;
@@ -192,14 +193,18 @@ public class SearchFragment extends Fragment {
                 String from = fName;
                 String to = tName;
                 String inputDate = dateTV.getText().toString();
-                Intent intent = new Intent(getActivity(), ResultActivity.class);
-                intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
-                //intent.putExtra("fromLatLong", new LatLng(18.5263886,-69.8157937));
-                intent.putExtra("toLatLong", new LatLng(tLat,tLong));
-                //intent.putExtra("toLatLong", new LatLng(18.484553,-69.9143632));
-                intent.putExtra("date", inputDate);
-                intent.putExtra("seats", txtSeats.getText().toString());
-                startActivity(intent);
+                if(fLat == null || fLong == null || tLat == null || tLong == null){
+                    Toast.makeText(getContext(), "Invalid Address selected", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = new Intent(getActivity(), ResultActivity.class);
+                    intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
+                    //intent.putExtra("fromLatLong", new LatLng(18.5263886,-69.8157937));
+                    intent.putExtra("toLatLong", new LatLng(tLat,tLong));
+                    //intent.putExtra("toLatLong", new LatLng(18.484553,-69.9143632));
+                    intent.putExtra("date", inputDate);
+                    intent.putExtra("seats", txtSeats.getText().toString());
+                    startActivity(intent);
+                }
 
             }
         });
