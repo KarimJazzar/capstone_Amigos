@@ -193,10 +193,10 @@ public class SearchFragment extends Fragment {
                 String to = tName;
                 String inputDate = dateTV.getText().toString();
                 Intent intent = new Intent(getActivity(), ResultActivity.class);
-                //intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
-                intent.putExtra("fromLatLong", new LatLng(18.5263886,-69.8157937));
-                //intent.putExtra("toLatLong", new LatLng(tLat,tLong));
-                intent.putExtra("toLatLong", new LatLng(18.484553,-69.9143632));
+                intent.putExtra("fromLatLong", new LatLng(fLat,fLong));
+                //intent.putExtra("fromLatLong", new LatLng(18.5263886,-69.8157937));
+                intent.putExtra("toLatLong", new LatLng(tLat,tLong));
+                //intent.putExtra("toLatLong", new LatLng(18.484553,-69.9143632));
                 intent.putExtra("date", inputDate);
                 intent.putExtra("seats", txtSeats.getText().toString());
                 startActivity(intent);

@@ -24,7 +24,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -40,7 +43,7 @@ public class TripsFragment extends Fragment {
     private RecyclerView tripsRV;
     private List<Trip> tripList = new ArrayList<>();
     private TripRidesRVAdapter tripAdapter = new TripRidesRVAdapter();
-
+    public static List<String> tripsIDs = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,22 +89,46 @@ public class TripsFragment extends Fragment {
         String id = FirebaseHelper.instance.getUserId();
 
         CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Trips");
-        Query yourChat =  chatRef.whereArrayContains("users", id);
+        Query yourTrips =  chatRef.whereArrayContains("users", id);
 
         Log.e("ERROR", "" + FirebaseHelper.instance.getUserId());
 
-        yourChat.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        yourTrips.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 tripList.clear();
+                tripsIDs.clear();
 
                 QuerySnapshot documents = task.getResult();
                 for(DocumentSnapshot document : documents) {
+                    tripsIDs.add(document.getId());
                     tripList.add(document.toObject(Trip.class));
-                    Log.e("ERROR", "" + tripList);
                 }
 
                 tripAdapter.submitList(tripList);
+            }
+        });
+
+        yourTrips.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    return;
+                }
+
+                tripList.clear();
+                tripsIDs.clear();
+
+                for(QueryDocumentSnapshot val : value) {
+                    if (value != null && val.exists()) {
+                        tripsIDs.add(val.getId());
+                        tripList.add(val.toObject(Trip.class));
+                    } else {
+                        System.out.print("Current data: null");
+                    }
+                }
+
+                tripAdapter.notifyDataSetChanged();
             }
         });
     }

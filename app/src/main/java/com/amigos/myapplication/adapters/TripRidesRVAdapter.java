@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.MessagesActivity;
 import com.amigos.myapplication.activities.TripRideDetailActivity;
+import com.amigos.myapplication.fragments.TripsFragment;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.models.Chat;
@@ -88,6 +89,7 @@ public class TripRidesRVAdapter extends ListAdapter<Trip, TripRidesRVAdapter.Vie
                     Context context = v.getContext();
                     Intent intent = new Intent(context, TripRideDetailActivity.class);
                     intent.putExtra("header", typeTV.getText().toString());
+                    intent.putExtra("trip_id", TripsFragment.tripsIDs.get(position));
                     intent.putExtra("trip_obj", getTripAt(position));
                     context.startActivity(intent);
                 }

@@ -106,14 +106,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void uploadImage(String randomName) {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setTitle("Profile picture being uploaded");
-        pd.show();
+        //pd.show();
 
 
         StorageReference picsRef = FirebaseHelper.instance.getStorageRef().child("images/" + randomName);
         picsRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                pd.dismiss();
+                //pd.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                 double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                pd.setMessage("Percentage: " + (int) progressPercent + "%");
+                //pd.setMessage("Percentage: " + (int) progressPercent + "%");
             }
         });
 
