@@ -199,6 +199,7 @@ public class BookingActivity extends AppCompatActivity {
                 chat.setFrom(trip.getFrom());
                 chat.setTo(trip.getTo());
                 chat.setMsgID(randomName);
+                chat.setTripID(tripId);
 
                 Message msg = new Message();
                 chat.setMessages(msg);

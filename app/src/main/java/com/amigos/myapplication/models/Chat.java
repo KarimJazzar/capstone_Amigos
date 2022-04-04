@@ -12,6 +12,7 @@ public class Chat {
     private List<String> users;
     private Message messages;
     private String msgID;
+    private String tripID;
 
     public String getDriver() {
         return driver;
@@ -83,5 +84,13 @@ public class Chat {
 
     public void setMsgID(String msgID) {
         this.msgID = msgID;
+    }
+
+    public String getTripID() {
+        return tripID;
+    }
+
+    public void setTripID(String tripID) {
+        this.tripID = tripID;
     }
 }
