@@ -47,7 +47,6 @@ public class DateTimeHelper {
                 texview.setText( selectedHour + ":" + selectedMinute);
             }
         }, hour, minute, false);
-        mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
 }
