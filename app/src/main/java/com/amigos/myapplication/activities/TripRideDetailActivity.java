@@ -1,6 +1,7 @@
 package com.amigos.myapplication.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +23,10 @@ import com.amigos.myapplication.models.Trip;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -63,36 +67,39 @@ public class TripRideDetailActivity extends AppCompatActivity {
             titleTV.setText(extras.getString("header"));
             tripID = extras.getString("trip_id");
             trip = (Trip) extras.getSerializable("trip_obj");
-
-            FirebaseHelper.instance.setProfileImage(trip.getDriver().getProfilePicture(), avatar);
-            driveTV.setText(trip.getDriver().getFirstName() + " " + trip.getDriver().getLastName());
-            dateTV.setText(DateHelper.dateToString(trip.getDate()));
-            timeTV.setText("Departure at " + trip.getTime());
-            seatsTV.setText("Seats left " + trip.getSeats());
-            priceTV.setText("CAD$" + trip.getPrice());
-
-            conditionAdapter.submitList(trip.getConditions());
-            conditionRV.setLayoutManager(new LinearLayoutManager(TripRideDetailActivity.this));
-            conditionRV.setHasFixedSize(true);
-            conditionRV.setAdapter(conditionAdapter);
-
-            passengerRVAdapter.submitList(trip.getPassengers());
-            passengerRV.setLayoutManager(new LinearLayoutManager(TripRideDetailActivity.this));
-            passengerRV.setHasFixedSize(true);
-            passengerRV.setAdapter(passengerRVAdapter);
-
-            if(trip.getUsers().get(0).equals(FirebaseHelper.instance.getUserId())) {
-                isDriver = true;
-                deleteBtn.setText("Cancel Ride");
-            } else {
-                isDriver = false;
-                deleteBtn.setText("Cancel Trip");
-            }
+            updateView();
         }
+
+        DocumentReference tripDoc = FirebaseHelper.instance.getDB().collection("Trips").document(tripID);
+
+        tripDoc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()) {
+                    trip = (Trip) value.toObject(Trip.class);
+                    updateView();
+                } else {
+                    finish();
+                }
+            }
+        });
 
         deleteBtn.setOnClickListener(view ->{
             if(isDriver) {
                 Log.e("ERROR", "CANCEL RIDE");
+                CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Chat");
+                Query yourChat =  chatRef.whereEqualTo("tripID", tripID);
+                yourChat.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot documents = task.getResult();
+                        for(DocumentSnapshot document : documents) {
+                            FirebaseHelper.instance.getDB().collection("Chat").document(document.getId()).delete();
+                        }
+                    }
+                });
+
+                FirebaseHelper.instance.getDB().collection("Trips").document(tripID).delete();
             } else {
                 Log.e("ERROR", "CANCEL TRIP");
                 CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Chat");
@@ -137,5 +144,32 @@ public class TripRideDetailActivity extends AppCompatActivity {
         backBtn.setOnClickListener(view ->{
             this.finish();
         });
+    }
+
+    private void updateView() {
+        FirebaseHelper.instance.setProfileImage(trip.getDriver().getProfilePicture(), avatar);
+        driveTV.setText(trip.getDriver().getFirstName() + " " + trip.getDriver().getLastName());
+        dateTV.setText(DateHelper.dateToString(trip.getDate()));
+        timeTV.setText("Departure at " + trip.getTime());
+        seatsTV.setText("Seats left " + trip.getSeats());
+        priceTV.setText("CAD$" + trip.getPrice());
+
+        conditionAdapter.submitList(trip.getConditions());
+        conditionRV.setLayoutManager(new LinearLayoutManager(TripRideDetailActivity.this));
+        conditionRV.setHasFixedSize(true);
+        conditionRV.setAdapter(conditionAdapter);
+
+        passengerRVAdapter.submitList(trip.getPassengers());
+        passengerRV.setLayoutManager(new LinearLayoutManager(TripRideDetailActivity.this));
+        passengerRV.setHasFixedSize(true);
+        passengerRV.setAdapter(passengerRVAdapter);
+
+        if(trip.getUsers().get(0).equals(FirebaseHelper.instance.getUserId())) {
+            isDriver = true;
+            deleteBtn.setText("Cancel Ride");
+        } else {
+            isDriver = false;
+            deleteBtn.setText("Cancel Trip");
+        }
     }
 }
