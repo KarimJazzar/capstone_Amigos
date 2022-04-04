@@ -281,7 +281,9 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                 // load docs
                 tripsList.clear();
                 tripIDs.clear();
+                noResultTV.setVisibility(View.VISIBLE);
                 for (int i = 0; i < matchingDocs.size(); i++) {
+
                     Timestamp timestamp = matchingDocs.get(i).getTimestamp("date");
                     LocalDateTime ldt = LocalDateTime.ofInstant(timestamp.toDate().toInstant(), ZoneId.systemDefault());
                     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd - MMM - yyyy");
@@ -298,14 +300,9 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                     if(stringBuilder.toString().equalsIgnoreCase(stringBuilder1.toString())){
                         Trip trip = matchingDocs.get(i).toObject(Trip.class);
                         if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
+                            noResultTV.setVisibility(View.GONE);
                             tripIDs.add(matchingDocs.get(i).getId());
                             tripsList.add(trip);
-                        }
-
-                        if(tripsList.size() <= 0) {
-                            noResultTV.setVisibility(View.VISIBLE);
-                        } else {
-                            noResultTV.setVisibility(View.GONE);
                         }
 
                         tripAdapter.notifyDataSetChanged();
