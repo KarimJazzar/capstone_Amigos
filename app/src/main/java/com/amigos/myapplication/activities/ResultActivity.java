@@ -1,6 +1,7 @@
 package com.amigos.myapplication.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -50,7 +51,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -107,7 +111,12 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
         //List<DocumentSnapshot> docsFrom = getRadiusTrips(centerFrom,"from geohash", "from lat", "from lng");
         //List<DocumentSnapshot> docsTo = getRadiusTrips(centerTo,"to geohash", "to lat", "to lng");
 
-        getRadiusTrips(centerFrom,"fromGeohash",inputDate, seats);
+        FirebaseHelper.instance.getDB().collection("Trips").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                getRadiusTrips(centerFrom,"fromGeohash",inputDate, seats);
+            }
+        });
 
         setAdapter();
 
@@ -218,7 +227,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void getRadiusTrips(GeoLocation center, String whereGeo, String inputDate, String seats){
-        String zero = "0";
 
         final double radiusInM = 50 * 1000;
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
@@ -266,11 +274,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
                     StringBuilder stringBuilder1 = new StringBuilder(dateTimeFormatter.format(ldt));
 
-                    System.out.println(stringBuilder + " jojo "+ stringBuilder1);
-
-
                     if(stringBuilder.toString().equalsIgnoreCase(stringBuilder1.toString())){
-                        System.out.println("jotarou");
                         Trip trip = matchingDocs.get(i).toObject(Trip.class);
                         if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
                             tripIDs.add(matchingDocs.get(i).getId());
