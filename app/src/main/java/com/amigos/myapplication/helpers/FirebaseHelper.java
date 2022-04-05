@@ -77,6 +77,8 @@ public class FirebaseHelper {
     }
 
     public void getUserData(String userid) {
+        user = mAuth.getCurrentUser();
+
         DocumentReference docRef = db.collection("User Info").document(userid);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -91,25 +93,6 @@ public class FirebaseHelper {
                     UserHelper.user.setEmail((String) details.get("email"));
                     UserHelper.user.setPhoneNuber((String) details.get("number"));
                     UserHelper.user.setProfilePicture((String) details.get("profile picture"));
-                    Log.e("ERROR", "" + details.get("profile picture"));
-
-                    /*
-                    String profilePicId = (String) details.get("profile picture");
-                    StorageReference pathReference = storageRef.child("images/" + profilePicId);
-
-                    final File localFile;
-                    try {
-                        localFile = File.createTempFile(profilePicId,"jpg");
-                        pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                UserHelper.user.setProfilePicture(BitmapFactory.decodeFile(localFile.getAbsolutePath()));
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    */
                 }
             }
         });
