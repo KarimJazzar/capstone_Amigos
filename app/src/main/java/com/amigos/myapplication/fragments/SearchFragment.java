@@ -53,6 +53,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -164,6 +165,7 @@ public class SearchFragment extends Fragment {
         findTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(fName == null || fName.equals("")){
                     AlertDialogHelper.show(getContext(), "Invalid From", "Plase select a valid direction.");
                     return;
@@ -179,9 +181,15 @@ public class SearchFragment extends Fragment {
                     return;
                 }
 
+                if(DateHelper.didDatePassed(dateTV.getText().toString())) {
+                    AlertDialogHelper.show(getContext(), "Invalid Date", "You can't select a passed date.");
+                    return;
+                }
+
                 Trip tempTrip = new Trip();
                 tempTrip.setFrom(fName);
                 tempTrip.setTo(tName);
+
                 try {
                     tempTrip.setDate(DateHelper.stringToDate(dateTV.getText().toString()));
                 } catch (ParseException e) {
@@ -203,7 +211,6 @@ public class SearchFragment extends Fragment {
                     intent.putExtra("seats", txtSeats.getText().toString());
                     startActivity(intent);
                 }
-
             }
         });
 

@@ -19,6 +19,7 @@ import com.amigos.myapplication.activities.TripRideDetailActivity;
 import com.amigos.myapplication.fragments.TripsFragment;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.helpers.Status;
 import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Trip;
 
@@ -54,13 +55,22 @@ public class TripRidesRVAdapter extends ListAdapter<Trip, TripRidesRVAdapter.Vie
     public void onBindViewHolder(@NonNull TripRidesRVAdapter.ViewHolder holder, int position) {
         Trip model = getTripAt(position);
         String direction = "Trip from " + model.getFrom() + " to " + model.getTo();
-        String date = "" + DateHelper.dateToString(model.getDate()) + " " + model.getTime();
+        String date = "" + DateHelper.dateToString(model.getDate()) + " at " + model.getTime();
+        String title = "";
 
         if (FirebaseHelper.instance.getUserId().equals(model.getUsers().get(0))) {
-            holder.typeTV.setText("RIDE");
+            title = "RIDE ";
         } else {
-            holder.typeTV.setText("TRIP");
+            title = "TRIP ";
         }
+
+        if(!model.getStatus().equals(Status.canceled) && DateHelper.didDatePassed(DateHelper.dateToString(model.getDate()))) {
+            title += Status.completed;
+        } else if(!model.getStatus().equals(Status.inprogress)) {
+            title += model.getStatus();
+        }
+
+        holder.typeTV.setText(title);
         holder.dateTV.setText(date);
         holder.destinationTV.setText(direction);
     }

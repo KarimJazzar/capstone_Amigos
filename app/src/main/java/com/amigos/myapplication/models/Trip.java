@@ -21,11 +21,9 @@ public class Trip implements Serializable {
     private List<String> users;
     private String fromGeohash;
     private String toGeohash;
+    private String status;
 
-
-    public String getFrom() {
-        return from;
-    }
+    public String getFrom() { return from; }
 
     public void setFrom(String from) {
         this.from = from;
@@ -133,5 +131,13 @@ public class Trip implements Serializable {
 
     public void setToGeohash(String toGeohash) {
         this.toGeohash = toGeohash;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

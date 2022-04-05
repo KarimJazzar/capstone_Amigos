@@ -145,6 +145,7 @@ public class ProfileFragment extends Fragment {
                     StorageReference pathReference = storageRef.child("images/" + profilePicId);
                     pathReference.delete();
                     final String randomName = UUID.randomUUID().toString();
+                    UserHelper.user.setProfilePicture(randomName);
                     data1.put("profile picture", randomName);
                     uploadImage(randomName);
                 }else{

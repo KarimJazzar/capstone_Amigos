@@ -83,7 +83,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
     public static Integer passengerNumber;
     public static List<String> tripIDs = new ArrayList<>();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
     private ArrayList<Trip> tempList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -299,7 +298,7 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
 
                     if(stringBuilder.toString().equalsIgnoreCase(stringBuilder1.toString())){
                         Trip trip = matchingDocs.get(i).toObject(Trip.class);
-                        if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats()){
+                        if(!tripsList.contains(trip) && Integer.parseInt(seats) <= trip.getSeats() && trip.getStatus().equals("inprogress")){
                             noResultTV.setVisibility(View.GONE);
                             tripIDs.add(matchingDocs.get(i).getId());
                             tripsList.add(trip);
@@ -308,7 +307,6 @@ public class ResultActivity extends AppCompatActivity implements OnMapReadyCallb
                         tripAdapter.notifyDataSetChanged();
                     }
                 }
-                Log.e("ERROR", tripIDs.toString());
             }
         });
     }

@@ -19,6 +19,7 @@ import com.amigos.myapplication.R;
 import com.amigos.myapplication.activities.BookingActivity;
 import com.amigos.myapplication.activities.MessagesActivity;
 import com.amigos.myapplication.activities.ResultActivity;
+import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Chat;
@@ -77,8 +78,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.driverName.setText(data.get(position).getDriver().getFirstName() + " " + data.get(position).getDriver().getLastName());
-        holder.date.setText(data.get(position).getDate().toString());
-        holder.price.setText("$" + data.get(position).getPrice().toString());
+        holder.date.setText(DateHelper.dateToString(data.get(position).getDate()) + " at " + data.get(position).getTime());
+        holder.price.setText("CAD$" + data.get(position).getPrice().toString());
         holder.seats.setText(String.valueOf(data.get(position).getSeats()) + " seats available");
         FirebaseHelper.instance.setProfileImage(data.get(position).getDriver().getProfilePicture(), holder.profPic);
     }

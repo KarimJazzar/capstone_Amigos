@@ -167,6 +167,16 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                 trip.setToGeohash(toHash);
             }
 
+            if(DateHelper.didDatePassed(inputDate.getText().toString())) {
+                AlertDialogHelper.show(this, "Invalid Date", "You can't select a passed date.");
+                return;
+            }
+
+            if(inputTime.getText().toString().equals("")) {
+                AlertDialogHelper.show(this, "Invalid Time", "Select a departure time.");
+                return;
+            }
+
             try {
                 int seats = Integer.parseInt(inputSeats.getText().toString());
                 double price = Double.parseDouble(inputPrice.getText().toString());
@@ -185,6 +195,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
                     trip.setPrice(price);
                 }
             } catch (NumberFormatException error) {
+                AlertDialogHelper.show(CreateRideActivity.this, "Invalid Price or Seat", "Please insert a valid number.");
                 return;
             }
 
@@ -223,6 +234,7 @@ public class CreateRideActivity extends AppCompatActivity  implements OnMapReady
             trip.setConditions(conditions);
 
             trip.setTime(inputTime.getText().toString());
+            trip.setStatus("inprogress");
 
             try {
                 trip.setDate(DateHelper.stringToDate(inputDate.getText().toString()));

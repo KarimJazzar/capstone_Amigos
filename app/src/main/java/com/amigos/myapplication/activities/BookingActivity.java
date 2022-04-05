@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.amigos.myapplication.configurations.PaypalClientIDConfigClass;
 import com.amigos.myapplication.R;
+import com.amigos.myapplication.helpers.AlertDialogHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.helpers.Status;
 import com.amigos.myapplication.helpers.UserHelper;
 import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Message;
@@ -119,6 +121,16 @@ public class BookingActivity extends AppCompatActivity {
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(trip.getSeats() == 0 || ResultActivity.passengerNumber > trip.getSeats()) {
+                    AlertDialogHelper.show(BookingActivity.this, "No Seats Available", "Sorry, it seems there is not seats or quantity requested to rent.");
+                    return;
+                }
+
+                if(!trip.getStatus().equals(Status.inprogress)) {
+                    AlertDialogHelper.show(BookingActivity.this, "Trip", "Sorry, the current trip is no longer available.");
+                    return;
+                }
+
                 PaypalpaymentsMethod();
             }
         });

@@ -118,6 +118,28 @@
                 android:text="@string/trip_details" />
 
             <TextView
+                android:id="@+id/tripRideFrom"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/name" />
+
+            <TextView
+                android:id="@+id/tripRideTo"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/name" />
+
+            <TextView
                 android:id="@+id/tripRideDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

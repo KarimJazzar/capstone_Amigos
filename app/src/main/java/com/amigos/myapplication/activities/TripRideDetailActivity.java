@@ -17,6 +17,7 @@ import com.amigos.myapplication.adapters.ConditionRVAdapter;
 import com.amigos.myapplication.adapters.PassengerRVAdapter;
 import com.amigos.myapplication.helpers.DateHelper;
 import com.amigos.myapplication.helpers.FirebaseHelper;
+import com.amigos.myapplication.helpers.Status;
 import com.amigos.myapplication.models.Chat;
 import com.amigos.myapplication.models.Passenger;
 import com.amigos.myapplication.models.Trip;
@@ -38,7 +39,7 @@ public class TripRideDetailActivity extends AppCompatActivity {
     private RecyclerView conditionRV, passengerRV;
     private ConditionRVAdapter conditionAdapter  = new ConditionRVAdapter();
     private PassengerRVAdapter passengerRVAdapter = new PassengerRVAdapter();
-    private TextView titleTV, driveTV, dateTV, timeTV, seatsTV, priceTV;
+    private TextView titleTV, driveTV, dateTV, timeTV, seatsTV, priceTV, fromTV, toTV;
     private Button deleteBtn, backBtn;
     private ImageView avatar;
     private boolean isDriver;
@@ -59,6 +60,8 @@ public class TripRideDetailActivity extends AppCompatActivity {
         priceTV = findViewById(R.id.tripRidePrice);
         deleteBtn = findViewById(R.id.tripRideDelete);
         backBtn = findViewById(R.id.tripRideBack);
+        fromTV = findViewById(R.id.tripRideFrom);
+        toTV = findViewById(R.id.tripRideTo);
         conditionRV = findViewById(R.id.tripRideConditionRV);
         passengerRV = findViewById(R.id.tripRidePassengerRV);
 
@@ -86,7 +89,6 @@ public class TripRideDetailActivity extends AppCompatActivity {
 
         deleteBtn.setOnClickListener(view ->{
             if(isDriver) {
-                Log.e("ERROR", "CANCEL RIDE");
                 CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Chat");
                 Query yourChat =  chatRef.whereEqualTo("tripID", tripID);
                 yourChat.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -99,9 +101,15 @@ public class TripRideDetailActivity extends AppCompatActivity {
                     }
                 });
 
-                FirebaseHelper.instance.getDB().collection("Trips").document(tripID).delete();
+                if(DateHelper.didDatePassed(DateHelper.dateToString(trip.getDate()))) {
+                    trip.setStatus(Status.completed);
+                } else {
+                    trip.setStatus(Status.canceled);
+                }
+
+                trip.getUsers().set(0,"");
+                FirebaseHelper.instance.getDB().collection("Trips").document(tripID).set(trip);
             } else {
-                Log.e("ERROR", "CANCEL TRIP");
                 CollectionReference chatRef = FirebaseHelper.instance.getDB().collection("Chat");
                 Query yourChat =  chatRef.whereArrayContains("users", FirebaseHelper.instance.getUserId()).whereEqualTo("tripID", tripID);
                 yourChat.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -125,16 +133,19 @@ public class TripRideDetailActivity extends AppCompatActivity {
                     }
                 }
 
-                for(Integer i = 0; i < trip.getPassengers().size(); i++) {
-                    if(!trip.getPassengers().get(i).getUserID().equals(FirebaseHelper.instance.getUserId())) {
-                        newPassengerList.add(trip.getPassengers().get(i));
-                    } else {
-                        trip.setSeats(trip.getSeats() + trip.getPassengers().get(i).getSeats());
+                if(trip.getStatus().equals(Status.inprogress) && !DateHelper.didDatePassed(DateHelper.dateToString(trip.getDate()))) {
+                    for(Integer i = 0; i < trip.getPassengers().size(); i++) {
+                        if(!trip.getPassengers().get(i).getUserID().equals(FirebaseHelper.instance.getUserId())) {
+                            newPassengerList.add(trip.getPassengers().get(i));
+                        } else {
+                            trip.setSeats(trip.getSeats() + trip.getPassengers().get(i).getSeats());
+                        }
                     }
+
+                    trip.setPassengers(newPassengerList);
                 }
 
                 trip.setUsers(newUserList);
-                trip.setPassengers(newPassengerList);
                 FirebaseHelper.instance.getDB().collection("Trips").document(tripID).set(trip);
             }
 
@@ -150,6 +161,8 @@ public class TripRideDetailActivity extends AppCompatActivity {
         FirebaseHelper.instance.setProfileImage(trip.getDriver().getProfilePicture(), avatar);
         driveTV.setText(trip.getDriver().getFirstName() + " " + trip.getDriver().getLastName());
         dateTV.setText(DateHelper.dateToString(trip.getDate()));
+        fromTV.setText("From " + trip.getFrom());
+        toTV.setText("To " + trip.getTo());
         timeTV.setText("Departure at " + trip.getTime());
         seatsTV.setText("Seats left " + trip.getSeats());
         priceTV.setText("CAD$" + trip.getPrice());
@@ -166,10 +179,18 @@ public class TripRideDetailActivity extends AppCompatActivity {
 
         if(trip.getUsers().get(0).equals(FirebaseHelper.instance.getUserId())) {
             isDriver = true;
-            deleteBtn.setText("Cancel Ride");
+            if(DateHelper.didDatePassed(DateHelper.dateToString(trip.getDate()))) {
+                deleteBtn.setText("Complete Ride");
+            } else {
+                deleteBtn.setText("Cancel Ride");
+            }
         } else {
             isDriver = false;
-            deleteBtn.setText("Cancel Trip");
+            if(!trip.getStatus().equals(Status.inprogress) || DateHelper.didDatePassed(DateHelper.dateToString(trip.getDate()))) {
+                deleteBtn.setText("Close Trip");
+            } else {
+                deleteBtn.setText("Cancel Trip");
+            }
         }
     }
 }
