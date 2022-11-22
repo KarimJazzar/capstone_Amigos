@@ -1,7 +1,7 @@
 # capstone_Amigos
 Mobile Development and Design Capstone Project
 
-Some Description
+Description
 
 Login & Register<br/>
 ![login](https://user-images.githubusercontent.com/68635396/203230187-f9699d32-ca94-429c-8ad5-9cf96e73cfaf.JPG)
